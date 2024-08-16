@@ -7,7 +7,7 @@ all:
 	python src/leancheck.py
 
 repl:
-	python -i leancheck.py -c 'from leancheck import *'
+	python -i src/leancheck.py -c 'from leancheck import *'
 
 test:
 	python src/leancheck.py
