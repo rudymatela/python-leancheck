@@ -1,8 +1,6 @@
 TODO for leancheck.py
 =====================
 
-* add CI
-
 * create example folder
 
 * remove examples from leancheck.py
