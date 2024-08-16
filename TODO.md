@@ -1,7 +1,7 @@
 TODO for leancheck.py
 =====================
 
-* move to standalone repository
+* add a README
 
 * create example folder
 
