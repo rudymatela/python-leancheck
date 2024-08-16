@@ -9,10 +9,15 @@ all:
 repl:
 	python -i src/leancheck.py -c 'from leancheck import *'
 
-test:
+test: examples
 	python src/leancheck.py
 	pytest
 	validate-pyproject pyproject.toml
+
+.PHONY: examples
+examples:
+	PYTHONPATH=src python examples/arith.py
+	PYTHONPATH=src python examples/sort.py
 
 clean:
 	rm -rf __pycache__ src/__pycache__ tests/__pycache__ .pytest_cache

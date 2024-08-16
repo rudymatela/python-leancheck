@@ -187,49 +187,17 @@ def llist(mkTiers):
     yield from pproduct_with(lambda x, xs: xs + [x], mkTiers(), llist(mkTiers))
 
 
-def prop_commute(x:int, y:int) -> bool:
-    return x + y == y + x
-
-# incorrect property
-def prop_increase(x:int, y:int) -> bool:
-    return x + y > x
-
-# Interesting calls:
-# signature(prop_commute).return_annotation
-# signature(prop_commute).parameters
-# signature(prop_commute).parameters['x'].annotation
-
-def prop_sort(xs: list[int]) -> bool:
-    xs.sort()
-    ys = list(xs)
-    xs.sort()
-    return xs == ys
-
-def prop_elem(x: int, xs: list[int]) -> bool:
-    ys = list(xs)
-    ys.sort
-    return (x in ys) == (x in xs)
-
-def prop_sort2(xs: list[int]) -> bool:
-    ys = list(xs)
-    xs.sort()
-    return xs == ys
-
-# Interesting calls:
-# signature(prop_sort).return_annotation
-# signature(prop_sort).parameters
-# signature(prop_sort).parameters['xs'].annotation # a GenericAlias
-# signature(prpo_sort).parameters['xs'].annotation.__origin__
-# signature(prpo_sort).parameters['xs'].annotation.__args__
-
-
 def check(prop):
     """
     Checks a property for several enumerated argument values.
 
+    >>> def prop_commute(x:int, y:int) -> bool:
+    ...     return x + y == y + x
     >>> check(prop_commute)
     Property passes!
 
+    >>> def prop_increase(x:int, y:int) -> bool:
+    ...     return x + y > x
     >>> check(prop_increase)
     Failed, falsifiable on (0, 0) after X tests
 
