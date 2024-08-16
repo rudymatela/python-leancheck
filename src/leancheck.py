@@ -130,6 +130,7 @@ def to_list(xss):
 def zippend(*iiterables):
     return itertools.starmap(itertools.chain,itertools.zip_longest(*iiterables, fillvalue=[]))
 
+# TODO: merge pproduct and pproduct_with
 def pproduct(xss, yss):
     xss_ = []
     yss_ = []
