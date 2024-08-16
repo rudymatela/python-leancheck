@@ -3,6 +3,8 @@ TODO for leancheck.py
 
 * add a README
 
+* add CI
+
 * create example folder
 
 * remove examples from leancheck.py
