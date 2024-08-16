@@ -1,0 +1,20 @@
+# CI script for python-leancheck
+#
+# 2024 Rudy Matela
+# Distributed under the LGPL v2.1 or later (see the file LICENSE)
+
+name: test
+on: [push]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.12 # 2023-2024
+          # cache: 'pip' # no dependencies, no need to cache...
+      - name: Run tests
+        run: make test
