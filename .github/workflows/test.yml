@@ -11,13 +11,19 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: 3.12 # 2023-2024
-          cache: 'pip' # no dependencies, no need to cache...
+          cache: 'pip'
+
+      - run: make --version
+      - run: python --version
+      - run: pip --version
+
       - name: Install dependencies
         run:
           pip install pytest validate-pyproject
-      - name: Run tests
-        run: make test
+
+      - run: make test
