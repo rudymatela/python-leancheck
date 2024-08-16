@@ -1,0 +1,23 @@
+# pyproject.toml for python-leancheck
+#
+# (C) 2023-2024  Rudy Matela
+# Distributed under the LGPL v2.1 or later (see the file LICENSE)
+
+[project]
+name = "leancheck"
+version = "0.0.1"
+authors = [
+  { name="Rudy Matela", email="rudy@matela.com.br" }
+]
+description = "Enumerative property-based testing"
+readme = "README.md"
+license = { text = "LGPL-2.1-or-later" }
+classifiers = [
+	"License :: OSI Approved :: GNU Lesser General Public License v2 or later (LGPLv2+)"
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
