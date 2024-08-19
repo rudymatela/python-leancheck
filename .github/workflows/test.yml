@@ -24,6 +24,6 @@ jobs:
 
       - name: Install dependencies
         run:
-          pip install pytest validate-pyproject
+          pip install pytest mypy validate-pyproject
 
       - run: make test
