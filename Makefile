@@ -23,3 +23,9 @@ examples:
 
 clean:
 	rm -rf __pycache__ src/__pycache__ tests/__pycache__ .pytest_cache
+
+%.run: %.py
+	PYTHONPATH=src python $<
+
+%.repl: %.py
+	PYTHONPATH=src python -i $<
