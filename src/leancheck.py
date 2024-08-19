@@ -188,7 +188,7 @@ def llist(mkTiers):
     yield from pproduct_with(lambda x, xs: xs + [x], mkTiers(), llist(mkTiers))
 
 
-def check(prop):
+def check(prop, max_tests=360):
     """
     Checks a property for several enumerated argument values.
 
@@ -230,7 +230,7 @@ def check(prop):
         # print(par.annotation)
         e = Enumerator.find(par.annotation)
         es.append(e)
-    for args in itertools.islice(Enumerator.product(*es), 360):
+    for args in itertools.islice(Enumerator.product(*es), max_tests):
         if not prop(*args):
             print(f"Failed, falsifiable on {args} after X tests")
             return
