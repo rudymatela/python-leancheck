@@ -76,7 +76,8 @@ class Enumerator:
                 int: cls.from_gen(itertools.count), # TODO: include negatives
                 bool: cls.from_choices([False,True]),
             }
-            # The following needs to be separate to avoid infinite recursion.
+            # The following needs to be separate to avoid infinite recursion
+            # as __class__getitem__ calls this very function _initialize.
             cls.register(list[int], cls.lists(cls[int]))
             cls.register(list[bool], cls.lists(cls[bool]))
             cls.register(tuple[int,int], cls[int] * cls[int])
