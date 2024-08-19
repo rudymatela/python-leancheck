@@ -3,7 +3,7 @@ TODO for leancheck.py
 
 * `check`: add `types=` mechanism in order to support lambdas
 
-* `check`: improve output
+* `check`: report when test cases were exhausted
 
 * handle exceptions nicely somehow (`prop_minimum`) for sort
 

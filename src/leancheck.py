@@ -195,30 +195,32 @@ def check(prop, max_tests=360):
     >>> def prop_commute(x:int, y:int) -> bool:
     ...     return x + y == y + x
     >>> check(prop_commute)
-    Property passes!
+    +++ OK, passed 360 tests: prop_commute
 
     >>> def prop_increase(x:int, y:int) -> bool:
     ...     return x + y > x
     >>> check(prop_increase)
-    Failed, falsifiable on (0, 0) after X tests
+    *** Failed! Falsifiable after 1 tests:
+        prop_increase(0, 0)
 
     >>> def prop_sorted_twice(xs: list[int]) -> bool:
     ...     return sorted(sorted(xs)) == sorted(xs)
     ...
     >>> check(prop_sorted_twice)
-    Property passes!
+    +++ OK, passed 360 tests: prop_sorted_twice
 
     >>> def prop_sorted_len(xs: list[int]) -> bool:
     ...     return len(sorted(xs)) == len(xs)
     ...
     >>> check(prop_sorted_len)
-    Property passes!
+    +++ OK, passed 360 tests: prop_sorted_len
 
     >>> def prop_sorted_wrong(xs: list[int]) -> bool:
     ...     return sorted(xs) == xs
     ...
     >>> check(prop_sorted_wrong)
-    Failed, falsifiable on ([1, 0],) after X tests
+    *** Failed! Falsifiable after 6 tests:
+        prop_sorted_wrong([1, 0])
     """
     sig = signature(prop)
     ret = sig.return_annotation
@@ -230,11 +232,13 @@ def check(prop, max_tests=360):
         # print(par.annotation)
         e = Enumerator.find(par.annotation)
         es.append(e)
-    for args in itertools.islice(Enumerator.product(*es), max_tests):
+    for i, args in enumerate(itertools.islice(Enumerator.product(*es), max_tests)):
         if not prop(*args):
-            print(f"Failed, falsifiable on {args} after X tests")
+            repr_args = ', '.join(map(repr, args))
+            print(f"*** Failed! Falsifiable after {i+1} tests:")
+            print(f"    {prop.__name__}({repr_args})")
             return
-    print("Property passes!")
+    print(f"+++ OK, passed {i+1} tests: {prop.__name__}")
 
 
 if __name__ == "__main__":
