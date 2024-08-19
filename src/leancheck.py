@@ -7,6 +7,7 @@
 
 
 import itertools
+import sys
 from inspect import signature
 
 
@@ -187,6 +188,18 @@ def llist(mkTiers):
     yield [[]]
     yield from pproduct_with(lambda x, xs: xs + [x], mkTiers(), llist(mkTiers))
 
+def colour_escapes():
+    """
+    Returns colour escape sequences for clear, red, green, blue and yellow
+
+    >>> c, r, g, b, y = colour_escapes()
+    """
+    plats = ['linux'] # TODO: add other supported platforms
+    supported = sys.stdout.isatty() and sys.platform in plats
+    if supported:
+        return '\x1b[m', '\x1b[1;31m', '\x1b[32m', '\x1b[34m', '\x1b[33m'
+    else:
+        return '', '', '', '', ''
 
 def check(prop, max_tests=360):
     """
@@ -232,15 +245,16 @@ def check(prop, max_tests=360):
         # print(par.annotation)
         e = Enumerator.find(par.annotation)
         es.append(e)
+    clear, red, green, _, _ = colour_escapes()
     for i, args in enumerate(itertools.islice(Enumerator.product(*es), max_tests)):
         if not prop(*args):
             repr_args = ', '.join(map(repr, args))
             print(f"*** Failed! Falsifiable after {i+1} tests:")
-            print(f"    {prop.__name__}({repr_args})")
+            print(f"    {red}{prop.__name__}{clear}({repr_args})")
             return
     i = i+1
     exhausted = " (exhausted)" if i < max_tests else ""
-    print(f"+++ OK, passed {i} tests{exhausted}: {prop.__name__}")
+    print(f"+++ OK, passed {i} tests{exhausted}: {green}{prop.__name__}{clear}")
 
 
 if __name__ == "__main__":
