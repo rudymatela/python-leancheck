@@ -87,39 +87,34 @@ class Enumerator:
 
     @classmethod
     def register(cls, c, enumerator):
+        """
+        Registers an enumerator for the given type.
+
+        >>> Enumerator.register(bool, Enumerator(lambda: (xs for xs in [[False, True]])))
+        """
         cls._initialize()
         cls._enumerators[c] = enumerator
 
+    # @classmethod # automatic
     def __class_getitem__(cls, c):
-        """
-        And alias to Enumerator.find:
-
-        >>> Enumerator[int]
-        Enumerator(lambda: (xs for xs in [[0], [1], [2], [3], [4], [5], ...]))
-        """
-        return cls.find(c)
-
-    @classmethod
-    def find(cls, c):
         """
         Finds an enumerator for the given type.
 
-        >>> Enumerator.find(int)
+        >>> Enumerator[int]
         Enumerator(lambda: (xs for xs in [[0], [1], [2], [3], [4], [5], ...]))
 
-        >>> Enumerator.find(bool)
+        >>> Enumerator[bool]
         Enumerator(lambda: (xs for xs in [[False, True]]))
 
-        >>> print(Enumerator.find(list[int]))
+        >>> print(Enumerator[list[int]])
         [[], [0], [0, 0], [1], [0, 0, 0], [1, 0], ...]
 
-        >>> print(Enumerator.find(tuple[bool, int]))
+        >>> print(Enumerator[tuple[bool, int]])
         [(False, 0), (True, 0), (False, 1), (True, 1), (False, 2), (True, 2), ...]
 
-        >>> print(Enumerator.find(tuple[int,int,int]))
+        >>> print(Enumerator[tuple[int,int,int]])
         [(0, 0, 0), (0, 0, 1), (0, 1, 0), (1, 0, 0), (0, 0, 2), (0, 1, 1), ...]
         """
-
         cls._initialize()
         try:
             return cls._enumerators[c]
@@ -249,7 +244,7 @@ def check(prop, max_tests=360):
     es = []
     for par in sig.parameters.values():
         # print(par.annotation)
-        e = Enumerator.find(par.annotation)
+        e = Enumerator[par.annotation]
         es.append(e)
     clear, red, green, _, _ = colour_escapes()
     for i, args in enumerate(itertools.islice(Enumerator.product(*es), max_tests)):
