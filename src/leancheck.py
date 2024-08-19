@@ -115,6 +115,11 @@ class Enumerator:
 
         >>> print(Enumerator[tuple[int,int,int]])
         [(0, 0, 0), (0, 0, 1), (0, 1, 0), (1, 0, 0), (0, 0, 2), (0, 1, 1), ...]
+
+        >>> print(Enumerator[type])
+        Traceback (most recent call last):
+        ...
+        TypeError: could not find Enumerator for <class 'type'>
         """
         cls._initialize()
         try:
