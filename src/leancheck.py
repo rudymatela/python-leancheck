@@ -238,7 +238,9 @@ def check(prop, max_tests=360):
             print(f"*** Failed! Falsifiable after {i+1} tests:")
             print(f"    {prop.__name__}({repr_args})")
             return
-    print(f"+++ OK, passed {i+1} tests: {prop.__name__}")
+    i = i+1
+    exhausted = " (exhausted)" if i < max_tests else ""
+    print(f"+++ OK, passed {i} tests{exhausted}: {prop.__name__}")
 
 
 if __name__ == "__main__":
