@@ -69,7 +69,7 @@ $ python -i leancheck.py
 
 >>> check(prop_sorted_wrong)
 *** Failed! Falsifiable after 6 tests:
-	prop_sorted_wrong([1, 0])
+    prop_sorted_wrong([1, 0])
 ```
 
 
