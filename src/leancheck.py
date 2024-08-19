@@ -67,7 +67,7 @@ class Enumerator:
 
     @classmethod
     def register(cls, c, enumerator):
-        pass # TODO: implement me
+        cls._enumerators[c] = enumerator
 
     def __class_getitem__(cls, c):
         """
@@ -98,27 +98,27 @@ class Enumerator:
         >>> print(Enumerator.find(tuple[int,int,int]))
         [(0, 0, 0), (0, 0, 1), (0, 1, 0), (1, 0, 0), (0, 0, 2), (0, 1, 1), ...]
         """
-        # TODO: hardcoded for now, fix later
-        if c == int:
-            return Enumerator.from_gen(itertools.count)
-        elif c == bool:
-            return Enumerator.from_choices([False,True])
-        elif c == list[int]:  # TODO: somehow match into list[X], then find the argument type
-            return Enumerator.lists(cls.find(int))
-        elif c == list[bool]:
-            return Enumerator.lists(cls.find(bool))
-        elif c == tuple[int,int]:
-            return cls.find(int) * cls.find(int)
-        elif c == tuple[int,int,int]:
-            return cls.product(cls.find(int), cls.find(int), cls.find(int))
-        elif c == tuple[int,bool]:
-            return cls.find(int) * cls.find(bool)
-        elif c == tuple[bool,int]:
-            return cls.find(bool) * cls.find(int)
-        elif c == tuple[bool,bool]:
-            return cls.find(bool) * cls.find(bool)
-        else:
-            raise TypeError(f"could not find Enumerator for {c}")
+
+        if cls._enumerators is None:
+            cls._enumerators = {
+                int: cls.from_gen(itertools.count), # TODO: include negatives
+                bool: cls.from_choices([False,True]),
+            }
+            # The following needs to be separate to avoid infinite recursion.
+            cls.register(list[int], cls.lists(cls[int]))
+            cls.register(list[bool], cls.lists(cls[bool]))
+            cls.register(tuple[int,int], cls[int] * cls[int])
+            cls.register(tuple[int,int,int], cls.product(cls[int], cls[int], cls[int]))
+            cls.register(tuple[int,bool], cls[int] * cls[bool])
+            cls.register(tuple[bool,int], cls[bool] * cls[int])
+            cls.register(tuple[bool,bool], cls[bool] * cls[bool])
+
+        try:
+            return cls._enumerators[c]
+        except KeyError as err:
+            raise TypeError(f"could not find Enumerator for {c}") from err
+
+    _enumerators = None
 
 def to_tiers(xs):
     for x in xs:

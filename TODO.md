@@ -5,8 +5,6 @@ TODO for leancheck.py
 
 * handle exceptions nicely somehow (`prop_minimum`) for sort
 
-* allow registering new enumerations
-
 * dynamically construct enumerations
 
 * create iitertools module?
