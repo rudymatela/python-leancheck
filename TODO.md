@@ -10,3 +10,5 @@ TODO for leancheck.py
 * create iitertools module?
 
 * simplify code
+
+* add a `leancheck.main()` similar to `unittest.main()`
