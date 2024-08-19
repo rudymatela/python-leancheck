@@ -16,10 +16,10 @@ test: examples
 	validate-pyproject pyproject.toml
 
 .PHONY: examples
-examples:
-	PYTHONPATH=src python examples/arith.py
-	PYTHONPATH=src python examples/sort.py
-	PYTHONPATH=src python examples/bool.py
+examples: \
+	examples/arith.run \
+	examples/sort.run \
+	examples/bool.run
 
 clean:
 	rm -rf __pycache__ src/__pycache__ tests/__pycache__ .pytest_cache
