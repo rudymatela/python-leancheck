@@ -11,6 +11,7 @@ repl:
 
 test: examples
 	python src/leancheck.py
+	mypy src/ tests/ examples/
 	pytest
 	validate-pyproject pyproject.toml
 
