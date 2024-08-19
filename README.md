@@ -73,6 +73,25 @@ $ python -i leancheck.py
 ```
 
 
-[Haskell's LeanCheck]: https://hackage.haskell.org/package/leancheck
+Further reading
+---------------
+
+[LeanCheck for Haskell] is subject to a chapter in a [PhD Thesis (2017)].
+
+As of 2024, [Python] already has a relatively popular property-based testing
+library called [Hypothesis].  While writing this port of LeanCheck, I
+intentionally didn't take a closer look at Hypothesis.  I want to see if I
+would take an entirely different approach here by not getting biased of how
+things were implemented there.  The (current) idea is mostly to stay as close
+as I could to the Haskell version.  I will note the differences (and
+similarities) here, once I am done with the LeanCheck prototype and after I
+take a closer look at Hypothesis.  LeanCheck test generation is enumerative,
+Hypothesis test generation is (likely) random.
+
+
+[Haskell's LeanCheck]:   https://hackage.haskell.org/package/leancheck
+[LeanCheck for Haskell]: https://hackage.haskell.org/package/leancheck
 [Python]: https://www.python.org/
+[Hypothesis]: https://pypi.org/project/hypothesis/
 [TODO]: TODO.md
+[PhD Thesis (2017)]: https://matela.com.br/thesis-rudy.pdf
