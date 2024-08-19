@@ -54,21 +54,22 @@ $ python -i leancheck.py
 ...
 
 >>> check(prop_sorted_twice)
-Property passes!
++++ OK, passed 360 tests: prop_sorted_twice
 
 >>> def prop_sorted_len(xs: list[int]) -> bool:
 ...     return len(sorted(xs)) == len(xs)
 ...
 
 >>> check(prop_sorted_len)
-Property passes!
++++ OK, passed 360 tests: prop_sorted_len
 
 >>> def prop_sorted_wrong(xs: list[int]) -> bool:
 ...     return sorted(xs) == xs
 ...
 
 >>> check(prop_sorted_wrong)
-Failed, falsifiable on ([1, 0],) after X tests
+*** Failed! Falsifiable after 6 tests:
+	prop_sorted_wrong([1, 0])
 ```
 
 
