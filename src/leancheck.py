@@ -9,7 +9,6 @@
 import itertools
 import sys
 import typing
-import inspect
 from inspect import signature, getmembers
 from types import GenericAlias
 
