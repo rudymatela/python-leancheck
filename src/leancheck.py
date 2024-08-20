@@ -8,7 +8,9 @@
 
 import itertools
 import sys
+import typing
 from inspect import signature
+from types import GenericAlias
 
 
 class Enumerator:
@@ -75,16 +77,9 @@ class Enumerator:
             cls._enumerators = {
                 int: cls.from_gen(itertools.count), # TODO: include negatives
                 bool: cls.from_choices([False,True]),
+                list: lambda e: cls.lists(e),
+                tuple: lambda *e: cls.product(*e),
             }
-            # The following needs to be separate to avoid infinite recursion
-            # as __class__getitem__ calls this very function _initialize.
-            cls.register(list[int], cls.lists(cls[int]))
-            cls.register(list[bool], cls.lists(cls[bool]))
-            cls.register(tuple[int,int], cls[int] * cls[int])
-            cls.register(tuple[int,int,int], cls.product(cls[int], cls[int], cls[int]))
-            cls.register(tuple[int,bool], cls[int] * cls[bool])
-            cls.register(tuple[bool,int], cls[bool] * cls[int])
-            cls.register(tuple[bool,bool], cls[bool] * cls[bool])
 
     @classmethod
     def register(cls, c, enumerator):
@@ -123,7 +118,13 @@ class Enumerator:
         """
         cls._initialize()
         try:
-            return cls._enumerators[c]
+            if type(c) is GenericAlias:
+                origin = typing.get_origin(c)
+                args = typing.get_args(c)
+                enums = [Enumerator[a] for a in args]
+                return cls._enumerators[origin](*enums)
+            else:
+                return cls._enumerators[c]
         except KeyError as err:
             raise TypeError(f"could not find Enumerator for {c}") from err
         # TODO: dynamically construct enumerations
