@@ -9,7 +9,8 @@
 import itertools
 import sys
 import typing
-from inspect import signature
+import inspect
+from inspect import signature, getmembers
 from types import GenericAlias
 
 
@@ -243,6 +244,10 @@ def check(prop, max_tests=360):
     exhausted = " (exhausted)" if i < max_tests else ""
     print(f"+++ OK, passed {i} tests{exhausted}: {green}{prop.__name__}{clear}")
 
+def main():
+    for name, member in getmembers(sys.modules["__main__"]):
+        if name.startswith("prop_") and callable(member):
+            check(member)
 
 if __name__ == "__main__":
     import doctest

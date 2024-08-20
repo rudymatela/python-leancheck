@@ -1,7 +1,8 @@
 TODO for leancheck.py
 =====================
 
-* add a `leancheck.main()` similar to `unittest.main()`
+* make so that `leancheck.main()` exits with an error code of 1
+  upon property failure
 
 * simplify code
 

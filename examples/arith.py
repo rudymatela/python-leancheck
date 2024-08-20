@@ -6,6 +6,7 @@
 # Distributed under the LGPL v2.1 or later (see the file LICENSE)
 
 from leancheck import check
+import leancheck
 
 
 def prop_commute(x:int, y:int) -> bool:
@@ -21,3 +22,6 @@ check(prop_commute)
 
 # should fail
 check(prop_increase)
+
+# This collects and tests all properties:
+leancheck.main()
