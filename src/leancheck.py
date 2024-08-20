@@ -138,8 +138,9 @@ def to_list(xss):
 def zippend(*iiterables):
     return itertools.starmap(itertools.chain,itertools.zip_longest(*iiterables, fillvalue=[]))
 
-# TODO: merge pproduct and pproduct_with
-def pproduct(xss, yss):
+def pproduct(xss, yss, with_f=None):
+    if with_f is None:
+        with_f = lambda x, y: (x,y)
     xss_ = []
     yss_ = []
     l = 0
@@ -149,29 +150,7 @@ def pproduct(xss, yss):
         l += 1
         zs = []
         for i in range(0,l):
-            zs += itertools.product(xss_[i],yss_[l-i-1])
-        if zs == []:
-            # This is "sound-but-incomplete".
-            # TODO: in the final version, use None as a default value
-            # in the appends above
-            # and break only in the case where we
-            # end up with empty zs because of None values
-            # there's an opportunity for memory optimization here
-            # such as in the example of product between integers and booleans
-            break
-        yield zs
-
-def pproduct_with(f, xss, yss):
-    xss_ = []
-    yss_ = []
-    l = 0
-    while True:
-        xss_.append(list(next(xss, [])))
-        yss_.append(list(next(yss, [])))
-        l += 1
-        zs = []
-        for i in range(0,l):
-            zs += [f(x,y) for x in xss_[i] for y in yss_[l-i-1]]
+            zs += [with_f(x,y) for x in xss_[i] for y in yss_[l-i-1]]
         if zs == []:
             # This is "sound-but-incomplete".
             # TODO: in the final version, use None as a default value
@@ -193,7 +172,7 @@ def mmap(f,xss):
 
 def llist(mkTiers):
     yield [[]]
-    yield from pproduct_with(lambda x, xs: xs + [x], mkTiers(), llist(mkTiers))
+    yield from pproduct(mkTiers(), llist(mkTiers), with_f=lambda x, xs: xs + [x])
 
 def colour_escapes():
     """
