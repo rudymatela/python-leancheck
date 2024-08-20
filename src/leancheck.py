@@ -126,6 +126,9 @@ class Enumerator:
             return cls._enumerators[c]
         except KeyError as err:
             raise TypeError(f"could not find Enumerator for {c}") from err
+        # TODO: dynamically construct enumerations
+        # use typing.get_origin(c) to get tuple      in tuple[int,bool]
+        # use typing.get_args(c)   to get (int,bool) in tuple[int,bool]
 
 def to_tiers(xs):
     for x in xs:
