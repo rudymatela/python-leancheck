@@ -51,6 +51,11 @@ class TestLeanCheck(unittest.TestCase):
         self.assertEnum(tuple[int,int,int], [(0, 0, 0), (0, 0, 1), (0, 1, 0), (1, 0, 0), (0, 0, 2), (0, 1, 1)])
         self.assertEnum(tuple[bool,bool], [(False, False), (False, True), (True, False), (True, True)])
 
+    def test_empty_product(self):
+        e = Enumerator.product()
+        self.assertEqual(list(e), [()])
+        self.assertEqual(list(e.tiers()), [[()]])
+
 
 if __name__ == '__main__':
     unittest.main()

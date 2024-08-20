@@ -1,8 +1,6 @@
 TODO for leancheck.py
 =====================
 
-* make `check()` work for 0-argument properties?
-
 * add a `leancheck.main()` similar to `unittest.main()`
 
 * simplify code

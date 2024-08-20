@@ -60,12 +60,12 @@ class Enumerator:
         return Enumerator(lambda: mmap(f, self.tiers()))
 
     @classmethod
-    def product(cls, enumerator, *enumerators):
-        # TODO: FIXME: this seems quite unpythonic
+    def product(cls, *enumerators):
         if len(enumerators) == 0:
-            return enumerator.map(lambda x: (x,))
+            return Enumerator(lambda: (xs for xs in [[()]]))
         else:
-            return (enumerator * cls.product(*enumerators)).map(lambda t: (t[0],) + t[1])
+            e, *es = enumerators
+            return (e * cls.product(*es)).map(lambda t: (t[0],) + t[1])
 
     _enumerators = None
 
