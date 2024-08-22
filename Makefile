@@ -18,8 +18,9 @@ test: examples
 .PHONY: examples
 examples: \
 	examples/arith.run \
+	examples/bool.run \
 	examples/sort.run \
-	examples/bool.run
+	examples/empty.run
 
 clean:
 	rm -rf __pycache__ src/__pycache__ tests/__pycache__ .pytest_cache

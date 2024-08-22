@@ -284,12 +284,16 @@ def testmod(max_tests=360, silent=False, verbose=False):
 
 def main(max_tests=360, silent=False, verbose=False, exit_on_failure=True):
     n_failures, n_tests = testmod(max_tests=max_tests, silent=silent, verbose=verbose)
-    if not n_tests:
-        print(f"Warning: no properties found")
+    clear, red, green, blue, yellow = colour_escapes()
+    if not n_tests and not silent:
+        print(f"{yellow}Warning{clear}: no properties found")
     if n_failures:
-        print(f"*** {n_failures} of {n_tests} properties failed")
+        if not silent:
+            print(f"\n{red}*** {n_failures} of {n_tests} properties failed{clear}")
         if exit_on_failure:
             sys.exit(1)
+    elif not silent:
+        print(f"{green}+++ {n_tests} properties passed{clear}")
 
 if __name__ == "__main__":
     import doctest
