@@ -9,7 +9,7 @@
 # In this example, we test properties for the functional/pure and the
 # effectful/impure interfaces for sorting in Python.  LeanCheck works for both.
 
-from leancheck import check
+import leancheck
 
 # Properties about the functional "sorted()" interface
 
@@ -49,9 +49,14 @@ def prop_sort_wrong(xs: list[int]) -> bool:
     xs.sort()
     return xs == ys
 
-check(prop_sorted_twice)
-check(prop_sorted_len)
-check(prop_sorted_wrong)
-check(prop_sort_twice)
-check(prop_sort_elem)
-check(prop_sort_wrong)
+# We could check the properties explicitly like so:
+# check(prop_sorted_twice)
+# check(prop_sorted_len)
+# check(prop_sorted_wrong)
+# check(prop_sort_twice)
+# check(prop_sort_elem)
+# check(prop_sort_wrong)
+
+# ... but we instead call leancheck.main()
+# which tests all functions starting with prop_
+leancheck.main(exit_on_failure=False)

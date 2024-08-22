@@ -1,9 +1,6 @@
 TODO for leancheck.py
 =====================
 
-* make so that `leancheck.main()` exits with an error code of 1
-  upon property failure
-
 * simplify code
 
 later

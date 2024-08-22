@@ -16,12 +16,9 @@ def prop_commute(x:int, y:int) -> bool:
 def prop_increase(x:int, y:int) -> bool:
     return x + y > x
 
-
-# should pass
-check(prop_commute)
-
-# should fail
-check(prop_increase)
-
 # This collects and tests all properties:
-leancheck.main()
+leancheck.main(verbose=True, exit_on_failure=False)
+# Normal users should just call leancheck.main()
+# We set exit_on_failure=False here because we have
+# an intentionally incorrect property.
+# The verbose is there so we get info on correct properties as well.

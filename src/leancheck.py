@@ -271,13 +271,25 @@ def holds(prop, max_tests=360):
     """
     return check(prop, max_tests=max_tests, silent=True)
 
-def main():
-    passed = True
+def testmod(max_tests=360, silent=False, verbose=False):
+    n_failures = 0
+    n_tests = 0
     for name, member in getmembers(sys.modules["__main__"]):
         if name.startswith("prop_") and callable(member):
-            passed = passed and check(member)
-    if not passed:
-        sys.exit(1)
+            n_tests += 1
+            passed = check(member, max_tests=max_tests, silent=silent, verbose=verbose)
+            if not passed:
+                n_failures += 1
+    return (n_failures, n_tests) # just like doctest.testmod()
+
+def main(max_tests=360, silent=False, verbose=False, exit_on_failure=True):
+    n_failures, n_tests = testmod(max_tests=max_tests, silent=silent, verbose=verbose)
+    if not n_tests:
+        print(f"Warning: no properties found")
+    if n_failures:
+        print(f"*** {n_failures} of {n_tests} properties failed")
+        if exit_on_failure:
+            sys.exit(1)
 
 if __name__ == "__main__":
     import doctest
