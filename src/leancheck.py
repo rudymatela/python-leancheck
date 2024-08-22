@@ -273,25 +273,25 @@ def holds(prop, max_tests=360):
 
 def testmod(max_tests=360, silent=False, verbose=False):
     n_failures = 0
-    n_tests = 0
+    n_properties = 0
     for name, member in getmembers(sys.modules["__main__"]):
         if name.startswith("prop_") and callable(member):
-            n_tests += 1
+            n_properties += 1
             passed = check(member, max_tests=max_tests, silent=silent, verbose=verbose)
             if not passed:
                 n_failures += 1
-    return (n_failures, n_tests) # just like doctest.testmod()
+    return (n_failures, n_properties) # just like doctest.testmod()
 
 def main(max_tests=360, silent=False, verbose=False, exit_on_failure=True):
-    n_failures, n_tests = testmod(max_tests=max_tests, silent=silent, verbose=verbose)
+    n_failures, n_properties = testmod(max_tests=max_tests, silent=silent, verbose=verbose)
     clear, red, green, blue, yellow = colour_escapes()
     if not silent:
-        if not n_tests:
+        if not n_properties:
             print(f"{yellow}Warning{clear}: no properties found")
         if n_failures:
-            print(f"\n{red}*** {n_failures} of {n_tests} properties failed{clear}")
+            print(f"\n{red}*** {n_failures} of {n_properties} properties failed{clear}")
         elif verbose:
-            print(f"{green}+++ {n_tests} properties passed{clear}")
+            print(f"{green}+++ {n_properties} properties passed{clear}")
     if n_failures and exit_on_failure:
         sys.exit(1)
 
