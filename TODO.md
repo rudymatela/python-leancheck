@@ -1,6 +1,10 @@
 TODO for leancheck.py
 =====================
 
+* add documentation to all functions
+
+* split sorting example into two: built-in and custom _incorrect_ property
+
 * simplify code
 
 later
