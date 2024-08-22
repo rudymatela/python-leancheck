@@ -59,4 +59,4 @@ def prop_sort_wrong(xs: list[int]) -> bool:
 
 # ... but we instead call leancheck.main()
 # which tests all functions starting with prop_
-leancheck.main(exit_on_failure=False)
+leancheck.main(exit_on_failure=False, verbose=True)
