@@ -188,7 +188,7 @@ def colour_escapes():
     else:
         return '', '', '', '', ''
 
-def check(prop, max_tests=360):
+def check(prop, max_tests=360, verbose=True, silent=False):
     """
     Checks a property for several enumerated argument values.
 
@@ -196,24 +196,28 @@ def check(prop, max_tests=360):
     ...     return x + y == y + x
     >>> check(prop_commute)
     +++ OK, passed 360 tests: prop_commute
+    True
 
     >>> def prop_increase(x:int, y:int) -> bool:
     ...     return x + y > x
     >>> check(prop_increase)
     *** Failed! Falsifiable after 1 tests:
         prop_increase(0, 0)
+    False
 
     >>> def prop_sorted_twice(xs: list[int]) -> bool:
     ...     return sorted(sorted(xs)) == sorted(xs)
     ...
     >>> check(prop_sorted_twice)
     +++ OK, passed 360 tests: prop_sorted_twice
+    True
 
     >>> def prop_sorted_len(xs: list[int]) -> bool:
     ...     return len(sorted(xs)) == len(xs)
     ...
     >>> check(prop_sorted_len)
     +++ OK, passed 360 tests: prop_sorted_len
+    True
 
     >>> def prop_sorted_wrong(xs: list[int]) -> bool:
     ...     return sorted(xs) == xs
@@ -221,27 +225,32 @@ def check(prop, max_tests=360):
     >>> check(prop_sorted_wrong)
     *** Failed! Falsifiable after 6 tests:
         prop_sorted_wrong([1, 0])
+    False
     """
+    verbose = verbose and not silent
+    clear, red, green, blue, yellow = colour_escapes()
     sig = signature(prop)
     ret = sig.return_annotation
     # print(f"Property's signature: {sig}")
-    if ret != bool:
-        print(f"Warning: property's return value is {ret} and not {bool}")
+    if ret != bool and not silent:
+        print(f"{yellow}Warning{clear}: property's return value is {ret} and not {bool}")
     es = []
     for par in sig.parameters.values():
         # print(par.annotation)
         e = Enumerator[par.annotation]
         es.append(e)
-    clear, red, green, _, _ = colour_escapes()
     for i, args in enumerate(itertools.islice(Enumerator.product(*es), max_tests)):
         if not prop(*args):
-            repr_args = ', '.join(map(repr, args))
-            print(f"*** Failed! Falsifiable after {i+1} tests:")
-            print(f"    {red}{prop.__name__}{clear}({repr_args})")
-            return
-    i = i+1
-    exhausted = " (exhausted)" if i < max_tests else ""
-    print(f"+++ OK, passed {i} tests{exhausted}: {green}{prop.__name__}{clear}")
+            if not silent:
+                repr_args = ', '.join(map(repr, args))
+                print(f"*** Failed! Falsifiable after {i+1} tests:")
+                print(f"    {red}{prop.__name__}{clear}({repr_args})")
+            return False
+    if verbose:
+        i = i+1
+        exhausted = " (exhausted)" if i < max_tests else ""
+        print(f"+++ OK, passed {i} tests{exhausted}: {green}{prop.__name__}{clear}")
+    return True
 
 def main():
     for name, member in getmembers(sys.modules["__main__"]):
