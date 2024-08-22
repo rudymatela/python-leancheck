@@ -272,9 +272,12 @@ def holds(prop, max_tests=360):
     return check(prop, max_tests=max_tests, silent=True)
 
 def main():
+    passed = True
     for name, member in getmembers(sys.modules["__main__"]):
         if name.startswith("prop_") and callable(member):
-            check(member)
+            passed = passed and check(member)
+    if not passed:
+        sys.exit(1)
 
 if __name__ == "__main__":
     import doctest
