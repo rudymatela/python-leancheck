@@ -226,6 +226,9 @@ def check(prop, max_tests=360, verbose=True, silent=False):
     *** Failed! Falsifiable after 6 tests:
         prop_sorted_wrong([1, 0])
     False
+
+    >>> check(prop_sorted_twice, silent=True)
+    True
     """
     verbose = verbose and not silent
     clear, red, green, blue, yellow = colour_escapes()
@@ -251,6 +254,22 @@ def check(prop, max_tests=360, verbose=True, silent=False):
         exhausted = " (exhausted)" if i < max_tests else ""
         print(f"+++ OK, passed {i} tests{exhausted}: {green}{prop.__name__}{clear}")
     return True
+
+def holds(prop, max_tests=360):
+    """
+    Alias to `check(prop, silent=True)`.
+
+    >>> def prop_commute(x:int, y:int) -> bool:
+    ...     return x + y == y + x
+    >>> holds(prop_commute)
+    True
+
+    >>> def prop_increase(x:int, y:int) -> bool:
+    ...     return x + y > x
+    >>> holds(prop_increase)
+    False
+    """
+    return check(prop, max_tests=max_tests, silent=True)
 
 def main():
     for name, member in getmembers(sys.modules["__main__"]):
