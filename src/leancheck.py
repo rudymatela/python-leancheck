@@ -274,7 +274,12 @@ def holds(prop, max_tests=360):
 def testmod(max_tests=360, silent=False, verbose=False):
     n_failures = 0
     n_properties = 0
-    for name, member in getmembers(sys.modules["__main__"]):
+    def lineno(m):
+        try:
+            return m[1].__code__.co_firstlineno
+        except AttributeError:
+            return -1
+    for name, member in sorted(getmembers(sys.modules["__main__"]), key=lineno):
         if name.startswith("prop_") and callable(member):
             n_properties += 1
             passed = check(member, max_tests=max_tests, silent=silent, verbose=verbose)

@@ -1,8 +1,6 @@
 TODO for leancheck.py
 =====================
 
-* test functions in the order that they were declared
-
 * add documentation to all functions
 
 * simplify code
