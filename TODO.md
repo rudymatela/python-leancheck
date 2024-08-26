@@ -1,9 +1,9 @@
 TODO for leancheck.py
 =====================
 
-* add documentation to all functions
+* test functions in the order that they were declared
 
-* split sorting example into two: built-in and custom _incorrect_ property
+* add documentation to all functions
 
 * simplify code
 
