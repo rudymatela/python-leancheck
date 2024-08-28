@@ -1,7 +1,10 @@
 TODO for leancheck.py
 =====================
 
-* add documentation to all functions
+* generate docs on CI
+
+* add documentation to module and to all functions
+	- reorder functions if necessary
 
 * simplify code
 
