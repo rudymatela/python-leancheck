@@ -15,6 +15,12 @@ test: examples
 	pytest
 	validate-pyproject pyproject.toml
 
+doc:
+	PYTHONPATH=src pdoc leancheck -o docs
+
+opendoc: doc
+	wbi docs/index.html
+
 .PHONY: examples
 examples: \
 	examples/arith.run \
