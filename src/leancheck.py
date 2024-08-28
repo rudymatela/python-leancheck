@@ -13,7 +13,9 @@ from inspect import signature, getmembers
 from types import GenericAlias
 
 
-# declaration of some internal functions
+# Declaration of some internal functions.
+# These could eventually reside in a separate file,
+# but for now and for simplicity I am keeping them in a single one.
 
 def _to_tiers(xs):
     for x in xs:
@@ -103,6 +105,9 @@ def _colour_escapes():
     else:
         return '', '', '', '', ''
 
+
+
+# Actual code of LeanCheck starts here.
 
 class Enumerator:
     def __init__(self, tiers):
