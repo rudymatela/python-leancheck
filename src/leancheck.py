@@ -6,11 +6,11 @@
 # Distributed under the LGPL v2.1 or later (see the file LICENSE)
 
 
+import inspect
 import itertools
 import sys
+import types
 import typing
-from inspect import signature, getmembers
-from types import GenericAlias
 
 
 # Declaration of some internal functions.
@@ -214,7 +214,7 @@ class Enumerator:
         """
         cls._initialize()
         try:
-            if type(c) is GenericAlias:
+            if type(c) is types.GenericAlias:
                 origin = typing.get_origin(c)
                 args = typing.get_args(c)
                 enums = [Enumerator[a] for a in args]
@@ -268,7 +268,7 @@ def check(prop, max_tests=360, verbose=True, silent=False):
     """
     verbose = verbose and not silent
     clear, red, green, blue, yellow = _colour_escapes()
-    sig = signature(prop)
+    sig = inspect.signature(prop)
     ret = sig.return_annotation
     # print(f"Property's signature: {sig}")
     if ret != bool and not silent:
@@ -315,7 +315,7 @@ def testmod(max_tests=360, silent=False, verbose=False):
             return m[1].__code__.co_firstlineno
         except AttributeError:
             return -1
-    for name, member in sorted(getmembers(sys.modules["__main__"]), key=lineno):
+    for name, member in sorted(inspect.getmembers(sys.modules["__main__"]), key=lineno):
         if name.startswith("prop_") and callable(member):
             n_properties += 1
             passed = check(member, max_tests=max_tests, silent=silent, verbose=verbose)
