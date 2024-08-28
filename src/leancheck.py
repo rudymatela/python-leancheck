@@ -13,20 +13,111 @@ from inspect import signature, getmembers
 from types import GenericAlias
 
 
+# declaration of some internal functions
+
+def _to_tiers(xs):
+    for x in xs:
+        yield [x]
+
+def _to_list(xss):
+    for xs in xss:
+        yield from xs
+
+def _intercalate(generator1, generator2):
+    """
+    This function intercalates the two given iterables.
+
+    >>> list(_intercalate([1,2,3], [-1, -2, -3]))
+    [1, -1, 2, -2, 3, -3]
+
+    If the arguments are generators, they will be consumed.
+
+    >>> list(_intercalate((x for x in [1,2,3]), (y for y in [4,5,6])))
+    [1, 4, 2, 5, 3, 6]
+    """
+    g1 = (x for x in generator1) # makes this work on lists
+    g2 = (y for y in generator2) # makes this work on lists
+    while True:
+        try:
+            yield next(g1)
+        except StopIteration:
+            yield from g2
+            break
+        try:
+            yield next(g2)
+        except StopIteration:
+            yield from g1
+            break
+
+def _zippend(*iiterables):
+    return itertools.starmap(itertools.chain,itertools.zip_longest(*iiterables, fillvalue=[]))
+
+def _pproduct(xss, yss, with_f=None):
+    if with_f is None:
+        with_f = lambda x, y: (x,y)
+    xss_ = []
+    yss_ = []
+    l = 0
+    while True:
+        xss_.append(list(next(xss, [])))
+        yss_.append(list(next(yss, [])))
+        l += 1
+        zs = []
+        for i in range(0,l):
+            zs += [with_f(x,y) for x in xss_[i] for y in yss_[l-i-1]]
+        if zs == []:
+            # This is "sound-but-incomplete".
+            # TODO: in the final version, use None as a default value
+            # in the appends above
+            # and break only in the case where we
+            # end up with empty zs because of None values
+            # there's an opportunity for memory optimization here
+            # such as in the example of product between integers and booleans
+            break
+        yield zs
+
+def _delay(xss):
+    yield []
+    yield from xss
+
+def _mmap(f,xss):
+    for xs in xss:
+        yield [f(x) for x in xs]
+
+def _llist(mkTiers):
+    yield [[]]
+    yield from _pproduct(mkTiers(), _llist(mkTiers), with_f=lambda x, xs: xs + [x])
+
+def _colour_escapes():
+    """
+    Returns colour escape sequences for clear, red, green, blue and yellow
+
+    >>> clear, red, green, blue, yellow = _colour_escapes()
+    >>> print(f"{red}This is red{clear} and {blue}this is blue{clear}.")
+    This is red and this is blue.
+    """
+    plats = ['linux'] # TODO: add other supported platforms
+    supported = sys.stdout.isatty() and sys.platform in plats
+    if supported:
+        return '\x1b[m', '\x1b[1;31m', '\x1b[32m', '\x1b[34m', '\x1b[33m'
+    else:
+        return '', '', '', '', ''
+
+
 class Enumerator:
     def __init__(self, tiers):
         self.tiers = tiers
 
     def __iter__(self):
-        return to_list(self.tiers())
+        return _to_list(self.tiers())
 
     @classmethod
     def from_gen(cls, gen):
-        return cls(lambda: to_tiers(gen()))
+        return cls(lambda: _to_tiers(gen()))
 
     @classmethod
     def from_list(cls, lst):
-        return cls(lambda: to_tiers(x for x in lst))
+        return cls(lambda: _to_tiers(x for x in lst))
 
     @classmethod
     def from_choices(cls, choices):
@@ -34,13 +125,13 @@ class Enumerator:
 
     @classmethod
     def lists(cls, enumerator):
-        return cls(lambda: llist(enumerator.tiers))
+        return cls(lambda: _llist(enumerator.tiers))
 
     def __add__(self, other):
-        return Enumerator(lambda: zippend(self.tiers(), other.tiers()))
+        return Enumerator(lambda: _zippend(self.tiers(), other.tiers()))
 
     def __mul__(self, other):
-        return Enumerator(lambda: pproduct(self.tiers(), other.tiers()))
+        return Enumerator(lambda: _pproduct(self.tiers(), other.tiers()))
 
     def __repr__(self):
         # TODO: remove magic numbers: make them configurable?
@@ -57,7 +148,7 @@ class Enumerator:
         return "[" + ', '.join(xs) + "]"
 
     def map(self, f):
-        return Enumerator(lambda: mmap(f, self.tiers()))
+        return Enumerator(lambda: _mmap(f, self.tiers()))
 
     @classmethod
     def product(cls, *enumerators):
@@ -128,92 +219,6 @@ class Enumerator:
         except KeyError as err:
             raise TypeError(f"could not find Enumerator for {c}") from err
 
-def to_tiers(xs):
-    for x in xs:
-        yield [x]
-
-def to_list(xss):
-    for xs in xss:
-        yield from xs
-
-def zippend(*iiterables):
-    return itertools.starmap(itertools.chain,itertools.zip_longest(*iiterables, fillvalue=[]))
-
-def pproduct(xss, yss, with_f=None):
-    if with_f is None:
-        with_f = lambda x, y: (x,y)
-    xss_ = []
-    yss_ = []
-    l = 0
-    while True:
-        xss_.append(list(next(xss, [])))
-        yss_.append(list(next(yss, [])))
-        l += 1
-        zs = []
-        for i in range(0,l):
-            zs += [with_f(x,y) for x in xss_[i] for y in yss_[l-i-1]]
-        if zs == []:
-            # This is "sound-but-incomplete".
-            # TODO: in the final version, use None as a default value
-            # in the appends above
-            # and break only in the case where we
-            # end up with empty zs because of None values
-            # there's an opportunity for memory optimization here
-            # such as in the example of product between integers and booleans
-            break
-        yield zs
-
-def delay(xss):
-    yield []
-    yield from xss
-
-def mmap(f,xss):
-    for xs in xss:
-        yield [f(x) for x in xs]
-
-def llist(mkTiers):
-    yield [[]]
-    yield from pproduct(mkTiers(), llist(mkTiers), with_f=lambda x, xs: xs + [x])
-
-def colour_escapes():
-    """
-    Returns colour escape sequences for clear, red, green, blue and yellow
-
-    >>> c, r, g, b, y = colour_escapes()
-    """
-    plats = ['linux'] # TODO: add other supported platforms
-    supported = sys.stdout.isatty() and sys.platform in plats
-    if supported:
-        return '\x1b[m', '\x1b[1;31m', '\x1b[32m', '\x1b[34m', '\x1b[33m'
-    else:
-        return '', '', '', '', ''
-
-def intercalate(generator1, generator2):
-    """
-    This function intercalates the two given iterables.
-
-    >>> list(intercalate([1,2,3], [-1, -2, -3]))
-    [1, -1, 2, -2, 3, -3]
-
-    If the arguments are generators, they will be consumed.
-
-    >>> list(intercalate((x for x in [1,2,3]), (y for y in [4,5,6])))
-    [1, 4, 2, 5, 3, 6]
-    """
-    g1 = (x for x in generator1) # makes this work on lists
-    g2 = (y for y in generator2) # makes this work on lists
-    while True:
-        try:
-            yield next(g1)
-        except StopIteration:
-            yield from g2
-            break
-        try:
-            yield next(g2)
-        except StopIteration:
-            yield from g1
-            break
-
 def check(prop, max_tests=360, verbose=True, silent=False):
     """
     Checks a property for several enumerated argument values.
@@ -257,7 +262,7 @@ def check(prop, max_tests=360, verbose=True, silent=False):
     True
     """
     verbose = verbose and not silent
-    clear, red, green, blue, yellow = colour_escapes()
+    clear, red, green, blue, yellow = _colour_escapes()
     sig = signature(prop)
     ret = sig.return_annotation
     # print(f"Property's signature: {sig}")
@@ -315,7 +320,7 @@ def testmod(max_tests=360, silent=False, verbose=False):
 
 def main(max_tests=360, silent=False, verbose=False, exit_on_failure=True):
     n_failures, n_properties = testmod(max_tests=max_tests, silent=silent, verbose=verbose)
-    clear, red, green, blue, yellow = colour_escapes()
+    clear, red, green, blue, yellow = _colour_escapes()
     if not silent:
         if not n_properties:
             print(f"{yellow}Warning{clear}: no properties found")
