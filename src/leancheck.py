@@ -5,10 +5,9 @@
 # (C) 2023-2024  Rudy Matela
 # Distributed under the LGPL v2.1 or later (see the file LICENSE)
 """
-This is a port of [Haskell's LeanCheck] to [Python].
-
-[Haskell's LeanCheck]: https://hackage.haskell.org/package/leancheck
-[Python]: https://python.org
+This is a port of
+[Haskell's LeanCheck](https://hackage.haskell.org/package/leancheck) to
+[Python](https://python.org).
 
 LeanCheck is an enumerative property-based testing library.
 It can be used to complement your unit tests.
@@ -41,6 +40,16 @@ Now one can use LeanCheck to verify this automatically:
 
 LeanCheck automatically came up with 360 unique lists
 to exercise the property.
+
+If you have a bunch of properties (`prop_*`) in a Python file,
+just call `leancheck.main()` and all of them will be automatically tested.
+In the case of a library, you can put everything under
+an if-expression as you would do with `unittest.main()` or `doctest.testmod()`.
+
+    if __name__ == '__main__':
+        leancheck.main()  # or leancheck dot main()
+
+TODO: fix pdoc rendering and explicitly have leancheck dot main() above.
 """
 
 
