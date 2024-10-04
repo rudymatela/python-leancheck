@@ -24,7 +24,7 @@ one writes more general properties that should be true
 for a given set of arguments.
 
 For example:
-given __any__ list, sorting it twice is the same as sorting it once.
+given _any_ list, sorting it twice is the same as sorting it once.
 We can encode this as a function returning a boolean value:
 
     >>> def prop_sorted_twice(xs: list[int]) -> bool:
@@ -149,6 +149,13 @@ def holds(prop, max_tests=360):
 
 
 def main(max_tests=360, silent=False, verbose=False, exit_on_failure=True):
+    """
+    Tests all properties present in the current file,
+    report results and
+    exit with an error in case one of the properties fails.
+
+    This is analogous to `unittest.main()`.
+    """
     n_failures, n_properties = testmod(max_tests=max_tests, silent=silent, verbose=verbose)
     clear, red, green, blue, yellow = _colour_escapes()
     if not silent:
@@ -163,6 +170,10 @@ def main(max_tests=360, silent=False, verbose=False, exit_on_failure=True):
 
 
 def testmod(max_tests=360, silent=False, verbose=False):
+    """
+    Tests all properties present in the current file
+    and report the results.
+    """
     n_failures = 0
     n_properties = 0
     def lineno(m):
