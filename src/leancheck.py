@@ -6,8 +6,10 @@
 # Distributed under the LGPL v2.1 or later (see the file LICENSE)
 """
 This is a port of
-[Haskell's LeanCheck](https://hackage.haskell.org/package/leancheck) to
-[Python](https://python.org).
+[Haskell's LeanCheck][] to [Python][].
+
+[Haskell's LeanCheck]: https://hackage.haskell.org/package/leancheck
+[Python]: https://python.org
 
 LeanCheck is an enumerative property-based testing library.
 It can be used to complement your unit tests.
@@ -22,6 +24,9 @@ There are no arguments to the unit test.
 In property-based testing (with LeanCheck)
 one writes more general properties that should be true
 for a given set of arguments.
+Properties in this sense are
+parameterized unit tests or
+parameterized assertions.
 
 For example:
 given _any_ list, sorting it twice is the same as sorting it once.
@@ -40,6 +45,13 @@ Now one can use LeanCheck to verify this automatically:
 
 LeanCheck automatically came up with 360 unique lists
 to exercise the property.
+When the function-under-test is incorrect
+LeanCheck may find and report a counterexample:
+
+    *** Failed! Falsifiable after 3 tests:
+        prop_sort_len([0, 0])
+
+You then know that an ill input is the list `[0, 0]`.
 
 If you have a bunch of properties (`prop_*`) in a Python file,
 just call `leancheck.main()` and all of them will be automatically tested.
