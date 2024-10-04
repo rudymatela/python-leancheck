@@ -47,9 +47,7 @@ In the case of a library, you can put everything under
 an if-expression as you would do with `unittest.main()` or `doctest.testmod()`.
 
     if __name__ == '__main__':
-        leancheck.main()  # or leancheck dot main()
-
-TODO: fix pdoc rendering and explicitly have leancheck dot main() above.
+        leancheck.main()
 """
 
 
