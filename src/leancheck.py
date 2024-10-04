@@ -154,7 +154,11 @@ def main(max_tests=360, silent=False, verbose=False, exit_on_failure=True):
     report results and
     exit with an error in case one of the properties fails.
 
-    This is analogous to `unittest.main()`.
+    This is analogous to `unittest.main()`
+    and is generally used at the end of a Python file as:
+
+        if __name__ == '__main__':
+            leancheck.main()
     """
     n_failures, n_properties = testmod(max_tests=max_tests, silent=silent, verbose=verbose)
     clear, red, green, blue, yellow = _colour_escapes()
@@ -173,6 +177,17 @@ def testmod(max_tests=360, silent=False, verbose=False):
     """
     Tests all properties present in the current file
     and report the results.
+
+    This is analogous to `doctest.testmod()`
+    and is generally used at the end of a Python file as:
+
+        if __name__ == '__main__':
+            n_failures, n_properties = leancheck.testmod()
+            if n_failures:
+                sys.exit(1)
+
+    Depending on your use-case
+    you may be better off calling `leancheck.main()` instead.
     """
     n_failures = 0
     n_properties = 0
