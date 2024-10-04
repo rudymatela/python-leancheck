@@ -61,6 +61,9 @@ import typing
 def check(prop, max_tests=360, verbose=True, silent=False):
     """
     Checks a property for several enumerated argument values.
+    Properties must have type hints
+    in order for LeanCheck to be able to know
+    which kinds of argument values to generate.
 
     >>> def prop_commute(x:int, y:int) -> bool:
     ...     return x + y == y + x
@@ -129,6 +132,8 @@ def check(prop, max_tests=360, verbose=True, silent=False):
 def holds(prop, max_tests=360):
     """
     Alias to `check(prop, silent=True)`.
+    Returns a boolean indicating whether the given argument property holds
+    for a (given) number of maximum tests.
 
     >>> def prop_commute(x:int, y:int) -> bool:
     ...     return x + y == y + x
