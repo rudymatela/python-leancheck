@@ -27,3 +27,5 @@ jobs:
           pip install pytest mypy validate-pyproject
 
       - run: make test
+
+      - run: make doc
