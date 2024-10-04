@@ -206,7 +206,50 @@ def testmod(max_tests=360, silent=False, verbose=False):
 
 
 class Enumerator:
+    """
+    This class enumerates test values.
+
+    Enumerations are represented internally as
+    [a (potentially infinite) generator of finite lists](https://matela.com.br/thesis-rudy.pdf):
+    tiers of values of increasing size.
+    This is needed in order for the enumeration to be fair.
+
+    As a user, you can query available enumerations with
+    enumerations with "indexing":
+
+    >>> Enumerator[int]
+    Enumerator(lambda: (xs for xs in [[0], [1], [2], [3], [4], [5], ...]))
+
+    >>> Enumerator[bool]
+    Enumerator(lambda: (xs for xs in [[False, True]]))
+
+    >>> print(Enumerator[list[int]])
+    [[], [0], [0, 0], [1], [0, 0, 0], [1, 0], ...]
+
+    >>> print(Enumerator[tuple[bool, int]])
+    [(False, 0), (True, 0), (False, 1), (True, 1), (False, 2), (True, 2), ...]
+
+    >>> print(Enumerator[tuple[int,int,int]])
+    [(0, 0, 0), (0, 0, 1), (0, 1, 0), (1, 0, 0), (0, 0, 2), (0, 1, 1), ...]
+
+    You can use this class to build new enumerations
+    which can be registered using the `Enumerator.register()` method.
+
+    This class supports computing sums and products of enumerations:
+    """
+
     def __init__(self, tiers):
+        """
+        Raw initialization of an enumerator
+        with a (potentially infinite) generator of finite lists.
+
+        >>> Enumerator(lambda: ([x] for x in itertools.count()))
+        Enumerator(lambda: (xs for xs in [[0], [1], [2], [3], [4], [5], ...]))
+
+        >>> Enumerator(lambda: (ps for ps in [[False, True]]))
+        Enumerator(lambda: (xs for xs in [[False, True]]))
+        """
+
         self.tiers = tiers
 
     def __iter__(self):
@@ -214,18 +257,49 @@ class Enumerator:
 
     @classmethod
     def from_gen(cls, gen):
+        """
+        Initializes an enumerator directly from a plain generator.
+
+        >>> Enumerator.from_gen(itertools.count)
+        Enumerator(lambda: (xs for xs in [[0], [1], [2], [3], [4], [5], ...]))
+        """
         return cls(lambda: _to_tiers(gen()))
 
     @classmethod
     def from_list(cls, lst):
+        """
+        Initializes an enumerator from a list of options.
+        Earlier values are considered of smaller size than later values.
+
+        >>> Enumerator.from_list([0,2,4,6])
+        Enumerator(lambda: (xs for xs in [[0], [2], [4], [6]]))
+        """
         return cls(lambda: _to_tiers(x for x in lst))
 
     @classmethod
     def from_choices(cls, choices):
+        """
+        Initializes an enumerator from a list of choices.
+        All given values are considered to be of the same size.
+
+        >>> Enumerator.from_choices([0,2,4,6])
+        Enumerator(lambda: (xs for xs in [[0, 2, 4, 6]]))
+        """
         return cls(lambda: (cs for cs in [choices]))
 
     @classmethod
     def lists(cls, enumerator):
+        """
+        Constructs an enumerator of lists of values from another enumeration.
+
+        >>> print(Enumerator.lists(Enumerator[int]))
+        [[], [0], [0, 0], [1], [0, 0, 0], [1, 0], ...]
+
+        You are perhaps better off using:
+
+        >>> print(Enumerator[list[int]])
+        [[], [0], [0, 0], [1], [0, 0, 0], [1, 0], ...]
+        """
         return cls(lambda: _llist(enumerator.tiers))
 
     def __add__(self, other):
@@ -253,6 +327,18 @@ class Enumerator:
 
     @classmethod
     def product(cls, *enumerators):
+        """
+        Computes the product of several enumerators
+        returning an enumeration of tuples.
+
+        >>> print(Enumerator.product(Enumerator[int], Enumerator[bool], Enumerator[list[int]]))
+        [(0, False, []), (0, True, []), (0, False, [0]), (0, True, [0]), (1, False, []), (1, True, []), ...]
+
+        If you have just two enumerations, you can simply use `*`:
+
+        >>> print(Enumerator[int] * Enumerator[bool])
+        [(0, False), (0, True), (1, False), (1, True), (2, False), (2, True), ...]
+        """
         if len(enumerators) == 0:
             return Enumerator(lambda: (xs for xs in [[()]]))
         else:
