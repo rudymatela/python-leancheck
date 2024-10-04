@@ -306,6 +306,12 @@ class Enumerator:
         return Enumerator(lambda: _zippend(self.tiers(), other.tiers()))
 
     def __mul__(self, other):
+        """
+        Use `*` to take the product of two enumerations:
+
+        >>> print(Enumerator[int] * Enumerator[bool])
+        [(0, False), (0, True), (1, False), (1, True), (2, False), (2, True), ...]
+        """
         return Enumerator(lambda: _pproduct(self.tiers(), other.tiers()))
 
     def __repr__(self):
