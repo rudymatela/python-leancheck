@@ -303,6 +303,12 @@ class Enumerator:
         return cls(lambda: _llist(enumerator.tiers))
 
     def __add__(self, other):
+        """
+        Use `+` to compute the sum of two enumerations:
+
+        >>> print(Enumerator[int] + Enumerator[bool])
+        [0, False, True, 1, 2, 3, ...]
+        """
         return Enumerator(lambda: _zippend(self.tiers(), other.tiers()))
 
     def __mul__(self, other):
