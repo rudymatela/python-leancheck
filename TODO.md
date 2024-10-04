@@ -1,9 +1,6 @@
 TODO for leancheck.py
 =====================
 
-* add documentation to module and to all functions
-	- reorder functions if necessary
-
 * simplify code
 
 later
