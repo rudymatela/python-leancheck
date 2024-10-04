@@ -24,7 +24,7 @@ jobs:
 
       - name: Install dependencies
         run:
-          pip install pytest mypy validate-pyproject
+          pip install pytest mypy validate-pyproject pdoc
 
       - run: make test
 
