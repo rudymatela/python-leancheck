@@ -122,11 +122,7 @@ def check(prop, max_tests=360, verbose=True, silent=False):
     # print(f"Property's signature: {sig}")
     if ret != bool and not silent:
         print(f"{yellow}Warning{clear}: property's return value is {ret} and not {bool}")
-    es = []
-    for par in sig.parameters.values():
-        # print(par.annotation)
-        e = Enumerator[par.annotation]
-        es.append(e)
+    es = [Enumerator[par.annotation] for par in sig.parameters.values()]
     for i, args in enumerate(itertools.islice(Enumerator.product(*es), max_tests)):
         if not prop(*args):
             if not silent:
