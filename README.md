@@ -6,9 +6,8 @@ This is a port of [Haskell's LeanCheck] to [Python].
 LeanCheck is an enumerative property-based testing library.
 It can be used to complement your unit tests.
 
-This is a work in progress, this library barely works at the moment.
-Once I go over the most pressing [TODO] items,
-I will remove this notice and release it on PyPI.
+This is a work in progress:
+__this library is currently experimental.__.
 
 The usual drill in unit testing involves making assertions
 about specific input-output cases of functions, such as:
