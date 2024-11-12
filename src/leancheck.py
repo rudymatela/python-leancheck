@@ -11,7 +11,9 @@ This is a port of
 [Haskell's LeanCheck]: https://hackage.haskell.org/package/leancheck
 [Python]: https://python.org
 
-**(WIP: This library is currently experimental.)**
+**WIP: This library is currently experimental.**
+It works for simple properties,
+but the selection of supported types is still limited.
 
 LeanCheck is an enumerative property-based testing library.
 It can be used to complement your unit tests.
