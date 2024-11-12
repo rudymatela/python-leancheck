@@ -16,6 +16,10 @@ classifiers = [
 	"License :: OSI Approved :: GNU Lesser General Public License v2 or later (LGPLv2+)"
 ]
 
+[project.urls]
+"Homepage"    = "https://github.com/rudymatela/leancheck"
+"Bug Tracker" = "https://github.com/rudymatela/leancheck/issues"
+
 [tool.pytest.ini_options]
 pythonpath = ["src"]
 
