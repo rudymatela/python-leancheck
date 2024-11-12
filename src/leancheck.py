@@ -70,7 +70,7 @@ import types
 import typing
 
 
-def check(prop, max_tests=360, verbose=True, silent=False):
+def check(prop, max_tests=360, verbose=True, silent=False, types=[]):
     """
     Checks a property for several enumerated argument values.
     Properties must have type hints
@@ -114,15 +114,25 @@ def check(prop, max_tests=360, verbose=True, silent=False):
 
     >>> check(prop_sorted_twice, silent=True)
     True
+
+    Lambdas do not allow type annotations,
+    for them one can use the `types=` option
+    to list argument types.
+
+    >>> check(lambda xs: sorted(sorted(xs)) == sorted(xs), types=[list[int]])
+    +++ OK, passed 360 tests: <lambda>
+    True
     """
     verbose = verbose and not silent
     clear, red, green, blue, yellow = _colour_escapes()
-    sig = inspect.signature(prop)
-    ret = sig.return_annotation
-    # print(f"Property's signature: {sig}")
-    if ret != bool and not silent:
-        print(f"{yellow}Warning{clear}: property's return value is {ret} and not {bool}")
-    es = [Enumerator[par.annotation] for par in sig.parameters.values()]
+    if not types:
+        sig = inspect.signature(prop)
+        # print(f"Property's signature: {sig}")
+        ret = sig.return_annotation
+        if ret != bool and not silent:
+            print(f"{yellow}Warning{clear}: property's return value is {ret} and not {bool}")
+        types = [par.annotation for par in sig.parameters.values()]
+    es = [Enumerator[t] for t in types]
     for i, args in enumerate(itertools.islice(Enumerator.product(*es), max_tests)):
         if not prop(*args):
             if not silent:

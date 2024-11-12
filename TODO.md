@@ -6,8 +6,6 @@ TODO for leancheck.py
 later
 -----
 
-* `check`: add `types=` mechanism in order to support lambdas
-
 * handle exceptions nicely somehow (`prop_minimum`) for sort
 
 * simplify code
