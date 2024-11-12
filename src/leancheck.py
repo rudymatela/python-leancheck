@@ -11,6 +11,8 @@ This is a port of
 [Haskell's LeanCheck]: https://hackage.haskell.org/package/leancheck
 [Python]: https://python.org
 
+**(WIP: This library is currently experimental.)**
+
 LeanCheck is an enumerative property-based testing library.
 It can be used to complement your unit tests.
 
@@ -29,7 +31,7 @@ parameterized unit tests or
 parameterized assertions.
 
 For example:
-given _any_ list, sorting it twice is the same as sorting it once.
+given *any* list, sorting it twice is the same as sorting it once.
 We can encode this as a function returning a boolean value:
 
     >>> def prop_sorted_twice(xs: list[int]) -> bool:
