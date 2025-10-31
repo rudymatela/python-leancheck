@@ -45,4 +45,8 @@ def prop_sort_len(xs: list[int]) -> bool:
     "Sorting should not change the length of the list."
     return len(qsort(xs)) == len(xs)
 
+def prop_min(xs: list[int]) -> bool:
+    "The minimum is the head of the sorted list."
+    return not xs or qsort(xs)[0] == min(xs)
+
 leancheck.main(verbose = True, exit_on_failure = False)
