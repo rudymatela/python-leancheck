@@ -34,12 +34,7 @@ clean:
 
 
 release:
-	@echo '1. Bump version in pyproject.toml to even patch (02468)'
-	@echo '2. make upload-test'
-	@echo '3. Look at https://test.pypi.org/project/leancheck/'
-	@echo '4. Commit and tag'
-	@echo '5. make upload-for-real-this-time'
-	@echo '6. Rinse & repeat'
+	cat release.md
 
 # Generates a distribution archive for PyPI
 #
@@ -52,6 +47,15 @@ dist:
 
 upload-test: dist
 	python3 -m twine upload --repository testpypi dist/*
+
+test-install:
+	rm -rf tmp/test-install
+	mkdir -p tmp/test-install
+	python -m venv tmp/test-install
+	source tmp/test-install/bin/activate && \
+	pip install --index-url https://test.pypi.org/simple/ --no-deps leancheck && \
+	python -ic 'from leancheck import *; check(lambda x: x + x > x, types[int])'
+
 
 upload-for-real-this-time: dist
 	echo 'Uploading for real in PyPI in 6 seconds (Ctrl-C to abort)'
