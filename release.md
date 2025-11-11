@@ -18,12 +18,18 @@ python-leancheck release instructions
 	$ git commit
 	$ git tag -a vX.Y.Z
 
-6. Upload for real on PyPI:
+6. Cleanup dist
+
+	$ rm -r dist/
+
+7. Upload for real on PyPI:
 
 	$ make upload-for-real-this-time
 
-7. Bump version in `pyproject.toml` to odd "dev" patch (13579)
+8. Bump version in `pyproject.toml` to odd "dev" patch (13579)
 
-8. Commit
+9. Commit
 
-9. Rinse & repeat.
+10. Test real install with `pip install leancheck`
+
+11. Rinse & repeat.
