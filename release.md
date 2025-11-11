@@ -1,17 +1,17 @@
 python-leancheck release instructions
 =====================================
 
-1. Bump version in `pyproject.toml` to even patch (02468)
-
-2. Upload on test-PyPI
+1. Upload on test-PyPI
 
 	$ make upload-test
 
-3. Look at https://test.pypi.org/project/leancheck/
+2. Look at https://test.pypi.org/project/leancheck/
 
-4. Test install with:
+3. Test install with:
 
 	$ make test-install
+
+4. Bump version in `pyproject.toml` to even patch (02468)
 
 5. Commit and tag
 
