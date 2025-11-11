@@ -29,7 +29,25 @@ examples: \
 	examples/empty.run
 
 clean:
-	rm -rf __pycache__ src/__pycache__ tests/__pycache__ .pytest_cache
+	rm -rf __pycache__ src/__pycache__ tests/__pycache__ .pytest_cache .mypy_cache
+	rm -rf docs/ dist/ src/leancheck.egg-info
+
+
+# Generates a distribution archive for PyPI
+#
+# See: https://packaging.python.org/en/latest/tutorials/packaging-projects/
+#
+# Needed: python-setuptools; twine
+.PHONY: dist
+dist:
+	python -m build
+
+upload-test:
+	python3 -m twine upload --repository testpypi dist/*
+
+# alias to dist
+sdist: dist
+
 
 %.run: %.py
 	PYTHONPATH=src python $<
