@@ -30,7 +30,7 @@ examples: \
 
 clean:
 	rm -rf __pycache__ src/__pycache__ tests/__pycache__ .pytest_cache .mypy_cache
-	rm -rf docs/ dist/ src/leancheck.egg-info
+	rm -rf docs/ dist/ tmp/ src/leancheck.egg-info
 
 
 release:
