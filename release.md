@@ -1,6 +1,10 @@
 python-leancheck release instructions
 =====================================
 
+0. Make sure to pull from all remotes first
+
+	git pull --all
+
 1. Upload on test-PyPI
 
 	$ make upload-test
