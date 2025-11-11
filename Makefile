@@ -4,13 +4,13 @@
 # Distributed under the LGPL v2.1 or later (see the file LICENSE)
 
 all:
-	python src/leancheck.py
+	python src/leancheck/core.py
 
 repl:
 	PYTHONPATH=src python -ic 'from leancheck import *'
 
 test: examples
-	python src/leancheck.py
+	python src/leancheck/core.py
 	mypy src/ tests/ examples/
 	pytest
 	validate-pyproject pyproject.toml

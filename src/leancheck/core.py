@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# LeanCheck for Python.
+# LeanCheck for Python.  Core module.
 #
 # (C) 2023-2024  Rudy Matela
 # Distributed under the LGPL v2.1 or later (see the file LICENSE)
