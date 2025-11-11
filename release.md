@@ -22,4 +22,8 @@ python-leancheck release instructions
 
 	$ make upload-for-real-this-time
 
-7. Rinse & repeat.
+7. Bump version in `pyproject.toml` to odd "dev" patch (13579)
+
+8. Commit
+
+9. Rinse & repeat.
