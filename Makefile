@@ -26,6 +26,7 @@ examples: \
 	examples/arith.run \
 	examples/bool.run \
 	examples/sort.run \
+	examples/sortok.run \
 	examples/empty.run
 
 clean:

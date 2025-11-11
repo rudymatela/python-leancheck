@@ -138,11 +138,21 @@ def check(prop, max_tests=360, verbose=True, silent=False, types=[]):
         types = [par.annotation for par in sig.parameters.values()]
     es = [Enumerator[t] for t in types]
     for i, args in enumerate(itertools.islice(Enumerator.product(*es), max_tests)):
-        if not prop(*args):
+        # TODO: remove slight code duplication below...
+        #       have a single "if not silent"
+        try:
+            if not prop(*args):
+                if not silent:
+                    repr_args = ', '.join(map(repr, args))
+                    print(f"*** Failed! Falsifiable after {i+1} tests:")
+                    print(f"    {red}{prop.__name__}{clear}({repr_args})")
+                return False
+        except BaseException as e:
             if not silent:
                 repr_args = ', '.join(map(repr, args))
-                print(f"*** Failed! Falsifiable after {i+1} tests:")
+                print(f"*** Failed! Exception after {i+1} tests:")
                 print(f"    {red}{prop.__name__}{clear}({repr_args})")
+                print(f"    raised '{e}'")
             return False
     if verbose:
         i = i+1

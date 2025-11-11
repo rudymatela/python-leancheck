@@ -6,8 +6,6 @@ TODO for leancheck.py
 later
 -----
 
-* handle exceptions nicely somehow (`prop_minimum`) for sort
-
 * simplify code
 
 * create iitertools module?

@@ -20,7 +20,7 @@ There are no arguments to the unit test.
 
 In property-based testing (with LeanCheck)
 one writes more general properties that should be true
-for a given set of arguments.
+for any assignment of arguments.
 
 For example:
 given __any__ list, sorting it twice is the same as sorting it once.
