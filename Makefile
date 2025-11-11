@@ -33,6 +33,14 @@ clean:
 	rm -rf docs/ dist/ src/leancheck.egg-info
 
 
+release:
+	@echo '1. Bump version in pyproject.toml to even patch (02468)'
+	@echo '2. make upload-test'
+	@echo '3. Look at https://test.pypi.org/project/leancheck/'
+	@echo '4. Commit and tag'
+	@echo '5. make upload-for-real-this-time'
+	@echo '6. Rinse & repeat'
+
 # Generates a distribution archive for PyPI
 #
 # See: https://packaging.python.org/en/latest/tutorials/packaging-projects/
@@ -42,8 +50,13 @@ clean:
 dist:
 	python -m build
 
-upload-test:
+upload-test: dist
 	python3 -m twine upload --repository testpypi dist/*
+
+upload-for-real-this-time: dist
+	echo 'Uploading for real in PyPI in 6 seconds (Ctrl-C to abort)'
+	sleep 6
+	python3 -m twine upload dist/*
 
 # alias to dist
 sdist: dist
