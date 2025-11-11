@@ -46,7 +46,7 @@ dist:
 	python -m build
 
 upload-test: dist
-	python3 -m twine upload --repository testpypi dist/*
+	twine upload --skip-existing --repository testpypi dist/*
 
 test-install:
 	rm -rf tmp/test-install
@@ -54,13 +54,13 @@ test-install:
 	python -m venv tmp/test-install
 	source tmp/test-install/bin/activate && \
 	pip install --index-url https://test.pypi.org/simple/ --no-deps leancheck && \
-	python -ic 'from leancheck import *; check(lambda x: x + x > x, types[int])'
+	python -ic 'from leancheck import *; print("run check(lambda x: x + x > x, types = [int])")'
 
 
 upload-for-real-this-time: dist
 	echo 'Uploading for real in PyPI in 6 seconds (Ctrl-C to abort)'
 	sleep 6
-	python3 -m twine upload dist/*
+	twine upload --skip-existing dist/*
 
 # alias to dist
 sdist: dist
