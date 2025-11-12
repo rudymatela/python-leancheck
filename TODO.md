@@ -1,10 +1,13 @@
 TODO for leancheck.py
 =====================
 
-* release experimental version on PyPI
+* improve README with full tutorial
 
-later
------
+* add Enumerator for float
+
+* add Enumerator for set
+
+* add Enumerator for dict
 
 * simplify code
 
