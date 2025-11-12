@@ -32,7 +32,7 @@ python-leancheck release instructions
 
 8. Bump version in `pyproject.toml` to odd "dev" patch (13579)
 
-9. Commit
+9. Commit "dev version bump"
 
 10. Test real install with `pip install leancheck`
 
