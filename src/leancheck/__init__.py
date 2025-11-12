@@ -49,13 +49,23 @@ Now one can use LeanCheck to verify this automatically:
 
 LeanCheck automatically came up with 360 unique lists
 to exercise the property.
-When the function-under-test is incorrect
+
+When the property or function-under-test is incorrect
 LeanCheck may find and report a counterexample:
 
-    *** Failed! Falsifiable after 3 tests:
-        prop_sort_len([0, 0])
+    >>> def prop_sorted_wrong(xs: list[int]) -> bool:
+    ...     return sorted(xs) == xs
+    ...
 
-You then know that an ill input is the list `[0, 0]`.
+    >>> check(prop_sorted_wrong)
+    *** Failed! Falsifiable after 6 tests:
+        prop_sorted_wrong([1, 0])
+    False
+
+We now know that an ill input is the list `[1, 0]`.
+In this arbitrary example, the property is incorrect.
+In cases where the property is indeed correct,
+the counterexample indicates a bug.
 
 If you have a collection of properties (`prop_*`) in a Python file,
 just call `leancheck.main()` and all of them will be automatically tested.
