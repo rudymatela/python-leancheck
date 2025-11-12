@@ -1,7 +1,7 @@
 TODO for leancheck.py
 =====================
 
-* re-release
+* fix indentation in README: spaces instead of tabs!
 
 * include negatives in int enumeration
 
