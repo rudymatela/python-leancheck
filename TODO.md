@@ -1,7 +1,7 @@
 TODO for leancheck.py
 =====================
 
-* improve README with full tutorial
+* improve README with badges
 
 * add Enumerator for float
 

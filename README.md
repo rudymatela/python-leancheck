@@ -1,6 +1,9 @@
 LeanCheck for Python
 ====================
 
+[![LeanCheck's Build Status][build-status]][build-log]
+[![LeanCheck on PyPI][pypi-version]][leancheck-on-pypi]
+
 This is a port of [Haskell's LeanCheck] to [Python].
 
 LeanCheck is an enumerative property-based testing library.
@@ -187,3 +190,8 @@ is considered a property by convention.  LeanCheck is simpler to use IMHO.
 [Hypothesis]: https://pypi.org/project/hypothesis/
 [TODO]: TODO.md
 [PhD Thesis (2017)]: https://matela.com.br/thesis-rudy.pdf
+
+[build-log]:    https://github.com/rudymatela/python-leancheck/actions/workflows/test.yml
+[build-status]: https://github.com/rudymatela/python-leancheck/actions/workflows/test.yml/badge.svg
+[pypi-version]: https://img.shields.io/pypi/v/leancheck.svg
+[leancheck-on-pypi]: https://pypi.org/package/leancheck
