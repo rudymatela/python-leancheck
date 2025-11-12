@@ -1,6 +1,6 @@
 # pyproject.toml for python-leancheck
 #
-# (C) 2023-2024  Rudy Matela
+# (C) 2023-2025  Rudy Matela
 # Distributed under the LGPL v2.1 or later (see the file LICENSE)
 
 [project]
@@ -22,8 +22,10 @@ classifiers = [
 ]
 
 [project.urls]
-"Homepage"    = "https://github.com/rudymatela/leancheck"
-"Bug Tracker" = "https://github.com/rudymatela/leancheck/issues"
+"Homepage"      = "https://github.com/rudymatela/python-leancheck"
+"Bug Tracker"   = "https://github.com/rudymatela/python-leancheck/issues"
+"Repository"    = "https://github.com/rudymatela/python-leancheck.git"
+"Documentation" = "https://leancheck.github.io/"
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]
