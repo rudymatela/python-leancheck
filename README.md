@@ -149,6 +149,9 @@ False
 Our function discards repeated elements!
 Fixing the bug in `qsort` is left as an exercise to the reader.
 
+An extended version of this example can be found
+under the `examples/` folder in the source repository.
+
 
 Further reading
 ---------------
