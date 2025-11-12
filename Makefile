@@ -66,6 +66,10 @@ upload-for-real-this-time: dist
 # alias to dist
 sdist: dist
 
+clone-docs:
+	rm -r docs
+	git clone git@github.com:leancheck/leancheck.github.io.git docs
+
 
 %.run: %.py
 	PYTHONPATH=src python $<

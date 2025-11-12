@@ -36,4 +36,12 @@ python-leancheck release instructions
 
 10. Test real install with `pip install leancheck`
 
-11. Rinse & repeat.
+11. Publish updated docs:
+
+		$ make clone-docs # or pull
+		$ make docs
+		$ cd docs
+		$ git diff
+		$ git commit
+
+12. Rinse & repeat.
