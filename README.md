@@ -194,4 +194,4 @@ is considered a property by convention.  LeanCheck is simpler to use IMHO.
 [build-log]:    https://github.com/rudymatela/python-leancheck/actions/workflows/test.yml
 [build-status]: https://github.com/rudymatela/python-leancheck/actions/workflows/test.yml/badge.svg
 [pypi-version]: https://img.shields.io/pypi/v/leancheck.svg
-[leancheck-on-pypi]: https://pypi.org/package/leancheck
+[leancheck-on-pypi]: https://pypi.org/project/leancheck
