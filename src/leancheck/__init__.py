@@ -43,7 +43,6 @@ For whatever list we provide this function,
 it should return `True`.
 Now one can use LeanCheck to verify this automatically:
 
-    >>> from leancheck import *
     >>> check(prop_sorted_twice)
     +++ OK, passed 360 tests: prop_sorted_twice
     True
@@ -58,7 +57,7 @@ LeanCheck may find and report a counterexample:
 
 You then know that an ill input is the list `[0, 0]`.
 
-If you have a bunch of properties (`prop_*`) in a Python file,
+If you have a collection of properties (`prop_*`) in a Python file,
 just call `leancheck.main()` and all of them will be automatically tested.
 In the case of a library, you can put everything under
 an if-expression as you would do with `unittest.main()` or `doctest.testmod()`.
