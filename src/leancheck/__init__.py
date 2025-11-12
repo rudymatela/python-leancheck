@@ -43,6 +43,7 @@ For whatever list we provide this function,
 it should return `True`.
 Now one can use LeanCheck to verify this automatically:
 
+    >>> from leancheck import *
     >>> check(prop_sorted_twice)
     +++ OK, passed 360 tests: prop_sorted_twice
     True
