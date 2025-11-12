@@ -42,36 +42,112 @@ Now one can use LeanCheck to verify this automatically:
 +++ OK, passed 360 tests: prop_sorted_twice
 ```
 
-Quick Example
--------------
+When the property or function-under-test is incorrect
+LeanCheck may find and report a counterexample like so:
 
 ```py
-$ python -i leancheck.py
-
->>> from leancheck import *
-
->>> def prop_sorted_twice(xs: list[int]) -> bool:
-...     return sorted(sorted(xs)) == sorted(xs)
-...
-
->>> check(prop_sorted_twice)
-+++ OK, passed 360 tests: prop_sorted_twice
-
->>> def prop_sorted_len(xs: list[int]) -> bool:
-...     return len(sorted(xs)) == len(xs)
-...
-
->>> check(prop_sorted_len)
-+++ OK, passed 360 tests: prop_sorted_len
-
->>> def prop_sorted_wrong(xs: list[int]) -> bool:
-...     return sorted(xs) == xs
-...
-
->>> check(prop_sorted_wrong)
 *** Failed! Falsifiable after 6 tests:
     prop_sorted_wrong([1, 0])
 ```
+
+This would indicate that the list `[1, 0]` is an ill input.
+
+Besides using `check()` to test individual properties,
+one can use `leancheck.main()` to test all properties
+defined in the current file.
+
+
+Example, testing a sorting function
+-----------------------------------
+
+Consider the following (not-quite) `qsort` function:
+
+```py
+def qsort(lst):
+    if lst == []:
+        return []
+    x, *etc = lst  # split into head and tail
+    lesser  = [y for y in etc if y < x]
+    greater = [y for y in etc if y > x]
+    return qsort(lesser) + [x] + qsort(greater)
+```
+
+It returns the sorted version of the given argument list:
+
+```py
+>>> qsort([4,2,1,3])
+[1,2,3,4]
+```
+
+We can define the following three properties about it:
+
+1. Sorting a list returns the elements in order;
+2. Sorting preserves membership in the list;
+3. Sorting does not change the list length.
+
+We can define and test these properties with LeanCheck as follows:
+
+```py
+import leancheck
+
+def prop_sort_ordered(xs: list[int]) -> bool:
+	def ordered(xs):
+		for x, y in zip(xs, xs[1:]):
+			if x > y:
+				return False
+		return True
+	return ordered(qsort(xs))
+
+def prop_sort_elem(x: int, xs: list[int]) -> bool:
+	return (x in qsort(xs)) == (x in xs)
+
+def prop_sort_len(xs: list[int]) -> bool:
+	return len(qsort(xs)) == len(xs)
+
+if __name__ == '__main__':
+	leancheck.main()
+```
+
+We import LeanCheck, define the properties and call `leancheck.main()`
+which will test all properties defined in the file:
+anything named `prop_*`.
+The properties may be placed together with the function(s) under test
+or in a separate test file depending on your needs.
+
+Note the type annotations, these are necessary for LeanCheck to know
+how to test each property.
+
+Running the above file/program/script yields the following report:
+
+```py
++++ OK, passed 360 tests: prop_sort_ordered
+
++++ OK, passed 360 tests: prop_sort_elem
+
+*** Failed! Falsifiable after 3 tests:
+    prop_sort_len([0, 0])
+```
+
+We actually have a failure in the third property
+and we can investigate:
+
+```py
+>>> leancheck.check(prop_sort_len)
+*** Failed! Falsifiable after 3 tests:
+    prop_sort_len([0, 0])
+
+>>> prop_sort_len([0, 0])
+False
+
+>>> len(qsort([0, 0]))
+1
+
+>>> qsort([0, 0])
+[0]
+```
+
+Our function discards repeated elements!
+Fixing the bug in `qsort` is left as an exercise to the reader.
 
 
 Further reading

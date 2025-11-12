@@ -51,4 +51,5 @@ def prop_min(xs: list[int]) -> bool:
     # Removing this is nice way to test exception handling and reporting.
     return not xs or qsort(xs)[0] == min(xs)
 
-leancheck.main(verbose = True, exit_on_failure = False)
+if __name__ == '__main__':
+    leancheck.main(verbose = True, exit_on_failure = False)
