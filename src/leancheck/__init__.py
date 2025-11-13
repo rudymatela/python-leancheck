@@ -260,7 +260,7 @@ class Enumerator:
     enumerations with "indexing":
 
     >>> Enumerator[int]
-    Enumerator(lambda: (xs for xs in [[0], [1], [2], [3], [4], [5], ...]))
+    Enumerator(lambda: (xs for xs in [[0], [1], [-1], [2], [-2], [3], ...]))
 
     >>> Enumerator[bool]
     Enumerator(lambda: (xs for xs in [[False, True]]))
@@ -269,10 +269,10 @@ class Enumerator:
     [[], [0], [0, 0], [1], [0, 0, 0], [1, 0], ...]
 
     >>> print(Enumerator[tuple[bool, int]])
-    [(False, 0), (True, 0), (False, 1), (True, 1), (False, 2), (True, 2), ...]
+    [(False, 0), (True, 0), (False, 1), (True, 1), (False, -1), (True, -1), ...]
 
     >>> print(Enumerator[tuple[int,int,int]])
-    [(0, 0, 0), (0, 0, 1), (0, 1, 0), (1, 0, 0), (0, 0, 2), (0, 1, 1), ...]
+    [(0, 0, 0), (0, 0, 1), (0, 1, 0), (1, 0, 0), (0, 0, -1), (0, 1, 1), ...]
 
     You can use this class to build new enumerations
     which can be registered using the `Enumerator.register()` method.
@@ -280,12 +280,12 @@ class Enumerator:
     This class supports computing sums and products of enumerations:
 
     >>> print(Enumerator[int] + Enumerator[bool])
-    [0, False, True, 1, 2, 3, ...]
+    [0, False, True, 1, -1, 2, ...]
 
     Use `*` to take the product of two enumerations:
 
     >>> print(Enumerator[int] * Enumerator[bool])
-    [(0, False), (0, True), (1, False), (1, True), (2, False), (2, True), ...]
+    [(0, False), (0, True), (1, False), (1, True), (-1, False), (-1, True), ...]
     """
 
     tiers: typing.Callable[[], typing.Generator]
@@ -365,10 +365,10 @@ class Enumerator:
         Use `+` to compute the sum of two enumerations:
 
         >>> print(Enumerator[int] + Enumerator[bool])
-        [0, False, True, 1, 2, 3, ...]
+        [0, False, True, 1, -1, 2, ...]
 
         >>> Enumerator[int] + Enumerator[bool]
-        Enumerator(lambda: (xs for xs in [[0, False, True], [1], [2], [3], [4], [5], ...]))
+        Enumerator(lambda: (xs for xs in [[0, False, True], [1], [-1], [2], [-2], [3], ...]))
         """
         return Enumerator(lambda: _zippend(self.tiers(), other.tiers()))
 
@@ -377,10 +377,10 @@ class Enumerator:
         Use `*` to take the product of two enumerations:
 
         >>> print(Enumerator[int] * Enumerator[bool])
-        [(0, False), (0, True), (1, False), (1, True), (2, False), (2, True), ...]
+        [(0, False), (0, True), (1, False), (1, True), (-1, False), (-1, True), ...]
 
         >>> Enumerator[int] * Enumerator[bool]
-        Enumerator(lambda: (xs for xs in [[(0, False), (0, True)], [(1, False), (1, True)], [(2, False), (2, True)], [(3, False), (3, True)], [(4, False), (4, True)], [(5, False), (5, True)], ...]))
+        Enumerator(lambda: (xs for xs in [[(0, False), (0, True)], [(1, False), (1, True)], [(-1, False), (-1, True)], [(2, False), (2, True)], [(-2, False), (-2, True)], [(3, False), (3, True)], ...]))
         """
         return Enumerator(lambda: _pproduct(self.tiers(), other.tiers()))
 
@@ -403,7 +403,7 @@ class Enumerator:
         Applies a function to all values in the enumeration.
 
         >>> Enumerator[int].map(lambda x: x*2)
-        Enumerator(lambda: (xs for xs in [[0], [2], [4], [6], [8], [10], ...]))
+        Enumerator(lambda: (xs for xs in [[0], [2], [-2], [4], [-4], [6], ...]))
         """
         return Enumerator(lambda: _mmap(f, self.tiers()))
 
@@ -419,7 +419,7 @@ class Enumerator:
         If you have just two enumerations, you can simply use `*`:
 
         >>> print(Enumerator[int] * Enumerator[bool])
-        [(0, False), (0, True), (1, False), (1, True), (2, False), (2, True), ...]
+        [(0, False), (0, True), (1, False), (1, True), (-1, False), (-1, True), ...]
         """
         if len(enumerators) == 0:
             return Enumerator(lambda: (xs for xs in [[()]]))
@@ -433,9 +433,12 @@ class Enumerator:
     @classmethod
     def _initialize(cls):
         "Initializes the internal _enumerators dictionary"
+        def gen_ints():
+            yield 0
+            yield from _intercalate(itertools.count(1,1), itertools.count(-1,-1))
         if cls._enumerators is None:
             cls._enumerators = {
-                int: cls.from_gen(itertools.count), # TODO: include negatives
+                int: cls.from_gen(gen_ints),
                 bool: cls.from_choices([False,True]),
                 list: lambda e: cls.lists(e),
                 tuple: lambda *e: cls.product(*e),
@@ -457,7 +460,7 @@ class Enumerator:
         Finds an enumerator for the given type.
 
         >>> Enumerator[int]
-        Enumerator(lambda: (xs for xs in [[0], [1], [2], [3], [4], [5], ...]))
+        Enumerator(lambda: (xs for xs in [[0], [1], [-1], [2], [-2], [3], ...]))
 
         >>> Enumerator[bool]
         Enumerator(lambda: (xs for xs in [[False, True]]))
@@ -466,10 +469,10 @@ class Enumerator:
         [[], [0], [0, 0], [1], [0, 0, 0], [1, 0], ...]
 
         >>> print(Enumerator[tuple[bool, int]])
-        [(False, 0), (True, 0), (False, 1), (True, 1), (False, 2), (True, 2), ...]
+        [(False, 0), (True, 0), (False, 1), (True, 1), (False, -1), (True, -1), ...]
 
         >>> print(Enumerator[tuple[int,int,int]])
-        [(0, 0, 0), (0, 0, 1), (0, 1, 0), (1, 0, 0), (0, 0, 2), (0, 1, 1), ...]
+        [(0, 0, 0), (0, 0, 1), (0, 1, 0), (1, 0, 0), (0, 0, -1), (0, 1, 1), ...]
 
         >>> print(Enumerator[type])
         Traceback (most recent call last):

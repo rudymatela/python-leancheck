@@ -39,7 +39,7 @@ class TestLeanCheck(unittest.TestCase):
         self.assertEqual(list(e), [3,1,3,3,7])
 
     def test_int(self):
-        self.assertEnum(int, [0,1,2,3,4,5])
+        self.assertEnum(int, [0,1,-1,2,-2,3])
         self.assertEnum(list[int], [[], [0], [0, 0], [1], [0, 0, 0], [1, 0]])
 
     def test_bool(self):
@@ -47,8 +47,8 @@ class TestLeanCheck(unittest.TestCase):
         self.assertEnum(list[bool], [[], [False], [True], [False,False], [True,False], [False,True]])
 
     def test_tuple(self):
-        self.assertEnum(tuple[int,int], [(0,0), (0,1), (1,0), (0,2), (1,1), (2,0)])
-        self.assertEnum(tuple[int,int,int], [(0, 0, 0), (0, 0, 1), (0, 1, 0), (1, 0, 0), (0, 0, 2), (0, 1, 1)])
+        self.assertEnum(tuple[int,int], [(0,0), (0,1), (1,0), (0,-1), (1,1), (-1,0)])
+        self.assertEnum(tuple[int,int,int], [(0,0,0), (0,0,1), (0,1,0), (1,0,0), (0,0,-1), (0,1,1)])
         self.assertEnum(tuple[bool,bool], [(False, False), (False, True), (True, False), (True, True)])
 
     def test_empty_product(self):
