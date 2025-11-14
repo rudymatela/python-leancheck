@@ -609,6 +609,30 @@ def _fusc(n):
         n //= 2
     return b
 
+# See _fusc
+def _fusc_generator():
+    return (_fusc(n) for n in itertools.count(1))
+
+# Generates all positive float numbers.
+# All pairs n/d are included without repetition in their most simple form.
+# This is the Calkin-Wilf sequence
+# computed with the help of the fusc function (EWD 570)
+def _positive_float_generator():
+    return itertools.starmap(lambda n, d: n/d, zip(_fusc_generator(), _tail(_fusc_generator())))
+
+def _negative_float_generator():
+    return map(lambda x: -x, _positive_float_generator())
+
+def _float_generator():
+    yield 0.0
+    yield from _intercalate(_positive_float_generator(), _negative_float_generator())
+
+def _tail(gen):
+    return itertools.islice(gen, 1, None)
+
+def _truncate(gen):
+    return list(itertools.islice(gen,12))
+
 
 # Runs tests if this is not being imported as a module.
 if __name__ == "__main__":
