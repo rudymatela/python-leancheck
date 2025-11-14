@@ -603,9 +603,10 @@ def _fusc(n):
     a, b = 1, 0
     while n:
         if n % 2 == 0:
-            a, n = a + b, n//2
+            a += b
         else:
-            b, n = b + a, (n-1)//2
+            b += a
+        n //= 2
     return b
 
 
