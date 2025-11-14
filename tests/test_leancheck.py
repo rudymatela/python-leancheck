@@ -60,6 +60,8 @@ class TestLeanCheck(unittest.TestCase):
     def test_properties(self):
         self.assertEqual(check(lambda x: x + x >= x, types=[int]), False)
         self.assertEqual(check(lambda x: x * x >= x, types=[int]), True)
+        self.assertEqual(check(lambda x: not x or 1 / x * x == 1, types=[float]), False)
+        self.assertEqual(check(lambda x: x / 3 * 3 == x, types=[float]), False)
 
     def test_empty_product(self):
         e = Enumerator.product()
