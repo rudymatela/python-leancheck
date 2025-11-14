@@ -8,7 +8,7 @@
 
 import unittest
 import itertools
-from leancheck import Enumerator
+from leancheck import Enumerator, check
 
 
 def take(n, generator):
@@ -56,6 +56,10 @@ class TestLeanCheck(unittest.TestCase):
         self.assertEnum(tuple[int,int], [(0,0), (0,1), (1,0), (0,-1), (1,1), (-1,0)])
         self.assertEnum(tuple[int,int,int], [(0,0,0), (0,0,1), (0,1,0), (1,0,0), (0,0,-1), (0,1,1)])
         self.assertEnum(tuple[bool,bool], [(False, False), (False, True), (True, False), (True, True)])
+
+    def test_properties(self):
+        self.assertEqual(check(lambda x: x + x >= x, types=[int]), False)
+        self.assertEqual(check(lambda x: x * x >= x, types=[int]), True)
 
     def test_empty_product(self):
         e = Enumerator.product()
