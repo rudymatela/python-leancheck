@@ -7,7 +7,7 @@ all:
 	python src/leancheck/__init__.py
 
 repl:
-	PYTHONPATH=src python -ic 'from leancheck import *'
+	PYTHONPATH=src python -ic 'import leancheck; from leancheck import *'
 
 test: examples
 	python src/leancheck/__init__.py
