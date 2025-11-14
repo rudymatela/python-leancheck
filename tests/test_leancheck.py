@@ -42,6 +42,9 @@ class TestLeanCheck(unittest.TestCase):
         self.assertEnum(int, [0,1,-1,2,-2,3])
         self.assertEnum(list[int], [[], [0], [0, 0], [1], [0, 0, 0], [1, 0]])
 
+    def test_float(self):
+        self.assertEnum(float, [0,1,-1,0.5,-0.5,2])
+
     def test_bool(self):
         self.assertEnum(bool, [False,True])
         self.assertEnum(list[bool], [[], [False], [True], [False,False], [True,False], [False,True]])

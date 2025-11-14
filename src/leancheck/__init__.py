@@ -439,6 +439,7 @@ class Enumerator:
         if cls._enumerators is None:
             cls._enumerators = {
                 int: cls.from_gen(gen_ints),
+                float: cls.from_gen(_float_generator),
                 bool: cls.from_choices([False,True]),
                 list: lambda e: cls.lists(e),
                 tuple: lambda *e: cls.product(*e),
