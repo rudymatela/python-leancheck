@@ -594,6 +594,21 @@ def _colour_escapes():
         return '', '', '', '', ''
 
 
+# An implementation of the fusc function (EWD 570)
+# https://www.cs.utexas.edu/~EWD/ewd05xx/EWD570.PDF
+#
+# >>> [leancheck._fusc(x) for x in range(24)]
+# [0, 1, 1, 2, 1, 3, 2, 3, 1, 4, 3, 5, 2, 5, 3, 4, 1, 5, 4, 7, 3, 8, 5, 7]
+def _fusc(n):
+    a, b = 1, 0
+    while n:
+        if n % 2 == 0:
+            a, n = a + b, n//2
+        else:
+            b, n = b + a, (n-1)//2
+    return b
+
+
 # Runs tests if this is not being imported as a module.
 if __name__ == "__main__":
     import doctest
