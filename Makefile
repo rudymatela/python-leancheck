@@ -27,6 +27,7 @@ examples: \
 	examples/bool.run \
 	examples/sort.run \
 	examples/sortok.run \
+	examples/entropy.run \
 	examples/empty.run
 
 clean:
