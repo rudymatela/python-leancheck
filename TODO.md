@@ -8,6 +8,7 @@ TODO for leancheck.py
 * Add `precondition()` function:
   it raises a PreconditionException which is interpreted by `check` as `True`!
   It should make properties idiomatic.
+  It should also permit counting actual tests from "vacuous truth" tests.
 
 * simplify code
 
@@ -15,3 +16,5 @@ TODO for leancheck.py
 
 * Add some built-in benchmarks.
   Performance is not so good currently.
+
+* add carry-on flag
