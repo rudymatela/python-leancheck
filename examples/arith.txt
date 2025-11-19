@@ -1,0 +1,5 @@
++++ OK, passed 360 tests: prop_commute
+*** Failed! Falsifiable after 1 tests:
+    prop_increase(0, 0)
+
+*** 1 of 2 properties failed

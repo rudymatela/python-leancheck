@@ -9,7 +9,7 @@ all:
 repl:
 	PYTHONPATH=src python -ic 'import leancheck; from leancheck import *'
 
-test: examples
+test: examples diff-test
 	python src/leancheck/__init__.py
 	mypy src/ tests/ examples/
 	pytest
@@ -29,6 +29,10 @@ examples: \
 	examples/sortok.run \
 	examples/entropy.run \
 	examples/empty.run
+
+txt:       $(patsubst %.py,%.txt, $(wildcard examples/*.py))
+
+diff-test: $(patsubst %.py,%.diff,$(wildcard examples/*.py))
 
 clean:
 	rm -rf __pycache__ src/__pycache__ tests/__pycache__ .pytest_cache .mypy_cache
@@ -77,3 +81,9 @@ clone-docs:
 
 %.repl: %.py
 	PYTHONPATH=src python -i $<
+
+%.txt: %.py
+	PYTHONPATH=src python $< >$@
+
+%.diff: %.py
+	PYTHONPATH=src python $< | diff $*.txt -

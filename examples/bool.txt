@@ -1,0 +1,5 @@
++++ OK, passed 2 tests (exhausted): prop_not_idempotent
++++ OK, passed 4 tests (exhausted): prop_and_commutes
++++ OK, passed 4 tests (exhausted): prop_or_commutes
+*** Failed! Falsifiable after 2 tests:
+    prop_and_or_interchangeable(False, True)

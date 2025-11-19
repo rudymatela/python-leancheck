@@ -1,0 +1,7 @@
++++ OK, passed 360 tests: prop_sorted_twice
++++ OK, passed 360 tests: prop_sorted_elem
++++ OK, passed 360 tests: prop_sorted_len
++++ OK, passed 360 tests: prop_sort_twice
++++ OK, passed 360 tests: prop_sort_elem
++++ OK, passed 360 tests: prop_sort_len
++++ 6 properties passed

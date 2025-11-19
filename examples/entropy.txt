@@ -1,0 +1,11 @@
++++ OK, passed 1 tests (exhausted): prop_unit1
++++ OK, passed 1 tests (exhausted): prop_unit2
++++ OK, passed 1 tests (exhausted): prop_unit3
++++ OK, passed 1 tests (exhausted): prop_unit4
++++ OK, passed 1 tests (exhausted): prop_unit5
++++ OK, passed 360 tests: prop_range
+*** Failed! Exception after 1 tests:
+    prop_range0(0.0)
+    raised 'math domain error'
+
+*** 1 of 7 properties failed
