@@ -1,0 +1,12 @@
+>>> Enumerator[<class 'int'>]
+[0, 1, -1, 2, -2, 3, ...]
+
+>>> Enumerator[<class 'bool'>]
+[False, True]
+
+>>> Enumerator[list[int]]
+[[], [0], [0, 0], [1], [0, 0, 0], [1, 0], ...]
+
+>>> Enumerator[list[bool]]
+[[], [False], [True], [False, False], [True, False], [False, True], ...]
+
