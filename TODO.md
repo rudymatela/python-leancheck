@@ -5,10 +5,10 @@ TODO for leancheck.py
 
 * add Enumerator for dict
 
-* Add `precondition()` function:
-  it raises a PreconditionException which is interpreted by `check` as `True`!
-  It should make properties idiomatic.
-  It should also permit counting actual tests from "vacuous truth" tests.
+* count actual tests from "vacuous truth" tests
+  using the precondition mechanism
+
+* fix order of lists: `[4,3,2,1]` is enumerated before `[1,2,3,4]`.
 
 * simplify code
 

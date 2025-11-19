@@ -47,9 +47,9 @@ def prop_sort_len(xs: list[int]) -> bool:
 
 def prop_min(xs: list[int]) -> bool:
     "The minimum is the head of the sorted list."
-    # Without 'not xs or' this property is incorrect.
-    # Removing this is nice way to test exception handling and reporting.
-    return not xs or qsort(xs)[0] == min(xs)
+    # Removing the precondition is a nice way to test exception handling and reporting.
+    leancheck.precondition(len(xs) > 0)
+    return qsort(xs)[0] == min(xs)
 
 if __name__ == '__main__':
     leancheck.main(verbose = True, exit_on_failure = False)

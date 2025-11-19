@@ -157,6 +157,8 @@ def check(prop, max_tests=360, verbose=True, silent=False, types=[]):
                     print(f"*** Failed! Falsifiable after {i+1} tests:")
                     print(f"    {red}{prop.__name__}{clear}({repr_args})")
                 return False
+        except PreconditionUnmatched as e:
+            continue
         except BaseException as e:
             if not silent:
                 repr_args = ', '.join(map(repr, args))
@@ -246,6 +248,15 @@ def testmod(max_tests=360, silent=False, verbose=False):
             if not passed:
                 n_failures += 1
     return (n_failures, n_properties) # just like doctest.testmod()
+
+
+def precondition(condition: bool):
+    if not condition:
+        raise PreconditionUnmatched
+
+
+class PreconditionUnmatched(ValueError):
+    pass
 
 
 class Enumerator:
