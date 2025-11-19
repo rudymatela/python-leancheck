@@ -5,6 +5,8 @@ TODO for leancheck.py
 
 * add Enumerator for dict
 
+* add `Enumerator.only_positives`, `Enumerator.only_non_negatives` and `Enumerator.default`
+
 * count actual tests from "vacuous truth" tests
   using the precondition mechanism
 
