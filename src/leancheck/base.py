@@ -173,7 +173,6 @@ def check(prop, max_tests=360, verbose=True, silent=False, types=[]):
     return True
 
 
-# TODO: add missing arguments from check()
 def holds(prop, max_tests=360, types=[]):
     """
     Alias to `check(prop, silent=True)`.
