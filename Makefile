@@ -1,6 +1,6 @@
 # Makefile for python-leancheck
 #
-# (C) 2023-2024  Rudy Matela
+# (C) 2023-2025  Rudy Matela
 # Distributed under the LGPL v2.1 or later (see the file LICENSE)
 
 # Sets the number of jobs to the the number of processors minus one.
