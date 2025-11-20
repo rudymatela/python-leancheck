@@ -3,6 +3,9 @@
 # (C) 2023-2024  Rudy Matela
 # Distributed under the LGPL v2.1 or later (see the file LICENSE)
 
+# Sets the number of jobs to the the number of processors minus one.
+NJOBS := $(shell grep ^processor /proc/cpuinfo | head -n -1 | wc -l | sed 's/^0$$/1/')
+
 all: run
 
 run: src/leancheck/__init__.run
@@ -43,6 +46,9 @@ diff-test: $(patsubst %.py,%.diff,$(wildcard examples/*.py))
 clean:
 	rm -rf __pycache__ src/__pycache__ tests/__pycache__ .pytest_cache .mypy_cache
 	rm -rf docs/ dist/ tmp/ src/leancheck.egg-info
+
+fastest:
+	make test -j$(NJOBS)
 
 
 release:
