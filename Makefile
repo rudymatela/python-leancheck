@@ -13,7 +13,7 @@ run: src/leancheck/__init__.run
 repl:
 	PYTHONPATH=src python -ic 'import leancheck; from leancheck import *'
 
-test: run pytest mypy diff-test examples
+test: run pytest mypy diff-test
 
 pytest:
 	pytest
@@ -31,13 +31,7 @@ opendoc: doc
 	wbi docs/index.html
 
 .PHONY: examples
-examples: \
-	examples/arith.run \
-	examples/bool.run \
-	examples/sort.run \
-	examples/sortok.run \
-	examples/entropy.run \
-	examples/empty.run
+examples:  $(patsubst %.py,%.run, $(wildcard examples/*.py))
 
 txt:       $(patsubst %.py,%.txt, $(wildcard examples/*.py))
 
