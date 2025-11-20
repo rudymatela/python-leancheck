@@ -1,5 +1,5 @@
 >>> print(Enumerator[int])
-[0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, ...]
+[0, 1, -1, 2, -2, 3, ...]
 
 >>> Enumerator[int]
 Enumerator(lambda: (xs for xs in [[0], [1], [-1], [2], [-2], [3], ...]))

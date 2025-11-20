@@ -405,8 +405,10 @@ class Enumerator:
             xss[l] = "..."
         return "Enumerator(lambda: (xs for xs in [" + ', '.join(xss) + "]))"
 
+    _str_len: int = 6
+
     def __str__(self):
-        l = self._repr_len
+        l = self._str_len
         xs = [str(x) for x in itertools.islice(self, l+1)]
         if (len(xs) > l):
             xs[l] = "..."
@@ -415,19 +417,28 @@ class Enumerator:
     @classmethod
     def set_repr_length(self, repr_len: int):
         """
-        Configures the maximum length of the Enumerator's string representation.
+        Configures the maximum length of the Enumerator's representation.
 
         >>> Enumerator.set_repr_length(3)
         >>> Enumerator[int]
         Enumerator(lambda: (xs for xs in [[0], [1], [-1], ...]))
 
-        >>> Enumerator.set_repr_length(12)
+        When not set, LeanCheck defaults to 6 tiers.
+        """
+        self._repr_len = repr_len
+
+    @classmethod
+    def set_str_length(self, str_len: int):
+        """
+        Configures the maximum length of the Enumerator's representation.
+
+        >>> Enumerator.set_str_length(12)
         >>> print(Enumerator[int])
         [0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, ...]
 
-        When not set, LeanCheck defaults to 6 items/tiers.
+        When not set, LeanCheck defaults to 6 items.
         """
-        self._repr_len = repr_len
+        self._str_len = str_len
 
     def map(self, f):
         """
