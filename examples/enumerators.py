@@ -16,6 +16,10 @@ def pe(typ):
     print(repr(Enumerator[typ]))
     print()
 
+# TODO: make a function from string to string
+#       that transforms list definitions into multiline
+#       def multiline(str: string) -> string:
+
 pe(int)
 
 Enumerator.set_str_length(12)
