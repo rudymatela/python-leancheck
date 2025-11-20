@@ -86,4 +86,4 @@ clone-docs:
 	PYTHONPATH=src python $< >$@
 
 %.diff: %.py
-	PYTHONPATH=src python $< | diff $*.txt -
+	PYTHONPATH=src python $< | diff -rud $*.txt -
