@@ -3,16 +3,22 @@
 # (C) 2023-2024  Rudy Matela
 # Distributed under the LGPL v2.1 or later (see the file LICENSE)
 
-all:
-	python src/leancheck/__init__.py
+all: run
+
+run: src/leancheck/__init__.run
 
 repl:
 	PYTHONPATH=src python -ic 'import leancheck; from leancheck import *'
 
-test: examples diff-test
-	python src/leancheck/__init__.py
-	mypy src/ tests/ examples/
+test: run pytest mypy diff-test examples
+
+pytest:
 	pytest
+
+mypy:
+	mypy src/ tests/ examples/
+
+validate-pyproject:
 	validate-pyproject pyproject.toml
 
 doc:
