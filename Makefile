@@ -8,8 +8,6 @@ NJOBS := $(shell grep ^processor /proc/cpuinfo | head -n -1 | wc -l | sed 's/^0$
 
 all: run
 
-run: src/leancheck/__init__.run
-
 repl:
 	PYTHONPATH=src python -ic 'import leancheck; from leancheck import *'
 
@@ -29,6 +27,8 @@ doc:
 
 opendoc: doc
 	wbi docs/index.html
+
+run:       $(patsubst %.py,%.run, $(wildcard src/leancheck/*.py))
 
 .PHONY: examples
 examples:  $(patsubst %.py,%.run, $(wildcard examples/*.py))

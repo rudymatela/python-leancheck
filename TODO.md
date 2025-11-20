@@ -9,8 +9,6 @@ TODO for leancheck.py
 
 * add `Enumerator.only_positives`, `Enumerator.only_non_negatives` and `Enumerator.default`
 
-* separate into modules?
-
 * count actual tests from "vacuous truth" tests
   using the precondition mechanism
 
