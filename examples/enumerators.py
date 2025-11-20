@@ -8,8 +8,14 @@
 from leancheck import *
 
 def pe(typ):
-    print(f">>> Enumerator[{typ}]")
+    name = typ.__name__ if type(typ) == type else str(typ)
+    Enumerator.set_repr_length(12)
+    print(f">>> print(Enumerator[{name}])")
     print(Enumerator[typ])
+    print()
+    Enumerator.set_repr_length(6)
+    print(f">>> Enumerator[{name}]")
+    print(repr(Enumerator[typ]))
     print()
 
 pe(int)
