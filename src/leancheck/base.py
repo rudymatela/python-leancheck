@@ -174,7 +174,7 @@ def check(prop, max_tests=360, verbose=True, silent=False, types=[]):
 
 
 # TODO: add missing arguments from check()
-def holds(prop, max_tests=360):
+def holds(prop, max_tests=360, types=[]):
     """
     Alias to `check(prop, silent=True)`.
     Returns a boolean indicating whether the given argument property holds
@@ -190,7 +190,7 @@ def holds(prop, max_tests=360):
     >>> holds(prop_increase)
     False
     """
-    return check(prop, max_tests=max_tests, silent=True)
+    return check(prop, max_tests=max_tests, silent=True, types=types)
 
 
 def main(max_tests=360, silent=False, verbose=False, exit_on_failure=True):
