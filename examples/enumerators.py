@@ -12,7 +12,9 @@ def pe(typ):
     print(Enumerator[typ])
     print()
 
-# TODO: Enumerator.set_repr_length(12)
+pe(int)
+
+Enumerator.set_repr_length(12)
 
 pe(int)
 pe(bool)
