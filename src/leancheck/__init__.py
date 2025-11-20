@@ -396,19 +396,38 @@ class Enumerator:
         """
         return Enumerator(lambda: _pproduct(self.tiers(), other.tiers()))
 
+    _repr_len: int = 6
+
     def __repr__(self):
-        # TODO: remove magic numbers: make them configurable?
-        xss = [str(xs) for xs in itertools.islice(self.tiers(), 7)]
-        if (len(xss) > 6):
-            xss[6] = "..."
+        l = self._repr_len
+        xss = [str(xs) for xs in itertools.islice(self.tiers(), l+1)]
+        if (len(xss) > l):
+            xss[l] = "..."
         return "Enumerator(lambda: (xs for xs in [" + ', '.join(xss) + "]))"
 
     def __str__(self):
-        # TODO: remove magic numbers: make them configurable?
-        xs = [str(x) for x in itertools.islice(self, 7)]
-        if (len(xs) > 6):
-            xs[6] = "..."
+        l = self._repr_len
+        xs = [str(x) for x in itertools.islice(self, l+1)]
+        if (len(xs) > l):
+            xs[l] = "..."
         return "[" + ', '.join(xs) + "]"
+
+    @classmethod
+    def set_repr_length(self, repr_len: int):
+        """
+        Configures the maximum length of the Enumerator's string representation.
+
+        >>> Enumerator.set_repr_length(3)
+        >>> Enumerator[int]
+        Enumerator(lambda: (xs for xs in [[0], [1], [-1], ...]))
+
+        >>> Enumerator.set_repr_length(12)
+        >>> print(Enumerator[int])
+        [0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, ...]
+
+        When not set, LeanCheck defaults to 6 items/tiers.
+        """
+        self._repr_len = repr_len
 
     def map(self, f):
         """
