@@ -24,3 +24,15 @@ pe(int)
 pe(bool)
 pe(list[int])
 pe(list[bool])
+pe(float)
+pe(list[float])
+
+pe(tuple[int,int])
+pe(tuple[int,int,int])
+
+pe(tuple[bool,bool])
+pe(tuple[bool,bool,bool])
+
+pe(tuple[bool,int])
+
+pe(tuple[bool,int,float])
