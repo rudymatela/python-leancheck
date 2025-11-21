@@ -1,8 +1,6 @@
 TODO for leancheck.py
 =====================
 
-* fix `#!` in files
-
 * add Enumerator for set
 
 * add Enumerator for dict
@@ -24,3 +22,5 @@ TODO for leancheck.py
   Performance is not so good currently.
 
 * add carry-on flag
+
+* package _all_ files like in Haskell's leancheck
