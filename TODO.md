@@ -12,7 +12,7 @@ TODO for leancheck.py
 * count actual tests from "vacuous truth" tests
   using the precondition mechanism
 
-* fix order of lists: `[4,3,2,1]` is enumerated before `[1,2,3,4]`.
+* set-up black, flake8 or something of sorts
 
 * simplify code
 

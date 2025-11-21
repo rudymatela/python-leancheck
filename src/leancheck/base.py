@@ -617,7 +617,7 @@ def _mmap(f,xss):
 
 def _llist(mkTiers):
     yield [[]]
-    yield from _pproduct(mkTiers(), _llist(mkTiers), with_f=lambda x, xs: xs + [x])
+    yield from _pproduct(mkTiers(), _llist(mkTiers), with_f=lambda x, xs: [x] + xs)
 
 
 def _colour_escapes():
