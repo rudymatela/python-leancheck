@@ -30,12 +30,8 @@ def prop_sort_twice(xs: list[int]) -> bool:
 
 def prop_sort_ordered(xs: list[int]) -> bool:
     "Sorting a list returns the elements in order."
-    def ordered(xs):
-        for x, y in zip(xs, xs[1:]):
-            if x > y:
-                return False
-        return True
-    return ordered(qsort(xs))
+    ys = qsort(xs)
+    return all(x <= y for x, y in zip(ys, ys[1:]))
 
 def prop_sort_elem(x: int, xs: list[int]) -> bool:
     "Sorting preserves membership in the list."
