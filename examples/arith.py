@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env python
 #
 # Using LeanCheck to test arithmetic functions
 #

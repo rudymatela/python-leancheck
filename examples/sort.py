@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env python
 #
 # Example: using LeanCheck to test a sorting function
 #
