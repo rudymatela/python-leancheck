@@ -5,38 +5,42 @@ python-leancheck release instructions
 
 		git pull --all
 
-1. Upload on test-PyPI
+1. Cleanup dist
+
+		$ rm -r dist/
+
+2. Upload on test-PyPI
 
 		$ make upload-test
 
-2. Look at https://test.pypi.org/project/leancheck/
+3. Look at https://test.pypi.org/project/leancheck/
 
-3. Test install with:
+4. Test install with:
 
 		$ make test-install
 
-4. Bump version in `pyproject.toml` to even patch (02468)
+5. Bump version in `pyproject.toml` to even patch (02468)
 
-5. Commit and tag
+6. Commit and tag
 
 		$ git commit
 		$ git tag -a vX.Y.Z
 
-6. Cleanup dist
+7. Cleanup dist
 
 		$ rm -r dist/
 
-7. Upload for real on PyPI:
+8. Upload for real on PyPI:
 
 		$ make upload-for-real-this-time
 
-8. Bump version in `pyproject.toml` to odd "dev" patch (13579)
+9. Bump version in `pyproject.toml` to odd "dev" patch (13579)
 
-9. Commit "dev version bump"
+10. Commit "dev version bump"
 
-10. Test real install with `pip install leancheck`
+11. Test real install with `pip install leancheck`
 
-11. Publish updated docs:
+12. Publish updated docs:
 
 		$ make clone-docs # or pull
 		$ make docs
@@ -44,4 +48,4 @@ python-leancheck release instructions
 		$ git diff
 		$ git commit
 
-12. Rinse & repeat.
+13. Rinse & repeat.
