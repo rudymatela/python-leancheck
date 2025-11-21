@@ -58,7 +58,7 @@ LeanCheck may find and report a counterexample:
     ...
 
     >>> check(prop_sorted_wrong)
-    *** Failed! Falsifiable after 6 tests:
+    *** Failed! Falsifiable after 7 tests:
         prop_sorted_wrong([1, 0])
     False
 
