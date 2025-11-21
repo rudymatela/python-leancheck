@@ -1,6 +1,8 @@
 TODO for leancheck.py
 =====================
 
+* fix `#!` in files
+
 * add Enumerator for set
 
 * add Enumerator for dict

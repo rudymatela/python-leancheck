@@ -58,7 +58,7 @@ LeanCheck may find and report a counterexample:
     ...
 
     >>> check(prop_sorted_wrong)
-    *** Failed! Falsifiable after 6 tests:
+    *** Failed! Falsifiable after 7 tests:
         prop_sorted_wrong([1, 0])
     False
 
@@ -122,7 +122,7 @@ def check(prop, max_tests=360, verbose=True, silent=False, types=[]):
     ...     return sorted(xs) == xs
     ...
     >>> check(prop_sorted_wrong)
-    *** Failed! Falsifiable after 6 tests:
+    *** Failed! Falsifiable after 7 tests:
         prop_sorted_wrong([1, 0])
     False
 
@@ -277,7 +277,7 @@ class Enumerator:
     Enumerator(lambda: (xs for xs in [[False, True]]))
 
     >>> print(Enumerator[list[int]])
-    [[], [0], [0, 0], [1], [0, 0, 0], [1, 0], ...]
+    [[], [0], [0, 0], [1], [0, 0, 0], [0, 1], ...]
 
     >>> print(Enumerator[tuple[bool, int]])
     [(False, 0), (True, 0), (False, 1), (True, 1), (False, -1), (True, -1), ...]
@@ -362,12 +362,12 @@ class Enumerator:
         Constructs an enumerator of lists of values from another enumeration.
 
         >>> print(Enumerator.lists(Enumerator[int]))
-        [[], [0], [0, 0], [1], [0, 0, 0], [1, 0], ...]
+        [[], [0], [0, 0], [1], [0, 0, 0], [0, 1], ...]
 
         You are perhaps better off using:
 
         >>> print(Enumerator[list[int]])
-        [[], [0], [0, 0], [1], [0, 0, 0], [1, 0], ...]
+        [[], [0], [0, 0], [1], [0, 0, 0], [0, 1], ...]
         """
         return cls(lambda: _llist(enumerator.tiers))
 
@@ -508,7 +508,7 @@ class Enumerator:
         Enumerator(lambda: (xs for xs in [[False, True]]))
 
         >>> print(Enumerator[list[int]])
-        [[], [0], [0, 0], [1], [0, 0, 0], [1, 0], ...]
+        [[], [0], [0, 0], [1], [0, 0, 0], [0, 1], ...]
 
         >>> print(Enumerator[tuple[bool, int]])
         [(False, 0), (True, 0), (False, 1), (True, 1), (False, -1), (True, -1), ...]
@@ -680,6 +680,6 @@ def _truncate(gen):
 if __name__ == "__main__":
     import doctest
     import sys
-    (failures, _) = doctest.testmod()
+    (failures, _) = doctest.testmod(optionflags=doctest.REPORT_ONLY_FIRST_FAILURE)
     if failures:
         sys.exit(1)

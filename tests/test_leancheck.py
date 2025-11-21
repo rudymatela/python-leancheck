@@ -43,14 +43,14 @@ class TestLeanCheck(unittest.TestCase):
 
     def test_int(self):
         self.assertEnum(int, [0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, -6])
-        self.assertEnum(list[int], [[], [0], [0, 0], [1], [0, 0, 0], [1, 0]])
+        self.assertEnum(list[int], [[], [0], [0, 0], [1], [0, 0, 0], [0, 1]])
 
     def test_float(self):
         self.assertEnum(float, [0, 1, -1, 0.5, -0.5, 2, -2, 1/3, -1/3, 3/2, -3/2, 2/3])
 
     def test_bool(self):
         self.assertFiniteEnum(bool, [False,True])
-        self.assertEnum(list[bool], [[], [False], [True], [False,False], [True,False], [False,True]])
+        self.assertEnum(list[bool], [[], [False], [True], [False,False], [False,True], [True,False]])
 
     def test_tuple(self):
         self.assertEnum(tuple[int,int], [(0,0), (0,1), (1,0), (0,-1), (1,1), (-1,0)])
