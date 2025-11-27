@@ -23,25 +23,9 @@ def negative_ints():
     return itertools.count(-1, -1)
 
 
-# An implementation of the fusc function (EWD 570)
-# https://www.cs.utexas.edu/~EWD/ewd05xx/EWD570.PDF
-#
-# >>> [leancheck._fusc(x) for x in range(24)]
-# [0, 1, 1, 2, 1, 3, 2, 3, 1, 4, 3, 5, 2, 5, 3, 4, 1, 5, 4, 7, 3, 8, 5, 7]
-def fusc(n):
-    a, b = 1, 0
-    while n:
-        if n % 2 == 0:
-            a += b
-        else:
-            b += a
-        n //= 2
-    return b
-
-
-# See _fusc
-def fuscs():
-    return (fusc(n) for n in itertools.count(1))
+def floats():
+    yield 0.0
+    yield from ii.intercalate(positive_floats(), negative_floats())
 
 
 # Generates all positive float numbers.
@@ -56,9 +40,25 @@ def negative_floats():
     return map(lambda x: -x, positive_floats())
 
 
-def floats():
-    yield 0.0
-    yield from ii.intercalate(positive_floats(), negative_floats())
+# See _fusc
+def fuscs():
+    return (fusc(n) for n in itertools.count(1))
+
+
+# An implementation of the fusc function (EWD 570)
+# https://www.cs.utexas.edu/~EWD/ewd05xx/EWD570.PDF
+#
+# >>> [leancheck._fusc(x) for x in range(24)]
+# [0, 1, 1, 2, 1, 3, 2, 3, 1, 4, 3, 5, 2, 5, 3, 4, 1, 5, 4, 7, 3, 8, 5, 7]
+def fusc(n):
+    a, b = 1, 0
+    while n:
+        if n % 2 == 0:
+            a += b
+        else:
+            b += a
+        n //= 2
+    return b
 
 
 # Runs tests if this is not being imported as a module.
