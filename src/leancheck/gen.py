@@ -27,7 +27,7 @@ def fusc(n):
 
 
 # See _fusc
-def fusc_generator():
+def fuscs():
     return (fusc(n) for n in itertools.count(1))
 
 
@@ -35,17 +35,17 @@ def fusc_generator():
 # All pairs n/d are included without repetition in their most simple form.
 # This is the Calkin-Wilf sequence
 # computed with the help of the fusc function (EWD 570)
-def positive_float_generator():
-    return itertools.starmap(lambda n, d: n / d, zip(fusc_generator(), ii.tail(fusc_generator())))
+def positive_floats():
+    return itertools.starmap(lambda n, d: n / d, zip(fuscs(), ii.tail(fuscs())))
 
 
-def negative_float_generator():
-    return map(lambda x: -x, positive_float_generator())
+def negative_floats():
+    return map(lambda x: -x, positive_floats())
 
 
-def float_generator():
+def floats():
     yield 0.0
-    yield from ii.intercalate(positive_float_generator(), negative_float_generator())
+    yield from ii.intercalate(positive_floats(), negative_floats())
 
 
 # Runs tests if this is not being imported as a module.
