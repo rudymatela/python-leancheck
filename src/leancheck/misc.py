@@ -4,6 +4,16 @@
 #
 # (C) 2023-2025  Rudy Matela
 # Distributed under the LGPL v2.1 or later (see the file LICENSE)
+"""
+This is part of the [LeanCheck package](https://pypi.org/project/leancheck/):
+an enumerative property-based testing library for Python.
+
+This module defines miscellaneous utilities used throughout LeanCheck.
+
+
+You are better off importing the main `leancheck` module
+with `import leancheck`.
+"""
 
 
 import sys
