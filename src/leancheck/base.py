@@ -85,6 +85,7 @@ import typing
 
 import leancheck.misc as misc
 import leancheck.iitertools as ii
+import leancheck.gen as gen
 
 
 def check(prop, max_tests=360, verbose=True, silent=False, types=[]):
@@ -487,7 +488,7 @@ class Enumerator:
         if cls._enumerators is None:
             cls._enumerators = {
                 int: cls.from_gen(gen_ints),
-                float: cls.from_gen(_float_generator),
+                float: cls.from_gen(gen.float_generator),
                 bool: cls.from_choices([False, True]),
                 list: lambda e: cls.lists(e),
                 tuple: lambda *e: cls.product(*e),
@@ -539,48 +540,6 @@ class Enumerator:
                 return cls._enumerators[c]
         except KeyError as err:
             raise TypeError(f"could not find Enumerator for {c}") from err
-
-
-# An implementation of the fusc function (EWD 570)
-# https://www.cs.utexas.edu/~EWD/ewd05xx/EWD570.PDF
-#
-# >>> [leancheck._fusc(x) for x in range(24)]
-# [0, 1, 1, 2, 1, 3, 2, 3, 1, 4, 3, 5, 2, 5, 3, 4, 1, 5, 4, 7, 3, 8, 5, 7]
-def _fusc(n):
-    a, b = 1, 0
-    while n:
-        if n % 2 == 0:
-            a += b
-        else:
-            b += a
-        n //= 2
-    return b
-
-
-# See _fusc
-def _fusc_generator():
-    return (_fusc(n) for n in itertools.count(1))
-
-
-# Generates all positive float numbers.
-# All pairs n/d are included without repetition in their most simple form.
-# This is the Calkin-Wilf sequence
-# computed with the help of the fusc function (EWD 570)
-def _positive_float_generator():
-    return itertools.starmap(lambda n, d: n / d, zip(_fusc_generator(), ii.tail(_fusc_generator())))
-
-
-def _negative_float_generator():
-    return map(lambda x: -x, _positive_float_generator())
-
-
-def _float_generator():
-    yield 0.0
-    yield from ii.intercalate(_positive_float_generator(), _negative_float_generator())
-
-
-def _truncate(gen):
-    return list(itertools.islice(gen, 12))
 
 
 # Runs tests if this is not being imported as a module.
