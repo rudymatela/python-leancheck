@@ -296,6 +296,37 @@ class Enumerator:
         except KeyError as err:
             raise TypeError(f"could not find Enumerator for {c}") from err
 
+    @classmethod
+    def default(cls):
+        """
+        Reverses the effect of `only_positives()`
+        restoring negatives in numeric enumerations.
+
+        >>> Enumerator.default()
+        """
+        cls.register(int,   cls.from_gen(gen.ints))
+        cls.register(float, cls.from_gen(gen.floats))
+
+    @classmethod
+    def only_positives(cls):
+        """
+        Forces enumerations to contain only positive numbers:
+
+        >>> Enumerator.only_positives()
+        >>> print(Enumerator[int])
+        [1, 2, 3, 4, 5, 6, ...]
+        >>> print(Enumerator[float])
+        [1.0, 0.5, 2.0, 0.3333333333333333, 1.5, 0.6666666666666666, ...]
+        >>> print(Enumerator[list[tuple[int,float]]])
+        [[], [(1, 1.0)], [(1, 1.0), (1, 1.0)], [(1, 0.5)], [(2, 1.0)], [(1, 1.0), (1, 1.0), (1, 1.0)], ...]
+
+        Reset with
+
+        >>> Enumerator.default()
+        """
+        cls.register(int,   cls.from_gen(gen.positive_ints))
+        cls.register(float, cls.from_gen(gen.positive_floats))
+
 
 # Runs tests if this is not being imported as a module.
 if __name__ == "__main__":
