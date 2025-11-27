@@ -13,13 +13,16 @@ import leancheck
 
 # Properties about the functional "sorted()" interface
 
+
 # Sorting once is the same as sorting twice
 def prop_sorted_twice(xs: list[int]) -> bool:
     return sorted(sorted(xs)) == sorted(xs)
 
+
 # After sorting, the list should retain all elements in the original list.
 def prop_sorted_elem(x: int, xs: list[int]) -> bool:
     return (x in sorted(xs)) == (x in xs)
+
 
 # After sorting, the list should not change its length
 def prop_sorted_len(xs: list[int]) -> bool:
@@ -28,6 +31,7 @@ def prop_sorted_len(xs: list[int]) -> bool:
 
 # Properties about the imperative ".sort()" interface
 
+
 # Sorting once is the same as sorting twice.
 def prop_sort_twice(xs: list[int]) -> bool:
     xs.sort()
@@ -35,17 +39,20 @@ def prop_sort_twice(xs: list[int]) -> bool:
     xs.sort()
     return xs == ys
 
+
 # After sorting, the list should retain all elements in the original list.
 def prop_sort_elem(x: int, xs: list[int]) -> bool:
     ys = list(xs)
     ys.sort
     return (x in ys) == (x in xs)
 
+
 # After sorting, the list should not change its length
 def prop_sort_len(xs: list[int]) -> bool:
     ys = list(xs)
     ys.sort
     return len(ys) == len(xs)
+
 
 # We could check the properties explicitly like so:
 # check(prop_sorted_twice)

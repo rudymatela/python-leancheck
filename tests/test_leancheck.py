@@ -33,29 +33,36 @@ class TestLeanCheck(unittest.TestCase):
         self.assertEqual(list(Enumerator[typ]), lst)
 
     def test_constructor(self):
-        e = Enumerator(lambda: ([x] for x in [3,1,3,3,7]))
-        self.assertEqual(list(e), [3,1,3,3,7])
-        self.assertEqual(list(e.tiers()), [[3],[1],[3],[3],[7]])
-    
+        e = Enumerator(lambda: ([x] for x in [3, 1, 3, 3, 7]))
+        self.assertEqual(list(e), [3, 1, 3, 3, 7])
+        self.assertEqual(list(e.tiers()), [[3], [1], [3], [3], [7]])
+
     def test_from_list(self):
-        e = Enumerator.from_list([3,1,3,3,7])
-        self.assertEqual(list(e), [3,1,3,3,7])
+        e = Enumerator.from_list([3, 1, 3, 3, 7])
+        self.assertEqual(list(e), [3, 1, 3, 3, 7])
 
     def test_int(self):
         self.assertEnum(int, [0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, -6])
         self.assertEnum(list[int], [[], [0], [0, 0], [1], [0, 0, 0], [0, 1]])
 
     def test_float(self):
-        self.assertEnum(float, [0, 1, -1, 0.5, -0.5, 2, -2, 1/3, -1/3, 3/2, -3/2, 2/3])
+        self.assertEnum(float, [0, 1, -1, 0.5, -0.5, 2, -2, 1 / 3, -1 / 3, 3 / 2, -3 / 2, 2 / 3])
 
     def test_bool(self):
-        self.assertFiniteEnum(bool, [False,True])
-        self.assertEnum(list[bool], [[], [False], [True], [False,False], [False,True], [True,False]])
+        self.assertFiniteEnum(bool, [False, True])
+        self.assertEnum(
+            list[bool], [[], [False], [True], [False, False], [False, True], [True, False]]
+        )
 
     def test_tuple(self):
-        self.assertEnum(tuple[int,int], [(0,0), (0,1), (1,0), (0,-1), (1,1), (-1,0)])
-        self.assertEnum(tuple[int,int,int], [(0,0,0), (0,0,1), (0,1,0), (1,0,0), (0,0,-1), (0,1,1)])
-        self.assertEnum(tuple[bool,bool], [(False, False), (False, True), (True, False), (True, True)])
+        self.assertEnum(tuple[int, int], [(0, 0), (0, 1), (1, 0), (0, -1), (1, 1), (-1, 0)])
+        self.assertEnum(
+            tuple[int, int, int],
+            [(0, 0, 0), (0, 0, 1), (0, 1, 0), (1, 0, 0), (0, 0, -1), (0, 1, 1)],
+        )
+        self.assertEnum(
+            tuple[bool, bool], [(False, False), (False, True), (True, False), (True, True)]
+        )
 
     def test_properties(self):
         self.assertEqual(holds(lambda x: x + x >= x, types=[int]), False)
@@ -69,5 +76,5 @@ class TestLeanCheck(unittest.TestCase):
         self.assertEqual(list(e.tiers()), [[()]])
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

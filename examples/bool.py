@@ -7,17 +7,21 @@
 
 from leancheck import check
 
-def prop_not_idempotent(p:bool) -> bool:
+
+def prop_not_idempotent(p: bool) -> bool:
     return (not (not p)) == p
 
-def prop_and_commutes(p:bool, q:bool) -> bool:
+
+def prop_and_commutes(p: bool, q: bool) -> bool:
     return (p and q) == (q and p)
 
-def prop_or_commutes(p:bool, q:bool) -> bool:
+
+def prop_or_commutes(p: bool, q: bool) -> bool:
     return (p or q) == (q or p)
 
+
 # The following property is intentionally incorrect
-def prop_and_or_interchangeable(p:bool, q:bool) -> bool:
+def prop_and_or_interchangeable(p: bool, q: bool) -> bool:
     return (p and q) == (p or q)
 
 

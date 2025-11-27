@@ -9,12 +9,14 @@ from leancheck import check
 import leancheck
 
 
-def prop_commute(x:int, y:int) -> bool:
+def prop_commute(x: int, y: int) -> bool:
     return x + y == y + x
 
+
 # incorrect property
-def prop_increase(x:int, y:int) -> bool:
+def prop_increase(x: int, y: int) -> bool:
     return x + y > x
+
 
 # This collects and tests all properties:
 leancheck.main(verbose=True, exit_on_failure=False)

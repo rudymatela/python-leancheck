@@ -153,7 +153,7 @@ def check(prop, max_tests=360, verbose=True, silent=False, types=[]):
         try:
             if not prop(*args):
                 if not silent:
-                    repr_args = ', '.join(map(repr, args))
+                    repr_args = ", ".join(map(repr, args))
                     print(f"*** Failed! Falsifiable after {i+1} tests:")
                     print(f"    {red}{prop.__name__}{clear}({repr_args})")
                 return False
@@ -161,13 +161,13 @@ def check(prop, max_tests=360, verbose=True, silent=False, types=[]):
             continue
         except BaseException as e:
             if not silent:
-                repr_args = ', '.join(map(repr, args))
+                repr_args = ", ".join(map(repr, args))
                 print(f"*** Failed! Exception after {i+1} tests:")
                 print(f"    {red}{prop.__name__}{clear}({repr_args})")
                 print(f"    raised '{e}'")
             return False
     if verbose:
-        i = i+1
+        i = i + 1
         exhausted = " (exhausted)" if i < max_tests else ""
         print(f"+++ OK, passed {i} tests{exhausted}: {green}{prop.__name__}{clear}")
     return True
@@ -235,18 +235,20 @@ def testmod(max_tests=360, silent=False, verbose=False):
     """
     n_failures = 0
     n_properties = 0
+
     def lineno(m):
         try:
             return m[1].__code__.co_firstlineno
         except AttributeError:
             return -1
+
     for name, member in sorted(inspect.getmembers(sys.modules["__main__"]), key=lineno):
         if name.startswith("prop_") and callable(member):
             n_properties += 1
             passed = check(member, max_tests=max_tests, silent=silent, verbose=verbose)
             if not passed:
                 n_failures += 1
-    return (n_failures, n_properties) # just like doctest.testmod()
+    return (n_failures, n_properties)  # just like doctest.testmod()
 
 
 def precondition(condition: bool):
@@ -399,19 +401,19 @@ class Enumerator:
 
     def __repr__(self):
         l = self._repr_len
-        xss = [str(xs) for xs in itertools.islice(self.tiers(), l+1)]
-        if (len(xss) > l):
+        xss = [str(xs) for xs in itertools.islice(self.tiers(), l + 1)]
+        if len(xss) > l:
             xss[l] = "..."
-        return "Enumerator(lambda: (xs for xs in [" + ', '.join(xss) + "]))"
+        return "Enumerator(lambda: (xs for xs in [" + ", ".join(xss) + "]))"
 
     _str_len: int = 6
 
     def __str__(self):
         l = self._str_len
-        xs = [str(x) for x in itertools.islice(self, l+1)]
-        if (len(xs) > l):
+        xs = [str(x) for x in itertools.islice(self, l + 1)]
+        if len(xs) > l:
             xs[l] = "..."
-        return "[" + ', '.join(xs) + "]"
+        return "[" + ", ".join(xs) + "]"
 
     @classmethod
     def set_repr_length(self, repr_len: int):
@@ -474,14 +476,16 @@ class Enumerator:
     @classmethod
     def _initialize(cls):
         "Initializes the internal _enumerators dictionary"
+
         def gen_ints():
             yield 0
-            yield from _intercalate(itertools.count(1,1), itertools.count(-1,-1))
+            yield from _intercalate(itertools.count(1, 1), itertools.count(-1, -1))
+
         if cls._enumerators is None:
             cls._enumerators = {
                 int: cls.from_gen(gen_ints),
                 float: cls.from_gen(_float_generator),
-                bool: cls.from_choices([False,True]),
+                bool: cls.from_choices([False, True]),
                 list: lambda e: cls.lists(e),
                 tuple: lambda *e: cls.product(*e),
             }
@@ -561,8 +565,8 @@ def _intercalate(generator1, generator2):
     >>> list(_intercalate((x for x in [1,2,3]), (y for y in [4,5,6])))
     [1, 4, 2, 5, 3, 6]
     """
-    g1 = (x for x in generator1) # makes this work on lists
-    g2 = (y for y in generator2) # makes this work on lists
+    g1 = (x for x in generator1)  # makes this work on lists
+    g2 = (y for y in generator2)  # makes this work on lists
     while True:
         try:
             yield next(g1)
@@ -577,12 +581,14 @@ def _intercalate(generator1, generator2):
 
 
 def _zippend(*iiterables):
-    return map(list,itertools.starmap(itertools.chain,itertools.zip_longest(*iiterables, fillvalue=[])))
+    return map(
+        list, itertools.starmap(itertools.chain, itertools.zip_longest(*iiterables, fillvalue=[]))
+    )
 
 
 def _pproduct(xss, yss, with_f=None):
     if with_f is None:
-        with_f = lambda x, y: (x,y)
+        with_f = lambda x, y: (x, y)
     xss_ = []
     yss_ = []
     l = 0
@@ -591,8 +597,8 @@ def _pproduct(xss, yss, with_f=None):
         yss_.append(list(next(yss, [])))
         l += 1
         zs = []
-        for i in range(0,l):
-            zs += [with_f(x,y) for x in xss_[i] for y in yss_[l-i-1]]
+        for i in range(0, l):
+            zs += [with_f(x, y) for x in xss_[i] for y in yss_[l - i - 1]]
         if zs == []:
             # This is "sound-but-incomplete".
             # TODO: in the final version, use None as a default value
@@ -610,7 +616,7 @@ def _delay(xss):
     yield from xss
 
 
-def _mmap(f,xss):
+def _mmap(f, xss):
     for xs in xss:
         yield [f(x) for x in xs]
 
@@ -628,12 +634,12 @@ def _colour_escapes():
     >>> print(f"{red}This is red{clear} and {blue}this is blue{clear}.")
     This is red and this is blue.
     """
-    plats = ['linux'] # TODO: add other supported platforms
+    plats = ["linux"]  # TODO: add other supported platforms
     supported = sys.stdout.isatty() and sys.platform in plats
     if supported:
-        return '\x1b[m', '\x1b[1;31m', '\x1b[32m', '\x1b[34m', '\x1b[33m'
+        return "\x1b[m", "\x1b[1;31m", "\x1b[32m", "\x1b[34m", "\x1b[33m"
     else:
-        return '', '', '', '', ''
+        return "", "", "", "", ""
 
 
 # An implementation of the fusc function (EWD 570)
@@ -651,35 +657,42 @@ def _fusc(n):
         n //= 2
     return b
 
+
 # See _fusc
 def _fusc_generator():
     return (_fusc(n) for n in itertools.count(1))
+
 
 # Generates all positive float numbers.
 # All pairs n/d are included without repetition in their most simple form.
 # This is the Calkin-Wilf sequence
 # computed with the help of the fusc function (EWD 570)
 def _positive_float_generator():
-    return itertools.starmap(lambda n, d: n/d, zip(_fusc_generator(), _tail(_fusc_generator())))
+    return itertools.starmap(lambda n, d: n / d, zip(_fusc_generator(), _tail(_fusc_generator())))
+
 
 def _negative_float_generator():
     return map(lambda x: -x, _positive_float_generator())
+
 
 def _float_generator():
     yield 0.0
     yield from _intercalate(_positive_float_generator(), _negative_float_generator())
 
+
 def _tail(gen):
     return itertools.islice(gen, 1, None)
 
+
 def _truncate(gen):
-    return list(itertools.islice(gen,12))
+    return list(itertools.islice(gen, 12))
 
 
 # Runs tests if this is not being imported as a module.
 if __name__ == "__main__":
     import doctest
     import sys
+
     (failures, _) = doctest.testmod(optionflags=doctest.REPORT_ONLY_FIRST_FAILURE)
     if failures:
         sys.exit(1)

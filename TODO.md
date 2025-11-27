@@ -12,8 +12,6 @@ TODO for leancheck.py
 * count actual tests from "vacuous truth" tests
   using the precondition mechanism
 
-* set-up black, flake8 or something of sorts
-
 * simplify code
 
 * create iitertools module?

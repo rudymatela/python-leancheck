@@ -19,6 +19,9 @@ pytest:
 mypy:
 	mypy src/ tests/ examples/
 
+black:
+	black -l99 src/ tests/ examples/
+
 validate-pyproject:
 	validate-pyproject pyproject.toml
 
