@@ -82,6 +82,7 @@ import itertools
 import sys
 import types
 import typing
+import leancheck.iitertools as ii
 
 
 def check(prop, max_tests=360, verbose=True, silent=False, types=[]):
@@ -324,7 +325,7 @@ class Enumerator:
         self.tiers = tiers
 
     def __iter__(self):
-        return _to_list(self.tiers())
+        return ii.flatten(self.tiers())
 
     @classmethod
     def from_gen(cls, gen):
@@ -334,7 +335,7 @@ class Enumerator:
         >>> Enumerator.from_gen(itertools.count)
         Enumerator(lambda: (xs for xs in [[0], [1], [2], [3], [4], [5], ...]))
         """
-        return cls(lambda: _to_tiers(gen()))
+        return cls(lambda: ii.nest(gen()))
 
     @classmethod
     def from_list(cls, lst):
@@ -345,7 +346,7 @@ class Enumerator:
         >>> Enumerator.from_list([0,2,4,6])
         Enumerator(lambda: (xs for xs in [[0], [2], [4], [6]]))
         """
-        return cls(lambda: _to_tiers(x for x in lst))
+        return cls(lambda: ii.nest(x for x in lst))
 
     @classmethod
     def from_choices(cls, choices):
@@ -371,7 +372,7 @@ class Enumerator:
         >>> print(Enumerator[list[int]])
         [[], [0], [0, 0], [1], [0, 0, 0], [0, 1], ...]
         """
-        return cls(lambda: _llist(enumerator.tiers))
+        return cls(lambda: ii.listss(enumerator.tiers))
 
     def __add__(self, other):
         """
@@ -383,7 +384,7 @@ class Enumerator:
         >>> Enumerator[int] + Enumerator[bool]
         Enumerator(lambda: (xs for xs in [[0, False, True], [1], [-1], [2], [-2], [3], ...]))
         """
-        return Enumerator(lambda: _zippend(self.tiers(), other.tiers()))
+        return Enumerator(lambda: ii.zippend(self.tiers(), other.tiers()))
 
     def __mul__(self, other):
         """
@@ -395,7 +396,7 @@ class Enumerator:
         >>> Enumerator[int] * Enumerator[bool]
         Enumerator(lambda: (xs for xs in [[(0, False), (0, True)], [(1, False), (1, True)], [(-1, False), (-1, True)], [(2, False), (2, True)], [(-2, False), (-2, True)], [(3, False), (3, True)], ...]))
         """
-        return Enumerator(lambda: _pproduct(self.tiers(), other.tiers()))
+        return Enumerator(lambda: ii.pproduct(self.tiers(), other.tiers()))
 
     _repr_len: int = 6
 
@@ -448,7 +449,7 @@ class Enumerator:
         >>> Enumerator[int].map(lambda x: x*2)
         Enumerator(lambda: (xs for xs in [[0], [2], [-2], [4], [-4], [6], ...]))
         """
-        return Enumerator(lambda: _mmap(f, self.tiers()))
+        return Enumerator(lambda: ii.mmap(f, self.tiers()))
 
     @classmethod
     def product(cls, *enumerators):
@@ -479,7 +480,7 @@ class Enumerator:
 
         def gen_ints():
             yield 0
-            yield from _intercalate(itertools.count(1, 1), itertools.count(-1, -1))
+            yield from ii.intercalate(itertools.count(1, 1), itertools.count(-1, -1))
 
         if cls._enumerators is None:
             cls._enumerators = {
@@ -538,94 +539,6 @@ class Enumerator:
             raise TypeError(f"could not find Enumerator for {c}") from err
 
 
-# Declaration of some internal functions.
-# These could eventually reside in a separate file,
-# but for simplicity I am keeping them in a single one.
-
-
-def _to_tiers(xs):
-    for x in xs:
-        yield [x]
-
-
-def _to_list(xss):
-    for xs in xss:
-        yield from xs
-
-
-def _intercalate(generator1, generator2):
-    """
-    This function intercalates the two given iterables.
-
-    >>> list(_intercalate([1,2,3], [-1, -2, -3]))
-    [1, -1, 2, -2, 3, -3]
-
-    If the arguments are generators, they will be consumed.
-
-    >>> list(_intercalate((x for x in [1,2,3]), (y for y in [4,5,6])))
-    [1, 4, 2, 5, 3, 6]
-    """
-    g1 = (x for x in generator1)  # makes this work on lists
-    g2 = (y for y in generator2)  # makes this work on lists
-    while True:
-        try:
-            yield next(g1)
-        except StopIteration:
-            yield from g2
-            break
-        try:
-            yield next(g2)
-        except StopIteration:
-            yield from g1
-            break
-
-
-def _zippend(*iiterables):
-    return map(
-        list, itertools.starmap(itertools.chain, itertools.zip_longest(*iiterables, fillvalue=[]))
-    )
-
-
-def _pproduct(xss, yss, with_f=None):
-    if with_f is None:
-        with_f = lambda x, y: (x, y)
-    xss_ = []
-    yss_ = []
-    l = 0
-    while True:
-        xss_.append(list(next(xss, [])))
-        yss_.append(list(next(yss, [])))
-        l += 1
-        zs = []
-        for i in range(0, l):
-            zs += [with_f(x, y) for x in xss_[i] for y in yss_[l - i - 1]]
-        if zs == []:
-            # This is "sound-but-incomplete".
-            # TODO: in the final version, use None as a default value
-            # in the appends above
-            # and break only in the case where we
-            # end up with empty zs because of None values
-            # there's an opportunity for memory optimization here
-            # such as in the example of product between integers and booleans
-            break
-        yield zs
-
-
-def _delay(xss):
-    yield []
-    yield from xss
-
-
-def _mmap(f, xss):
-    for xs in xss:
-        yield [f(x) for x in xs]
-
-
-def _llist(mkTiers):
-    yield [[]]
-    yield from _pproduct(mkTiers(), _llist(mkTiers), with_f=lambda x, xs: [x] + xs)
-
-
 def _colour_escapes():
     """
     Returns colour escape sequences for clear, red, green, blue and yellow
@@ -668,7 +581,7 @@ def _fusc_generator():
 # This is the Calkin-Wilf sequence
 # computed with the help of the fusc function (EWD 570)
 def _positive_float_generator():
-    return itertools.starmap(lambda n, d: n / d, zip(_fusc_generator(), _tail(_fusc_generator())))
+    return itertools.starmap(lambda n, d: n / d, zip(_fusc_generator(), ii.tail(_fusc_generator())))
 
 
 def _negative_float_generator():
@@ -677,11 +590,7 @@ def _negative_float_generator():
 
 def _float_generator():
     yield 0.0
-    yield from _intercalate(_positive_float_generator(), _negative_float_generator())
-
-
-def _tail(gen):
-    return itertools.islice(gen, 1, None)
+    yield from ii.intercalate(_positive_float_generator(), _negative_float_generator())
 
 
 def _truncate(gen):
