@@ -33,6 +33,10 @@ def negative_ints():
     return itertools.count(-1, -1)
 
 
+def non_negative_ints():
+    return itertools.count()
+
+
 def floats():
     yield 0.0
     yield from ii.intercalate(positive_floats(), negative_floats())
@@ -48,6 +52,11 @@ def positive_floats():
 
 def negative_floats():
     return map(lambda x: -x, positive_floats())
+
+
+def non_negative_floats():
+    yield 0.0
+    yield from positive_floats()
 
 
 # See _fusc

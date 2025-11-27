@@ -327,6 +327,27 @@ class Enumerator:
         cls.register(int,   cls.from_gen(gen.positive_ints))
         cls.register(float, cls.from_gen(gen.positive_floats))
 
+    @classmethod
+    def only_non_negatives(cls):
+        """
+        Forces enumerations to contain only non-negative numbers,
+        i.e. zero and positives:
+
+        >>> Enumerator.only_non_negatives()
+        >>> print(Enumerator[int])
+        [0, 1, 2, 3, 4, 5, ...]
+        >>> print(Enumerator[float])
+        [0.0, 1.0, 0.5, 2.0, 0.3333333333333333, 1.5, ...]
+        >>> print(Enumerator[list[tuple[int,float]]])
+        [[], [(0, 0.0)], [(0, 0.0), (0, 0.0)], [(0, 1.0)], [(1, 0.0)], [(0, 0.0), (0, 0.0), (0, 0.0)], ...]
+
+        Reset with
+
+        >>> Enumerator.default()
+        """
+        cls.register(int,   cls.from_gen(gen.non_negative_ints))
+        cls.register(float, cls.from_gen(gen.non_negative_floats))
+
 
 # Runs tests if this is not being imported as a module.
 if __name__ == "__main__":
