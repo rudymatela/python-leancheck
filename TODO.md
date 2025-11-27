@@ -14,8 +14,6 @@ TODO for leancheck.py
 
 * simplify code
 
-* create iitertools module?
-
 * Add some built-in benchmarks.
   Performance is not so good currently.
 
