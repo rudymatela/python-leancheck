@@ -82,6 +82,8 @@ import itertools
 import sys
 import types
 import typing
+
+import leancheck.misc as misc
 import leancheck.iitertools as ii
 
 
@@ -139,7 +141,7 @@ def check(prop, max_tests=360, verbose=True, silent=False, types=[]):
     True
     """
     verbose = verbose and not silent
-    clear, red, green, blue, yellow = _colour_escapes()
+    clear, red, green, blue, yellow = misc.colour_escapes()
     if not types:
         sig = inspect.signature(prop)
         # print(f"Property's signature: {sig}")
@@ -206,7 +208,7 @@ def main(max_tests=360, silent=False, verbose=False, exit_on_failure=True):
             leancheck.main()
     """
     n_failures, n_properties = testmod(max_tests=max_tests, silent=silent, verbose=verbose)
-    clear, red, green, blue, yellow = _colour_escapes()
+    clear, red, green, blue, yellow = misc.colour_escapes()
     if not silent:
         if not n_properties:
             print(f"{yellow}Warning{clear}: no properties found")
@@ -537,22 +539,6 @@ class Enumerator:
                 return cls._enumerators[c]
         except KeyError as err:
             raise TypeError(f"could not find Enumerator for {c}") from err
-
-
-def _colour_escapes():
-    """
-    Returns colour escape sequences for clear, red, green, blue and yellow
-
-    >>> clear, red, green, blue, yellow = _colour_escapes()
-    >>> print(f"{red}This is red{clear} and {blue}this is blue{clear}.")
-    This is red and this is blue.
-    """
-    plats = ["linux"]  # TODO: add other supported platforms
-    supported = sys.stdout.isatty() and sys.platform in plats
-    if supported:
-        return "\x1b[m", "\x1b[1;31m", "\x1b[32m", "\x1b[34m", "\x1b[33m"
-    else:
-        return "", "", "", "", ""
 
 
 # An implementation of the fusc function (EWD 570)
