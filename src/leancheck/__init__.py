@@ -5,18 +5,12 @@
 # (C) 2023-2024  Rudy Matela
 # Distributed under the LGPL v2.1 or later (see the file LICENSE)
 """
-This is a port of
-[Haskell's LeanCheck][] to [Python][].
-
-[Haskell's LeanCheck]: https://hackage.haskell.org/package/leancheck
-[Python]: https://python.org
+LeanCheck is an enumerative property-based testing library.
+It can be used to complement your unit tests.
 
 **WIP: This library is currently experimental.**
 It works for simple properties,
 but the selection of supported types is still limited.
-
-LeanCheck is an enumerative property-based testing library.
-It can be used to complement your unit tests.
 
 The usual drill in unit testing involves making assertions
 about specific input-output cases of functions, such as:
@@ -74,6 +68,16 @@ an if-expression as you would do with `unittest.main()` or `doctest.testmod()`.
 
     if __name__ == '__main__':
         leancheck.main()
+
+[LeanCheck is available on PyPI][python-leancheck] and installable via:
+
+    $ pip install leancheck
+
+This is a port of [Haskell's LeanCheck][] to [Python][].
+
+[python-leancheck]: https://pypi.org/project/leancheck/
+[Haskell's LeanCheck]: https://hackage.haskell.org/package/leancheck
+[Python]: https://python.org
 """
 
 from leancheck.base import (
