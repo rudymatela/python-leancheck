@@ -481,13 +481,9 @@ class Enumerator:
     def _initialize(cls):
         "Initializes the internal _enumerators dictionary"
 
-        def gen_ints():
-            yield 0
-            yield from ii.intercalate(itertools.count(1, 1), itertools.count(-1, -1))
-
         if cls._enumerators is None:
             cls._enumerators = {
-                int: cls.from_gen(gen_ints),
+                int: cls.from_gen(gen.ints),
                 float: cls.from_gen(gen.floats),
                 bool: cls.from_choices([False, True]),
                 list: lambda e: cls.lists(e),

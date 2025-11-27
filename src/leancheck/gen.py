@@ -10,6 +10,19 @@ import itertools
 import leancheck.iitertools as ii
 
 
+def ints():
+    yield 0
+    yield from ii.intercalate(positive_ints(), negative_ints())
+
+
+def positive_ints():
+    return itertools.count(1, 1)
+
+
+def negative_ints():
+    return itertools.count(-1, -1)
+
+
 # An implementation of the fusc function (EWD 570)
 # https://www.cs.utexas.edu/~EWD/ewd05xx/EWD570.PDF
 #
