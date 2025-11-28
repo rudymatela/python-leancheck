@@ -80,6 +80,23 @@ def fusc(n):
     return b
 
 
+def chars():
+    # TODO: What a hack... Fix later.
+    yield from intercalate(
+        string.ascii_lowercase,
+        intercalate(
+            string.whitespace,
+            intercalate(
+                string.digits,
+                intercalate(
+                    string.ascii_uppercase,
+                    string.punctuation
+                )
+            )
+        )
+    )
+
+
 # Runs tests if this is not being imported as a module.
 if __name__ == "__main__":
     import doctest
