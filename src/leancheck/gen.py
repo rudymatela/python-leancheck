@@ -16,6 +16,7 @@ with `import leancheck`.
 """
 
 
+import string
 import itertools
 import leancheck.iitertools as ii
 
@@ -82,19 +83,23 @@ def fusc(n):
 
 def chars():
     # TODO: What a hack... Fix later.
-    yield from intercalate(
+    yield from ii.intercalate(
         string.ascii_lowercase,
-        intercalate(
+        ii.intercalate(
             string.whitespace,
-            intercalate(
+            ii.intercalate(
                 string.digits,
-                intercalate(
+                ii.intercalate(
                     string.ascii_uppercase,
                     string.punctuation
                 )
             )
         )
     )
+
+
+def stringss():
+    return ii.mmap(lambda cs: "".join(cs), ii.listss(lambda: ii.nest(chars())))
 
 
 # Runs tests if this is not being imported as a module.
