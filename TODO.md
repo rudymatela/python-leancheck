@@ -5,8 +5,6 @@ TODO for leancheck.py
 
 * add Enumerator for dict
 
-* add Enumerator for string
-
 * count actual tests from "vacuous truth" tests
   using the precondition mechanism
 

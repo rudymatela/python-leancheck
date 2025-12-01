@@ -98,7 +98,7 @@ def chars():
     )
 
 
-def stringss():
+def strss():
     return ii.mmap(lambda cs: "".join(cs), ii.listss(lambda: ii.nest(chars())))
 
 

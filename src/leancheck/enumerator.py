@@ -247,7 +247,7 @@ class Enumerator:
                 bool: cls.from_choices([False, True]),
                 list: lambda e: cls.lists(e),
                 tuple: lambda *e: cls.product(*e),
-                str: cls(gen.stringss),
+                str: cls(gen.strss),
             }
 
     @classmethod
