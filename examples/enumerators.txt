@@ -76,3 +76,9 @@ Enumerator(lambda: (xs for xs in [[(False, 0), (True, 0)], [(False, 1), (True, 1
 >>> Enumerator[tuple[bool, int, float]]
 Enumerator(lambda: (xs for xs in [[(False, 0, 0.0), (True, 0, 0.0)], [(False, 0, 1.0), (False, 1, 0.0), (True, 0, 1.0), (True, 1, 0.0)], [(False, 0, -1.0), (False, 1, 1.0), (False, -1, 0.0), (True, 0, -1.0), (True, 1, 1.0), (True, -1, 0.0)], [(False, 0, 0.5), (False, 1, -1.0), (False, -1, 1.0), (False, 2, 0.0), (True, 0, 0.5), (True, 1, -1.0), (True, -1, 1.0), (True, 2, 0.0)], [(False, 0, -0.5), (False, 1, 0.5), (False, -1, -1.0), (False, 2, 1.0), (False, -2, 0.0), (True, 0, -0.5), (True, 1, 0.5), (True, -1, -1.0), (True, 2, 1.0), (True, -2, 0.0)], [(False, 0, 2.0), (False, 1, -0.5), (False, -1, 0.5), (False, 2, -1.0), (False, -2, 1.0), (False, 3, 0.0), (True, 0, 2.0), (True, 1, -0.5), (True, -1, 0.5), (True, 2, -1.0), (True, -2, 1.0), (True, 3, 0.0)], ...]))
 
+>>> print(Enumerator[str])
+[, a, aa,  , aaa, a ,  a, b, aaaa, aa , a a, ab, ...]
+
+>>> Enumerator[str]
+Enumerator(lambda: (xs for xs in [[''], ['a'], ['aa', ' '], ['aaa', 'a ', ' a', 'b'], ['aaaa', 'aa ', 'a a', 'ab', ' aa', '  ', 'ba', '0'], ['aaaaa', 'aaa ', 'aa a', 'aab', 'a aa', 'a  ', 'aba', 'a0', ' aaa', ' a ', '  a', ' b', 'baa', 'b ', '0a', 'c'], ...]))
+

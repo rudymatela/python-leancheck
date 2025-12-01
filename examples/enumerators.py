@@ -42,3 +42,5 @@ pe(tuple[bool, bool, bool])
 pe(tuple[bool, int])
 
 pe(tuple[bool, int, float])
+
+pe(str)
