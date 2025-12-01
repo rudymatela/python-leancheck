@@ -164,7 +164,7 @@ class Enumerator:
 
     def __repr__(self):
         l = self._repr_len
-        xss = [str(xs) for xs in itertools.islice(self.tiers(), l + 1)]
+        xss = [repr(xs) for xs in itertools.islice(self.tiers(), l + 1)]
         if len(xss) > l:
             xss[l] = "..."
         return "Enumerator(lambda: (xs for xs in [" + ", ".join(xss) + "]))"
@@ -173,7 +173,7 @@ class Enumerator:
 
     def __str__(self):
         l = self._str_len
-        xs = [str(x) for x in itertools.islice(self, l + 1)]
+        xs = [repr(x) for x in itertools.islice(self, l + 1)]
         if len(xs) > l:
             xs[l] = "..."
         return "[" + ", ".join(xs) + "]"
