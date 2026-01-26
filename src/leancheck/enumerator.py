@@ -186,6 +186,7 @@ class Enumerator:
         >>> Enumerator.set_repr_length(3)
         >>> Enumerator[int]
         Enumerator(lambda: (xs for xs in [[0], [1], [-1], ...]))
+        >>> Enumerator.set_repr_length(6)
 
         When not set, LeanCheck defaults to 6 tiers.
         """
@@ -212,6 +213,21 @@ class Enumerator:
         Enumerator(lambda: (xs for xs in [[0], [2], [-2], [4], [-4], [6], ...]))
         """
         return Enumerator(lambda: ii.mmap(f, self.tiers()))
+
+    def that(self, p):
+        """
+        Filters values in an enumeration that match a given predicate.
+
+        >>> Enumerator[int].that(lambda x: x % 2 == 0)
+        Enumerator(lambda: (xs for xs in [[0], [], [], [2], [-2], [], ...]))
+
+        >>> Enumerator[int].that(lambda x: x > 0)
+        Enumerator(lambda: (xs for xs in [[], [1], [], [2], [], [3], ...]))
+
+        This may be innefficient due to empty tiers and unneeded computation,
+        use with care.
+        """
+        return Enumerator(lambda: ii.ffilter(p, self.tiers()))
 
     @classmethod
     def product(cls, *enumerators):

@@ -100,6 +100,11 @@ def mmap(f, xss):
         yield [f(x) for x in xs]
 
 
+def ffilter(p, xss):
+    for xs in xss:
+        yield [x for x in xs if p(x)]
+
+
 def listss(mkTiers):
     yield [[]]
     yield from pproduct(mkTiers(), listss(mkTiers), with_f=lambda x, xs: [x] + xs)
