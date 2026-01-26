@@ -2,7 +2,7 @@
 #
 # LeanCheck for Python.  Enumerator module.
 #
-# (C) 2023-2025  Rudy Matela
+# (C) 2023-2026  Rudy Matela
 # Distributed under the LGPL v2.1 or later (see the file LICENSE)
 """
 This is part of the [LeanCheck package](https://pypi.org/project/leancheck/):
