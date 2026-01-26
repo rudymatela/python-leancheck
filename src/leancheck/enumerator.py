@@ -233,22 +233,7 @@ class Enumerator:
             e, *es = enumerators
             return (e * cls.product(*es)).map(lambda t: (t[0],) + t[1])
 
-    _enumerators = None
-
-    # A hack!  Functions that use _enumerators, should first call this.
-    @classmethod
-    def _initialize(cls):
-        "Initializes the internal _enumerators dictionary"
-
-        if cls._enumerators is None:
-            cls._enumerators = {
-                int: cls.from_gen(gen.ints),
-                float: cls.from_gen(gen.floats),
-                bool: cls.from_choices([False, True]),
-                list: lambda e: cls.lists(e),
-                tuple: lambda *e: cls.product(*e),
-                str: cls(gen.strss),
-            }
+    _enumerators: dict = {}
 
     @classmethod
     def register(cls, c, enumerator):
@@ -257,7 +242,6 @@ class Enumerator:
 
         >>> Enumerator.register(bool, Enumerator(lambda: (xs for xs in [[False, True]])))
         """
-        cls._initialize()
         cls._enumerators[c] = enumerator
 
     # @classmethod # automatic
@@ -285,7 +269,6 @@ class Enumerator:
         ...
         TypeError: could not find Enumerator for <class 'type'>
         """
-        cls._initialize()
         try:
             if type(c) is types.GenericAlias:
                 origin = typing.get_origin(c)
@@ -348,6 +331,15 @@ class Enumerator:
         """
         cls.register(int,   cls.from_gen(gen.non_negative_ints))
         cls.register(float, cls.from_gen(gen.non_negative_floats))
+
+
+# Registers default Enumerators
+Enumerator.register(int, Enumerator.from_gen(gen.ints))
+Enumerator.register(float, Enumerator.from_gen(gen.floats))
+Enumerator.register(bool, Enumerator.from_choices([False, True]))
+Enumerator.register(list, lambda e: Enumerator.lists(e))
+Enumerator.register(tuple, lambda *e: Enumerator.product(*e))
+Enumerator.register(str, Enumerator(gen.strss))
 
 
 # Runs tests if this is not being imported as a module.
