@@ -1,8 +1,6 @@
 TODO for leancheck.py
 =====================
 
-* add Enumerator for set
-
 * add Enumerator for dict
 
 * count actual tests from "vacuous truth" tests

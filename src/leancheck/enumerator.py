@@ -280,6 +280,9 @@ class Enumerator:
         >>> print(Enumerator[tuple[int,int,int]])
         [(0, 0, 0), (0, 0, 1), (0, 1, 0), (1, 0, 0), (0, 0, -1), (0, 1, 1), ...]
 
+        >>> print(Enumerator[set[int]])
+        [[], [0], [1], [0, 1], [-1], [-1, 0], ...]
+
         >>> print(Enumerator[type])
         Traceback (most recent call last):
         ...
@@ -356,6 +359,8 @@ Enumerator.register(bool, Enumerator.from_choices([False, True]))
 Enumerator.register(list, lambda e: Enumerator.lists(e))
 Enumerator.register(tuple, lambda *e: Enumerator.product(*e))
 Enumerator.register(str, Enumerator(gen.strss))
+# TODO: Fix the following innefficient enumerator for the set type
+Enumerator.register(set, lambda e: Enumerator.lists(e).that(lambda xs: all(x < y for x, y in zip(xs, xs[1:]))))
 
 
 # Runs tests if this is not being imported as a module.
