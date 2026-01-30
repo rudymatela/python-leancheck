@@ -202,6 +202,7 @@ class Enumerator:
         >>> Enumerator.set_str_length(12)
         >>> print(Enumerator[int])
         [0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, ...]
+        >>> Enumerator.set_str_length(6)
 
         When not set, LeanCheck defaults to 6 items.
         """
