@@ -145,10 +145,16 @@ class Enumerator:
         >>> print(Enumerator[int].sets())
         [set(), {0}, {1}, {0, 1}, {-1}, {0, -1}, ...]
 
+        >>> Enumerator[bool].sets()
+        Enumerator(lambda: (xs for xs in [[set()], [{False}, {True}], [{False, True}], [], [], [], ...]))
+
         You are perhaps better off using:
 
         >>> print(Enumerator[set[int]])
         [set(), {0}, {1}, {0, 1}, {-1}, {0, -1}, ...]
+
+        >>> Enumerator[set[bool]]
+        Enumerator(lambda: (xs for xs in [[set()], [{False}, {True}], [{False, True}], [], [], [], ...]))
         """
         # TODO: Fix the following innefficient enumerator for sets
         return self.lists().that(lambda xs: all(x < y for x, y in zip(xs, xs[1:]))).map(set)
@@ -309,12 +315,6 @@ class Enumerator:
 
         >>> print(Enumerator[tuple[int,int,int]])
         [(0, 0, 0), (0, 0, 1), (0, 1, 0), (1, 0, 0), (0, 0, -1), (0, 1, 1), ...]
-
-        >>> print(Enumerator[set[int]])
-        [set(), {0}, {1}, {0, 1}, {-1}, {0, -1}, ...]
-
-        >>> Enumerator[set[bool]]
-        Enumerator(lambda: (xs for xs in [[set()], [{False}, {True}], [{False, True}], [], [], [], ...]))
 
         >>> print(Enumerator[type])
         Traceback (most recent call last):
