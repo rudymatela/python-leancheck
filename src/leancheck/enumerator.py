@@ -138,6 +138,15 @@ class Enumerator:
         """
         return Enumerator(lambda: ii.listss(self.tiers))
 
+    def sets(self):
+        """
+        Constructs an enumerator of sets of values from another enumeration.
+
+        >>> print(Enumerator[int].sets())
+        [set(), {0}, {1}, {0, 1}, {-1}, {0, -1}, ...]
+        """
+        return self.lists().that(lambda xs: all(x < y for x, y in zip(xs, xs[1:]))).map(set)
+
     def __add__(self, other):
         """
         Use `+` to compute the sum of two enumerations:
