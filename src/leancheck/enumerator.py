@@ -145,6 +145,7 @@ class Enumerator:
         >>> print(Enumerator[int].sets())
         [set(), {0}, {1}, {0, 1}, {-1}, {0, -1}, ...]
         """
+        # TODO: Fix the following innefficient enumerator for sets
         return self.lists().that(lambda xs: all(x < y for x, y in zip(xs, xs[1:]))).map(set)
 
     def __add__(self, other):
@@ -305,10 +306,10 @@ class Enumerator:
         [(0, 0, 0), (0, 0, 1), (0, 1, 0), (1, 0, 0), (0, 0, -1), (0, 1, 1), ...]
 
         >>> print(Enumerator[set[int]])
-        [[], [0], [1], [0, 1], [-1], [-1, 0], ...]
+        [set(), {0}, {1}, {0, 1}, {-1}, {0, -1}, ...]
 
         >>> Enumerator[set[bool]]
-        Enumerator(lambda: (xs for xs in [[[]], [[False], [True]], [[False, True]], [], [], [], ...]))
+        Enumerator(lambda: (xs for xs in [[set()], [{False}, {True}], [{False, True}], [], [], [], ...]))
 
         >>> print(Enumerator[type])
         Traceback (most recent call last):
@@ -386,8 +387,7 @@ Enumerator.register(bool, Enumerator.from_choices([False, True]))
 Enumerator.register(list, Enumerator.lists) # i.e.: lambda e: e.lists()
 Enumerator.register(tuple, Enumerator.product) # i.e.: lambda *e: Enumerator.product(*e)
 Enumerator.register(str, Enumerator(gen.strss))
-# TODO: Fix the following innefficient enumerator for the set type
-Enumerator.register(set, lambda e: Enumerator.lists(e).that(lambda xs: all(x < y for x, y in zip(xs, xs[1:]))))
+Enumerator.register(set, Enumerator.sets)
 
 
 # Runs tests if this is not being imported as a module.
