@@ -188,10 +188,16 @@ class Enumerator:
         >>> Enumerator.set_repr_length(3)
         >>> Enumerator[int]
         Enumerator(lambda: (xs for xs in [[0], [1], [-1], ...]))
-        >>> Enumerator.set_repr_length(6)
 
         When not set, LeanCheck defaults to 6 tiers.
+
+        >>> Enumerator.set_repr_length(6)
+        >>> Enumerator[int]
+        Enumerator(lambda: (xs for xs in [[0], [1], [-1], [2], [-2], [3], ...]))
         """
+        # NOTE: In the doctests above,
+        #       the default reversal is needed
+        #       to not affect other doctests.
         self._repr_len = repr_len
 
     @classmethod
@@ -202,10 +208,16 @@ class Enumerator:
         >>> Enumerator.set_str_length(12)
         >>> print(Enumerator[int])
         [0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, ...]
-        >>> Enumerator.set_str_length(6)
 
         When not set, LeanCheck defaults to 6 items.
+
+        >>> Enumerator.set_str_length(6)
+        >>> print(Enumerator[int])
+        [0, 1, -1, 2, -2, 3, ...]
         """
+        # NOTE: In the doctests above,
+        #       the default reversal is needed
+        #       to not affect other doctests.
         self._str_len = str_len
 
     def map(self, f):
