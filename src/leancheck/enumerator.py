@@ -144,6 +144,11 @@ class Enumerator:
 
         >>> print(Enumerator[int].sets())
         [set(), {0}, {1}, {0, 1}, {-1}, {0, -1}, ...]
+
+        You are perhaps better off using:
+
+        >>> print(Enumerator[set[int]])
+        [set(), {0}, {1}, {0, 1}, {-1}, {0, -1}, ...]
         """
         # TODO: Fix the following innefficient enumerator for sets
         return self.lists().that(lambda xs: all(x < y for x, y in zip(xs, xs[1:]))).map(set)
