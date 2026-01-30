@@ -121,12 +121,14 @@ class Enumerator:
         """
         return cls(lambda: (cs for cs in [choices]))
 
-    @classmethod
-    def lists(cls, enumerator):
+    def lists(self):
         """
         Constructs an enumerator of lists of values from another enumeration.
 
         >>> print(Enumerator.lists(Enumerator[int]))
+        [[], [0], [0, 0], [1], [0, 0, 0], [0, 1], ...]
+
+        >>> print(Enumerator[int].lists())
         [[], [0], [0, 0], [1], [0, 0, 0], [0, 1], ...]
 
         You are perhaps better off using:
@@ -134,7 +136,7 @@ class Enumerator:
         >>> print(Enumerator[list[int]])
         [[], [0], [0, 0], [1], [0, 0, 0], [0, 1], ...]
         """
-        return cls(lambda: ii.listss(enumerator.tiers))
+        return Enumerator(lambda: ii.listss(self.tiers))
 
     def __add__(self, other):
         """
