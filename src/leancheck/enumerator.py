@@ -358,8 +358,8 @@ class Enumerator:
 Enumerator.register(int, Enumerator.from_gen(gen.ints))
 Enumerator.register(float, Enumerator.from_gen(gen.floats))
 Enumerator.register(bool, Enumerator.from_choices([False, True]))
-Enumerator.register(list, lambda e: Enumerator.lists(e))
-Enumerator.register(tuple, lambda *e: Enumerator.product(*e))
+Enumerator.register(list, Enumerator.lists) # i.e.: lambda e: e.lists()
+Enumerator.register(tuple, Enumerator.product) # i.e.: lambda *e: Enumerator.product(*e)
 Enumerator.register(str, Enumerator(gen.strss))
 # TODO: Fix the following innefficient enumerator for the set type
 Enumerator.register(set, lambda e: Enumerator.lists(e).that(lambda xs: all(x < y for x, y in zip(xs, xs[1:]))))
