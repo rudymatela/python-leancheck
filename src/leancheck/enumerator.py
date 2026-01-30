@@ -285,6 +285,9 @@ class Enumerator:
         >>> print(Enumerator[set[int]])
         [[], [0], [1], [0, 1], [-1], [-1, 0], ...]
 
+        >>> Enumerator[set[bool]]
+        Enumerator(lambda: (xs for xs in [[[]], [[False], [True]], [[False, True]], [], [], [], ...]))
+
         >>> print(Enumerator[type])
         Traceback (most recent call last):
         ...
