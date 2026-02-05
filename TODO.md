@@ -1,7 +1,11 @@
 TODO for leancheck.py
 =====================
 
-* add instructions on how to create enumerators for custom types
+* document `precondition()`
+
+* add `precondition()` example in README
+
+* add instructions on how to create enumerators for custom types on README
 
 * fix infinite loop in `print(Enumerator[set[bool]])`
 
