@@ -5,6 +5,6 @@
 +++ OK, passed 360 tests: prop_sort_elem
 *** Failed! Falsifiable after 3 tests:
     prop_sort_len([0, 0])
-+++ OK, passed 360 tests: prop_min
++++ OK, passed 359 tests: prop_min
 
 *** 1 of 7 properties failed
