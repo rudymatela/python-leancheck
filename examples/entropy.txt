@@ -6,6 +6,6 @@
 +++ OK, passed 360 tests: prop_range
 *** Failed! Exception after 1 tests:
     prop_range0(0.0)
-    raised 'math domain error'
+    raised 'expected a positive input, got 0.0'
 
 *** 1 of 7 properties failed
