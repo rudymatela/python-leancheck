@@ -9,7 +9,7 @@ NJOBS := $(shell grep ^processor /proc/cpuinfo | head -n -1 | wc -l | sed 's/^0$
 all: run
 
 repl:
-	PYTHONPATH=src python -ic 'import leancheck; from leancheck import *'
+	PYTHONPATH=src python -ic 'import leancheck; from leancheck import *; from leancheck.iitertools import *'
 
 test: run pytest mypy diff-test
 

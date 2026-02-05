@@ -105,6 +105,25 @@ def ffilter(p, xss):
         yield [x for x in xs if p(x)]
 
 
+def cconcat(xssss):
+    # cconcat([ [xss0, yss0, zss0, ...]
+    #         , [xss1, yss1, zss1, ...]
+    #         , [xss2, yss2, zss2, ...], ...
+    #         ])
+    yss = []
+    xsss = map(lambda xsss: zippend(*xsss),xssss)
+    # xsss = [ xyss0, xyss1, xyss2, ...]
+    for xss in xsss:
+        yss = zippend(yss, xss)
+        ys = list(next(yss, []))
+        yield ys
+    yield from yss
+
+
+def cconcatmap(f, xss):
+    return cconcat(mmap(f, xss))
+
+
 def listss(mkTiers):
     yield [[]]
     yield from pproduct(mkTiers(), listss(mkTiers), with_f=lambda x, xs: [x] + xs)
