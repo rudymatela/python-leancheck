@@ -114,6 +114,17 @@ def tail(gen):
     return itertools.islice(gen, 1, None)
 
 
+# --- debugging tools, may be removed without warning ---
+def llist(gen):
+    return list(map(list,gen))
+
+def lllist(gen):
+    return list(map(llist,gen))
+
+def llllist(gen):
+    return list(map(lllist,gen))
+
+
 # Runs tests if this is not being imported as a module.
 if __name__ == "__main__":
     import doctest
