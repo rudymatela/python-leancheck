@@ -273,9 +273,6 @@ class Enumerator:
         """
         return Enumerator(lambda: ii.mmap(f, self.tiers()))
 
-    def concatmap(self, f):
-        return Enumerator(lambda: ii.cconcatmap(lambda x: f(x).tiers(), self.tiers()))
-
     def that(self, p):
         """
         Filters values in an enumeration that match a given predicate.
@@ -310,6 +307,19 @@ class Enumerator:
         else:
             e, *es = enumerators
             return (e * cls.product(*es)).map(lambda t: (t[0],) + t[1])
+
+    def concatmap(self, f):
+        """
+        Map and concatenate enumerators.
+
+        >>> Enumerator[int].concatmap(lambda x: Enumerator(lambda: (xs for xs in [[x],[x]])))
+        Enumerator(lambda: (xs for xs in [[0], [0, 1], [1, -1], [-1, 2], [2, -2], [-2, 3], ...]))
+
+        This has its use in the implementation of some
+        enumerators-without-repetitions, such as dicts.
+        """
+        return Enumerator(lambda: ii.cconcatmap(lambda x: f(x).tiers(), self.tiers()))
+
 
     _enumerators: dict = {}
 
