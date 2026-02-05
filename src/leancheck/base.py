@@ -198,6 +198,31 @@ def testmod(max_tests=360, silent=False, verbose=False):
 
 
 def precondition(condition: bool):
+    """
+    Allows one to define a precondition for a property.
+
+    >>> def prop_min(xs: list[int]) -> bool:
+    ...     return sorted(xs)[0] == min(xs)
+    >>> check(prop_min)
+    *** Failed! Exception after 1 tests:
+        prop_min([])
+        raised 'list index out of range'
+    False
+
+    A correct version of the above property,
+    requires that the given input list is non-empty.
+    This can be specified in LeanCheck with the `precondition` directive.
+
+    >>> def prop_min(xs: list[int]) -> bool:
+    ...     precondition(len(xs) > 0)
+    ...     return sorted(xs)[0] == min(xs)
+    >>> check(prop_min)
+    +++ OK, passed 359 tests: prop_min
+    True
+
+    Above, `precondition(xs)` would be equivalent.
+    We use the verbose option for clarity.
+    """
     if not condition:
         raise PreconditionUnmatched
 
