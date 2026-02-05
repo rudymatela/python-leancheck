@@ -251,7 +251,7 @@ class Enumerator:
         return Enumerator(lambda: ii.mmap(f, self.tiers()))
 
     def concatmap(self, f):
-        return Enumerator(lambda: ii.cconcatmap(f, self.tiers()))
+        return Enumerator(lambda: ii.cconcatmap(lambda x: f(x).tiers(), self.tiers()))
 
     def that(self, p):
         """
