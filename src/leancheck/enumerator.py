@@ -169,7 +169,15 @@ class Enumerator:
         >>> print(Enumerator[bool].dicts(Enumerator[int]))
         [{}, {False: 0}, {True: 0}, {False: 1}, {True: 1}, {False: 0, True: 0}, ...]
 
-        >>> print(Enumerator[bool].dicts(Enumerator[bool]))
+        You are perhaps better of using:
+
+        >>> print(Enumerator[dict[int,int]])
+        [{}, {0: 0}, {0: 1}, {1: 0}, {0: -1}, {1: 1}, ...]
+
+        >>> print(Enumerator[dict[bool,int]])
+        [{}, {False: 0}, {True: 0}, {False: 1}, {True: 1}, {False: 0, True: 0}, ...]
+
+        >>> print(Enumerator[dict[bool,bool]])
         [{}, {False: False}, {False: True}, {True: False}, {True: True}, {False: False, True: False}, ...]
         """
         return self.sets().concatmap(lambda s: Enumerator.product(*[other]*len(s)).map(lambda vs: dict(zip(s,vs))))
@@ -411,6 +419,7 @@ Enumerator.register(list, Enumerator.lists) # i.e.: lambda e: e.lists()
 Enumerator.register(tuple, Enumerator.product) # i.e.: lambda *e: Enumerator.product(*e)
 Enumerator.register(str, Enumerator(gen.strss))
 Enumerator.register(set, Enumerator.sets)
+Enumerator.register(dict, Enumerator.dicts)
 
 
 # Runs tests if this is not being imported as a module.

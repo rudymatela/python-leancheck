@@ -1,10 +1,6 @@
 TODO for leancheck.py
 =====================
 
-* add `concatmap`
-
-* add Enumerator for dict
-
 * count actual tests from "vacuous truth" tests
   using the precondition mechanism
 
