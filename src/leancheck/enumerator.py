@@ -159,6 +159,21 @@ class Enumerator:
         # TODO: Fix the following innefficient enumerator for sets
         return self.lists().that(lambda xs: all(x < y for x, y in zip(xs, xs[1:]))).map(set)
 
+    def dicts(self, other):
+        """
+        Constructs an enumeration of dictionaries.
+
+        >>> print(Enumerator[int].dicts(Enumerator[int]))
+        [{}, {0: 0}, {0: 1}, {1: 0}, {0: -1}, {1: 1}, ...]
+
+        >>> print(Enumerator[bool].dicts(Enumerator[int]))
+        [{}, {False: 0}, {True: 0}, {False: 1}, {True: 1}, {False: 0, True: 0}, ...]
+
+        >>> print(Enumerator[bool].dicts(Enumerator[bool]))
+        [{}, {False: False}, {False: True}, {True: False}, {True: True}, {False: False, True: False}, ...]
+        """
+        return self.sets().concatmap(lambda s: Enumerator.product(*[other]*len(s)).map(lambda vs: dict(zip(s,vs))))
+
     def __add__(self, other):
         """
         Use `+` to compute the sum of two enumerations:
