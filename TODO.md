@@ -79,4 +79,5 @@ Define-and-register list/choice enumerations?
 We always zippend the rest of the arguments.
 
 Problem: how to differentiate between `itertools.count()` and `(lambda:
-tiers)`.  They are both callable.
+tiers)`.  They are both callable.  Solution: check if it is tiers by looking at
+the first element in the enumeration.
