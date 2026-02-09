@@ -463,7 +463,11 @@ Enumerator.register(set, Enumerator.sets)
 Enumerator.register(dict, Enumerator.dicts)
 
 Enumerator.register(types.NoneType, Enumerator.from_choices([None]))
+
+# TODO: oof, simplify the following complex and range instances
 Enumerator.register(complex, Enumerator[tuple[float,float]].map(lambda ri: complex(*ri)))  # type: ignore
+# TODO: try with different step values in the range enumeration
+Enumerator.register(range, Enumerator[tuple[int,int]].map(lambda ss: range(*ss)))  # type: ignore
 
 
 # Runs tests if this is not being imported as a module.
