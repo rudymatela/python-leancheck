@@ -3,7 +3,7 @@ TODO for leancheck.py
 
 * add enumeration for unions
 
-* add instructions on how to create enumerators for custom types on README
+* lint?
 
 * avoid `__class_getitem__` abuse (see below)
 

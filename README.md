@@ -152,6 +152,36 @@ An extended version of this example can be found
 under the `examples/` folder in the source repository.
 
 
+Example, custom class
+---------------------
+
+LeanCheck also works for tesing properties over instances of custom classes.
+The following short example illustrates how to do this:
+
+```py
+import leancheck
+from leancheck import Enumerator
+
+class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def distance(self, other):
+        return (self.x - other.x)**2 + (self.y - other.y)**2
+
+Enumerator.register(Point, (Enumerator[int] * Enumerator[int]).map(lambda pq: Point(*pq)))
+
+def prop_distance_positive(p: Point, q: Point) -> bool:
+    return Point.distance(p,q) >= 0
+
+def prop_self_distance(p: Point) -> bool:
+    return Point.distance(p,p) == 0
+
+leancheck.main(verbose=True)
+```
+
+
 Further reading
 ---------------
 
