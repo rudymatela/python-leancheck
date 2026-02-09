@@ -461,7 +461,9 @@ Enumerator.register(tuple, Enumerator.product)  # i.e.: lambda *e: Enumerator.pr
 Enumerator.register(str, Enumerator(gen.strss))
 Enumerator.register(set, Enumerator.sets)
 Enumerator.register(dict, Enumerator.dicts)
+
 Enumerator.register(types.NoneType, Enumerator.from_choices([None]))
+Enumerator.register(complex, Enumerator[tuple[float,float]].map(lambda ri: complex(*ri)))  # type: ignore
 
 
 # Runs tests if this is not being imported as a module.
