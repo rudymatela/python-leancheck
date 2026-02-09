@@ -19,6 +19,9 @@ pytest:
 mypy:
 	mypy src/ tests/ examples/
 
+lint:
+	black -l99 src/ tests/ examples/ --check
+
 black:
 	black -l99 src/ tests/ examples/
 

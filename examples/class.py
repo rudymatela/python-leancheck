@@ -12,6 +12,7 @@
 
 from leancheck import *
 
+
 class Person:
     name: str
     age: int
@@ -22,6 +23,7 @@ class Person:
 
     def __repr__(self):
         return f"Person('{self.name}', {self.age})"
+
 
 Enumerator.register(Person, (Enumerator[str] * Enumerator[int]).map(lambda na: Person(*na)))
 

@@ -13,6 +13,7 @@ from math import log
 #     return -sum(p * log(p, 2) for p in probabilities)
 #     # fix by adding 'if p != 0'
 
+
 def entropy(probabilities: list[float]) -> float:
     try:
         return -sum(p * log(p, 2) for p in probabilities)

@@ -13,16 +13,19 @@
 import leancheck
 from leancheck import Enumerator
 
+
 class Point:
-    x: float # float | int ?, cf. [1]
-    y: float # float | int ?
+    x: float  # float | int ?, cf. [1]
+    y: float  # float | int ?
 
     def __init__(self, x: float, y: float):
         self.x = x
         self.y = y
 
     def distance(self, other):
-        return (self.x - other.x)**2 + (self.y - other.y)**2
+        return (self.x - other.x) ** 2 + (self.y - other.y) ** 2
+
+
 # or...
 # Point = collections.namedtuple('Point', ['x', 'y'])
 
@@ -32,10 +35,12 @@ Enumerator.register(Point, (Enumerator[int] * Enumerator[int]).map(lambda pq: Po
 
 
 def prop_distance_positive(p: Point, q: Point) -> bool:
-    return Point.distance(p,q) >= 0
+    return Point.distance(p, q) >= 0
+
 
 def prop_self_distance(p: Point) -> bool:
-    return Point.distance(p,p) == 0
+    return Point.distance(p, p) == 0
+
 
 leancheck.main(verbose=True)
 
