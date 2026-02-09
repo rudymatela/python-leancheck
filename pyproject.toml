@@ -5,7 +5,7 @@
 
 [project]
 name = "leancheck"
-version = "0.0.12"
+version = "0.0.13"
 authors = [
   { name="Rudy Matela", email="rudy@matela.com.br" }
 ]
