@@ -89,12 +89,9 @@ def chars():
             string.whitespace,
             ii.intercalate(
                 string.digits,
-                ii.intercalate(
-                    string.ascii_uppercase,
-                    string.punctuation
-                )
-            )
-        )
+                ii.intercalate(string.ascii_uppercase, string.punctuation),
+            ),
+        ),
     )
 
 

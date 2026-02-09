@@ -180,7 +180,9 @@ class Enumerator:
         >>> print(Enumerator[dict[bool,bool]])
         [{}, {False: False}, {False: True}, {True: False}, {True: True}, {False: False, True: False}, ...]
         """
-        return self.sets().concatmap(lambda s: Enumerator.product(*[other]*len(s)).map(lambda vs: dict(zip(s,vs))))
+        return self.sets().concatmap(
+            lambda s: Enumerator.product(*[other] * len(s)).map(lambda vs: dict(zip(s, vs)))
+        )
 
     def __add__(self, other):
         """
@@ -322,7 +324,6 @@ class Enumerator:
         """
         return Enumerator(lambda: ii.cconcatmap(lambda x: f(x).tiers(), self.tiers()))
 
-
     _enumerators: dict = {}
 
     @classmethod
@@ -378,7 +379,7 @@ class Enumerator:
 
         >>> Enumerator.default()
         """
-        cls.register(int,   cls.from_gen(gen.ints))
+        cls.register(int, cls.from_gen(gen.ints))
         cls.register(float, cls.from_gen(gen.floats))
 
     @classmethod
@@ -398,7 +399,7 @@ class Enumerator:
 
         >>> Enumerator.default()
         """
-        cls.register(int,   cls.from_gen(gen.positive_ints))
+        cls.register(int, cls.from_gen(gen.positive_ints))
         cls.register(float, cls.from_gen(gen.positive_floats))
 
     @classmethod
@@ -419,7 +420,7 @@ class Enumerator:
 
         >>> Enumerator.default()
         """
-        cls.register(int,   cls.from_gen(gen.non_negative_ints))
+        cls.register(int, cls.from_gen(gen.non_negative_ints))
         cls.register(float, cls.from_gen(gen.non_negative_floats))
 
 
@@ -427,8 +428,8 @@ class Enumerator:
 Enumerator.register(int, Enumerator.from_gen(gen.ints))
 Enumerator.register(float, Enumerator.from_gen(gen.floats))
 Enumerator.register(bool, Enumerator.from_choices([False, True]))
-Enumerator.register(list, Enumerator.lists) # i.e.: lambda e: e.lists()
-Enumerator.register(tuple, Enumerator.product) # i.e.: lambda *e: Enumerator.product(*e)
+Enumerator.register(list, Enumerator.lists)  # i.e.: lambda e: e.lists()
+Enumerator.register(tuple, Enumerator.product)  # i.e.: lambda *e: Enumerator.product(*e)
 Enumerator.register(str, Enumerator(gen.strss))
 Enumerator.register(set, Enumerator.sets)
 Enumerator.register(dict, Enumerator.dicts)

@@ -91,7 +91,7 @@ def check(prop, max_tests=360, verbose=True, silent=False, types=[]):
             print(f"{yellow}Warning{clear}: property's return value is {ret} and not {bool}")
         types = [par.annotation for par in sig.parameters.values()]
     es = [Enumerator[t] for t in types]
-    u = 0 # number of precondition fails
+    u = 0  # number of precondition fails
     for i, args in enumerate(itertools.islice(Enumerator.product(*es), max_tests)):
         # TODO: remove slight code duplication below...
         #       have a single "if not silent"

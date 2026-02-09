@@ -61,7 +61,8 @@ def intercalate(generator1, generator2):
 
 def zippend(*iiterables):
     return map(
-        list, itertools.starmap(itertools.chain, itertools.zip_longest(*iiterables, fillvalue=[]))
+        list,
+        itertools.starmap(itertools.chain, itertools.zip_longest(*iiterables, fillvalue=[])),
     )
 
 
@@ -111,7 +112,7 @@ def cconcat(xssss):
     #         , [xss2, yss2, zss2, ...], ...
     #         ])
     yss = []
-    xsss = map(lambda xsss: zippend(*xsss),xssss)
+    xsss = map(lambda xsss: zippend(*xsss), xssss)
     # xsss = [ xyss0, xyss1, xyss2, ...]
     for xss in xsss:
         yss = zippend(yss, xss)
@@ -135,13 +136,15 @@ def tail(gen):
 
 # --- debugging tools, may be removed without warning ---
 def llist(gen):
-    return list(map(list,gen))
+    return list(map(list, gen))
+
 
 def lllist(gen):
-    return list(map(llist,gen))
+    return list(map(llist, gen))
+
 
 def llllist(gen):
-    return list(map(lllist,gen))
+    return list(map(lllist, gen))
 
 
 # Runs tests if this is not being imported as a module.
