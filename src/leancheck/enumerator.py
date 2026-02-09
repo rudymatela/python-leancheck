@@ -290,6 +290,27 @@ class Enumerator:
         """
         return Enumerator(lambda: ii.ffilter(p, self.tiers()))
 
+    @classmethod
+    def empty(cls):
+        return cls(lambda: (xs for xs in []))
+
+    def sum(*enumerators):
+        """
+        Computes the sum of several enumerators
+        respecting size-order.
+
+        >>> print(Enumerator[int].sum(Enumerator[bool],Enumerator[str]))
+        [0, False, True, '', 1, 'a', ...]
+
+        >>> print(Enumerator[int].sum(Enumerator[int]))
+        [0, 0, 1, 1, -1, -1, ...]
+
+        If you have just two enumerations, you are better off using `+`:
+        >>> print(Enumerator[int] + Enumerator[bool])
+        [0, False, True, 1, -1, 2, ...]
+        """
+        return sum(enumerators, start=Enumerator.empty())
+
     def product(*enumerators):
         """
         Computes the product of several enumerators
