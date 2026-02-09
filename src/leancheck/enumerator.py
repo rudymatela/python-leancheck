@@ -288,14 +288,16 @@ class Enumerator:
         """
         return Enumerator(lambda: ii.ffilter(p, self.tiers()))
 
-    @classmethod
-    def product(cls, *enumerators):
+    def product(*enumerators):
         """
         Computes the product of several enumerators
         returning an enumeration of tuples.
 
         >>> print(Enumerator.product(Enumerator[int], Enumerator[bool], Enumerator[list[int]]))
         [(0, False, []), (0, True, []), (0, False, [0]), (0, True, [0]), (1, False, []), (1, True, []), ...]
+
+        >>> print(Enumerator[bool].product(Enumerator[float], Enumerator[str]))
+        [(False, 0.0, ''), (True, 0.0, ''), (False, 0.0, 'a'), (False, 1.0, ''), (True, 0.0, 'a'), (True, 1.0, ''), ...]
 
         If you have just two enumerations, you can simply use `*`:
 
@@ -306,7 +308,7 @@ class Enumerator:
             return Enumerator(lambda: (xs for xs in [[()]]))
         else:
             e, *es = enumerators
-            return (e * cls.product(*es)).map(lambda t: (t[0],) + t[1])
+            return (e * Enumerator.product(*es)).map(lambda t: (t[0],) + t[1])
 
     def concatmap(self, f):
         """
