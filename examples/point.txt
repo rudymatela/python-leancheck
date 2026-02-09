@@ -1,0 +1,3 @@
++++ OK, passed 360 tests: prop_distance_positive
++++ OK, passed 360 tests: prop_self_distance
++++ 2 properties passed

@@ -1,9 +1,11 @@
 TODO for leancheck.py
 =====================
 
-* avoid `__class_getitem__` abuse (see below)
+* add enumeration for unions
 
 * add instructions on how to create enumerators for custom types on README
+
+* avoid `__class_getitem__` abuse (see below)
 
 * release
 
@@ -81,3 +83,38 @@ We always zippend the rest of the arguments.
 Problem: how to differentiate between `itertools.count()` and `(lambda:
 tiers)`.  They are both callable.  Solution: check if it is tiers by looking at
 the first element in the enumeration.
+
+
+### A refinement
+
+Maybe not use the constructor for registration?  Maybe yes.
+
+```py
+Enumerator(Class, type, type, type)
+```
+
+The above instantiates and registers and enumerator for Class, with type, type, type as argument enumerators.
+
+
+```py
+Enumerator(Class)
+```
+
+The above instantiates and registers or query an enumerator for Class, inferring argument enumerators
+
+
+```py
+Enumerator(Class, Enumerator(...), Enumerator(...)
+```
+
+The above does the same with explicit enumerators.
+
+
+```py
+Enumerator(Class, type, Enumerator(...))
+```
+
+Mixing-up is allowed.
+
+
+Raw enumerations are permitted as well somehow.
