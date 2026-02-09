@@ -1,13 +1,7 @@
 TODO for leancheck.py
 =====================
 
-* add enumeration for unions
-
-* lint?
-
 * avoid `__class_getitem__` abuse (see below)
-
-* release
 
 * fix infinite loop in `print(Enumerator[set[bool]])`
 

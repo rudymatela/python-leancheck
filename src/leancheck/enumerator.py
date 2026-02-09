@@ -367,6 +367,9 @@ class Enumerator:
         >>> Enumerator[bool]
         Enumerator(lambda: (xs for xs in [[False, True]]))
 
+        >>> Enumerator[int | bool]
+        Enumerator(lambda: (xs for xs in [[0, False, True], [1], [-1], [2], [-2], [3], ...]))
+
         >>> print(Enumerator[list[int]])
         [[], [0], [0, 0], [1], [0, 0, 0], [0, 1], ...]
 
@@ -387,6 +390,10 @@ class Enumerator:
                 args = typing.get_args(c)
                 enums = [Enumerator[a] for a in args]
                 return cls._enumerators[origin](*enums)
+            if type(c) is typing.Union:
+                args = typing.get_args(c)
+                enums = [Enumerator[a] for a in args]
+                return cls.sum(*enums)
             else:
                 return cls._enumerators[c]
         except KeyError as err:
