@@ -50,6 +50,11 @@ class Enumerator:
     >>> print(Enumerator[tuple[int,int,int]])
     [(0, 0, 0), (0, 0, 1), (0, 1, 0), (1, 0, 0), (0, 0, -1), (0, 1, 1), ...]
 
+    Nesting can be arbitrary:
+
+    >>> print(Enumerator[list[list[int]]])
+    [[], [[]], [[], []], [[0]], [[], [], []], [[], [0]], ...]
+
     You can use this class to build new enumerations
     which can be registered using the `Enumerator.register()` method.
 
@@ -155,6 +160,11 @@ class Enumerator:
 
         >>> Enumerator[set[bool]]
         Enumerator(lambda: (xs for xs in [[set()], [{False}, {True}], [{False, True}], [], [], [], ...]))
+
+        Nested sets are allowed:
+
+        >>> print(Enumerator[set[frozenset[int]]])
+        [set(), {frozenset()}, {frozenset({0})}, {frozenset(), frozenset({0})}, {frozenset({1})}, {frozenset(), frozenset({1})}, ...]
         """
         # TODO: Fix the following innefficient enumerator for sets
         return self.lists().that(lambda xs: all(x < y for x, y in zip(xs, xs[1:]))).map(set)
@@ -461,6 +471,7 @@ Enumerator.register(tuple, Enumerator.product)  # i.e.: lambda *e: Enumerator.pr
 Enumerator.register(str, Enumerator(gen.strss))
 Enumerator.register(set, Enumerator.sets)
 Enumerator.register(dict, Enumerator.dicts)
+Enumerator.register(frozenset, lambda e: e.sets().map(frozenset))
 
 Enumerator.register(types.NoneType, Enumerator.from_choices([None]))
 
