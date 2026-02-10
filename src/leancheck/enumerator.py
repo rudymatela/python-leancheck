@@ -400,7 +400,8 @@ class Enumerator:
                 args = typing.get_args(c)
                 enums = [Enumerator[a] for a in args]
                 return cls._enumerators[origin](*enums)
-            if type(c) is typing.Union:
+            if type(c) in [typing.Union, types.UnionType]:
+                # ^ oof.., cf. stackoverflow.com/q/45957615
                 args = typing.get_args(c)
                 enums = [Enumerator[a] for a in args]
                 return cls.sum(*enums)
