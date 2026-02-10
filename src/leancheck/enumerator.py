@@ -366,6 +366,24 @@ class Enumerator:
         """
         cls._enumerators[c] = enumerator
 
+    @classmethod
+    def find(cls, c):
+        try:
+            if type(c) is types.GenericAlias:
+                origin = typing.get_origin(c)
+                args = typing.get_args(c)
+                enums = [Enumerator[a] for a in args]
+                return cls._enumerators[origin](*enums)
+            if type(c) in [typing.Union, types.UnionType]:
+                # ^ oof.., cf. stackoverflow.com/q/45957615
+                args = typing.get_args(c)
+                enums = [Enumerator[a] for a in args]
+                return cls.sum(*enums)
+            else:
+                return cls._enumerators[c]
+        except KeyError as err:
+            raise TypeError(f"could not find Enumerator for {c}") from err
+
     # @classmethod # automatic
     def __class_getitem__(cls, c):
         """
@@ -394,21 +412,7 @@ class Enumerator:
         ...
         TypeError: could not find Enumerator for <class 'type'>
         """
-        try:
-            if type(c) is types.GenericAlias:
-                origin = typing.get_origin(c)
-                args = typing.get_args(c)
-                enums = [Enumerator[a] for a in args]
-                return cls._enumerators[origin](*enums)
-            if type(c) in [typing.Union, types.UnionType]:
-                # ^ oof.., cf. stackoverflow.com/q/45957615
-                args = typing.get_args(c)
-                enums = [Enumerator[a] for a in args]
-                return cls.sum(*enums)
-            else:
-                return cls._enumerators[c]
-        except KeyError as err:
-            raise TypeError(f"could not find Enumerator for {c}") from err
+        return cls.find(c)
 
     @classmethod
     def default(cls):
