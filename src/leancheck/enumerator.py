@@ -69,7 +69,7 @@ class Enumerator:
     [(0, False), (0, True), (1, False), (1, True), (-1, False), (-1, True), ...]
     """
 
-    tiers: typing.Callable[[], typing.Generator]
+    tiers: typing.Callable[[], typing.Generator[list]]
     """
     Generate tiers of values.
 
