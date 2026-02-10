@@ -113,3 +113,13 @@ Mixing-up is allowed.
 
 
 Raw enumerations are permitted as well somehow.
+
+
+I will probably need to define `__new__` instead of `__init__`, here's the default behaviour inherited from Object:
+
+```py
+class X:
+	def __new__(cls):
+		# X and cls are distinct upon inheritance.
+		return super(X, cls).__new__(cls)
+```
