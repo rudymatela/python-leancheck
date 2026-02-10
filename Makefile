@@ -84,8 +84,11 @@ upload-for-real-this-time: dist
 sdist: dist
 
 clone-docs:
-	rm -r docs
+	rm -rf docs
 	git clone git@github.com:leancheck/leancheck.github.io.git docs
+
+pull-docs:
+	git -C docs pull
 
 
 %.run: %.py
