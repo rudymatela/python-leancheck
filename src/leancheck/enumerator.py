@@ -77,7 +77,7 @@ class Enumerator:
     [[False, True]]
     """
 
-    def __init__(self, tiers):
+    def __new__(cls, tiers):
         """
         Raw initialization of an enumerator
         with a (potentially infinite) generator of finite lists.
@@ -88,8 +88,9 @@ class Enumerator:
         >>> Enumerator(lambda: (ps for ps in [[False, True]]))
         Enumerator(lambda: (xs for xs in [[False, True]]))
         """
-
-        self.tiers = tiers
+        e = super(Enumerator, cls).__new__(cls)
+        e.tiers = tiers
+        return e
 
     def __iter__(self):
         return ii.flatten(self.tiers())
