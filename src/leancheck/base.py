@@ -25,7 +25,7 @@ import typing
 import leancheck.misc as misc
 import leancheck.iitertools as ii
 import leancheck.gen as gen
-import leancheck.ty as ty
+import leancheck.funtype as ty
 from leancheck.enumerator import Enumerator
 
 

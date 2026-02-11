@@ -21,7 +21,7 @@ import types
 import typing
 import leancheck.iitertools as ii
 import leancheck.gen as gen
-from leancheck.ty import arg_types
+from leancheck.funtype import arg_types
 
 
 class Enumerator:
