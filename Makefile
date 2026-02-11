@@ -72,7 +72,7 @@ test-install:
 	python -m venv tmp/test-install
 	source tmp/test-install/bin/activate && \
 	pip install --index-url https://test.pypi.org/simple/ --no-deps leancheck && \
-	python -ic 'from leancheck import *; print("run check(lambda x: x + x > x, types = [int])")'
+	python -ic 'from leancheck import *; print("run check(lambda x: x * x > x, int)")'
 
 
 upload-for-real-this-time: dist

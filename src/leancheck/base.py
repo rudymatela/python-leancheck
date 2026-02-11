@@ -77,7 +77,20 @@ def check(prop, *types, max_tests=360, verbose=True, silent=False):
     Lambdas do not allow type annotations,
     for them just pass types as further arguments.
 
+    >>> check(lambda x: x * x >= x, int)
+    +++ OK, passed 360 tests: <lambda>
+    True
+
+    >>> check(lambda x: x * x > x, int)
+    *** Failed! Falsifiable after 1 tests:
+        <lambda>(0)
+    False
+
     >>> check(lambda xs: sorted(sorted(xs)) == sorted(xs), list[int])
+    +++ OK, passed 360 tests: <lambda>
+    True
+
+    >>> check(lambda xs, ps: sorted(xs + ps) == sorted(ps + xs), list[int], list[bool])
     +++ OK, passed 360 tests: <lambda>
     True
     """
