@@ -170,7 +170,7 @@ class Point:
     def distance(self, other):
         return (self.x - other.x)**2 + (self.y - other.y)**2
 
-Enumerator.register(Point, Enumerator.cons(Point, int, int))
+Enumerator.register_cons(Point, int, int)
 
 def prop_distance_positive(p: Point, q: Point) -> bool:
     return Point.distance(p,q) >= 0
