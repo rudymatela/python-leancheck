@@ -485,12 +485,12 @@ Enumerator.register(NotImplemented, Enumerator.from_choices([NotImplemented]))
 # Enumerator.register(type, Enumerator.from_list([int, bool, float, list, tuple, str, set, dict, frozenset, complex, range]))
 
 # TODO: oof, simplify the following complex and range instances
-Enumerator.register(complex, Enumerator[tuple[float,float]].map(lambda ri: complex(*ri)))  # type: ignore
+Enumerator.register(complex, Enumerator[tuple[float, float]].map(lambda ri: complex(*ri)))  # type: ignore
 # TODO: try with different step values in the range enumeration
-Enumerator.register(range, Enumerator[tuple[int,int]].map(lambda ss: range(*ss)))  # type: ignore
+Enumerator.register(range, Enumerator[tuple[int, int]].map(lambda ss: range(*ss)))  # type: ignore
 
-Enumerator.register(bytes, Enumerator[str].map(lambda s: bytes(s, 'ascii')))  # type: ignore
-Enumerator.register(bytearray, Enumerator[str].map(lambda s: bytearray(s, 'ascii')))  # type: ignore
+Enumerator.register(bytes, Enumerator[str].map(lambda s: bytes(s, "ascii")))  # type: ignore
+Enumerator.register(bytearray, Enumerator[str].map(lambda s: bytearray(s, "ascii")))  # type: ignore
 Enumerator.register(memoryview, Enumerator[bytes].map(lambda bs: memoryview(bs)))  # type: ignore
 
 
