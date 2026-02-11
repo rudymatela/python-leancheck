@@ -110,23 +110,23 @@ class Enumerator:
         return ii.flatten(self.tiers())
 
     @classmethod
-    def build(cls, *iis):
+    def choice(cls, *iis):
         """
         Builds an enumerator from a list of plain iterables or items.
 
-        >>> Enumerator.build(itertools.count)
+        >>> Enumerator.choice(itertools.count)
         Enumerator(lambda: (xs for xs in [[0], [1], [2], [3], [4], [5], ...]))
 
-        >>> Enumerator.build([1,2,3], False, True)
+        >>> Enumerator.choice([1,2,3], False, True)
         Enumerator(lambda: (xs for xs in [[1, False, True], [2], [3]]))
 
         Note strings are iterables, you need to nest if you plan to include
         them:
 
-        >>> Enumerator.build([1,2,3], ["abc"])
+        >>> Enumerator.choice([1,2,3], ["abc"])
         Enumerator(lambda: (xs for xs in [[1, 'abc'], [2], [3]]))
 
-        >>> Enumerator.build([1,2,3], "abc")
+        >>> Enumerator.choice([1,2,3], "abc")
         Enumerator(lambda: (xs for xs in [[1, 'a'], [2, 'b'], [3, 'c']]))
         """
         def tierify(obj):
@@ -468,8 +468,8 @@ class Enumerator:
 
         >>> Enumerator.default()
         """
-        cls.register(int, cls.build(gen.ints))
-        cls.register(float, cls.build(gen.floats))
+        cls.register(int, cls.choice(gen.ints))
+        cls.register(float, cls.choice(gen.floats))
 
     @classmethod
     def only_positives(cls):
@@ -488,8 +488,8 @@ class Enumerator:
 
         >>> Enumerator.default()
         """
-        cls.register(int, cls.build(gen.positive_ints))
-        cls.register(float, cls.build(gen.positive_floats))
+        cls.register(int, cls.choice(gen.positive_ints))
+        cls.register(float, cls.choice(gen.positive_floats))
 
     @classmethod
     def only_non_negatives(cls):
@@ -514,9 +514,9 @@ class Enumerator:
 
 
 # Registers default Enumerators
-Enumerator.register(int, Enumerator.build(gen.ints))
-Enumerator.register(float, Enumerator.build(gen.floats))
-Enumerator.register(bool, Enumerator.build(False, True))
+Enumerator.register(int, Enumerator.choice(gen.ints))
+Enumerator.register(float, Enumerator.choice(gen.floats))
+Enumerator.register(bool, Enumerator.choice(False, True))
 Enumerator.register(list, Enumerator.lists)  # i.e.: lambda e: e.lists()
 Enumerator.register(tuple, Enumerator.product)  # i.e.: lambda *e: Enumerator.product(*e)
 Enumerator.register(str, Enumerator(gen.strss))
@@ -524,9 +524,9 @@ Enumerator.register(set, Enumerator.sets)
 Enumerator.register(dict, Enumerator.dicts)
 Enumerator.register(frozenset, lambda e: e.sets().map(frozenset))
 
-Enumerator.register(types.NoneType, Enumerator.build(None))
-Enumerator.register(Ellipsis, Enumerator.build(...))
-Enumerator.register(NotImplemented, Enumerator.build(NotImplemented))
+Enumerator.register(types.NoneType, Enumerator.choice(None))
+Enumerator.register(Ellipsis, Enumerator.choice(...))
+Enumerator.register(NotImplemented, Enumerator.choice(NotImplemented))
 # Enumerator.register(type, Enumerator.from_list([int, bool, float, list, tuple, str, set, dict, frozenset, complex, range]))
 
 # TODO: oof, simplify the following complex and range instances
