@@ -25,7 +25,7 @@ import typing
 import leancheck.misc as misc
 import leancheck.iitertools as ii
 import leancheck.gen as gen
-import leancheck.funtype as ty
+from leancheck.funtype import return_type, arg_types
 from leancheck.enumerator import Enumerator
 
 
@@ -97,9 +97,9 @@ def check(prop, *types, max_tests=360, verbose=True, silent=False):
     verbose = verbose and not silent
     clear, red, green, blue, yellow = misc.colour_escapes()
     if not types:
-        if ty.return_type(prop) != bool and not silent:
+        if return_type(prop) != bool and not silent:
             print(f"{yellow}Warning{clear}: property's return value is {ret} and not {bool}")
-        types = ty.arg_types(prop)
+        types = arg_types(prop)
     es = [Enumerator(t) for t in types]
     u = 0  # number of precondition fails
     for i, args in enumerate(itertools.islice(Enumerator.product(*es), max_tests)):
