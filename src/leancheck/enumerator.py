@@ -509,8 +509,8 @@ class Enumerator:
 
         >>> Enumerator.default()
         """
-        cls.register(int, cls.from_gen(gen.non_negative_ints))
-        cls.register(float, cls.from_gen(gen.non_negative_floats))
+        cls.register(int, cls.choices(gen.non_negative_ints))
+        cls.register(float, cls.choices(gen.non_negative_floats))
 
 
 # Registers default Enumerators
