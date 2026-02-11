@@ -33,26 +33,26 @@ class Enumerator:
     This is needed in order for the enumeration to be fair.
 
     As a user, you can query available enumerations with
-    enumerations with "indexing":
+    enumerations using the class constructor:
 
-    >>> Enumerator[int]
+    >>> Enumerator(int)
     Enumerator(lambda: (xs for xs in [[0], [1], [-1], [2], [-2], [3], ...]))
 
-    >>> Enumerator[bool]
+    >>> Enumerator(bool)
     Enumerator(lambda: (xs for xs in [[False, True]]))
 
-    >>> print(Enumerator[list[int]])
+    >>> print(Enumerator(list[int]))
     [[], [0], [0, 0], [1], [0, 0, 0], [0, 1], ...]
 
-    >>> print(Enumerator[tuple[bool, int]])
+    >>> print(Enumerator(tuple[bool, int]))
     [(False, 0), (True, 0), (False, 1), (True, 1), (False, -1), (True, -1), ...]
 
-    >>> print(Enumerator[tuple[int,int,int]])
+    >>> print(Enumerator(tuple[int,int,int]))
     [(0, 0, 0), (0, 0, 1), (0, 1, 0), (1, 0, 0), (0, 0, -1), (0, 1, 1), ...]
 
     Nesting can be arbitrary:
 
-    >>> print(Enumerator[list[list[int]]])
+    >>> print(Enumerator(list[list[int]]))
     [[], [[]], [[], []], [[0]], [[], [], []], [[], [0]], ...]
 
     You can use this class to build new enumerations
@@ -60,12 +60,12 @@ class Enumerator:
 
     This class supports computing sums and products of enumerations:
 
-    >>> print(Enumerator[int] + Enumerator[bool])
+    >>> print(Enumerator(int) + Enumerator(bool))
     [0, False, True, 1, -1, 2, ...]
 
     Use `*` to take the product of two enumerations:
 
-    >>> print(Enumerator[int] * Enumerator[bool])
+    >>> print(Enumerator(int) * Enumerator(bool))
     [(0, False), (0, True), (1, False), (1, True), (-1, False), (-1, True), ...]
     """
 
@@ -73,7 +73,7 @@ class Enumerator:
     """
     Generate tiers of values.
 
-    >>> list(Enumerator[bool].tiers())
+    >>> list(Enumerator(bool).tiers())
     [[False, True]]
     """
 
@@ -173,40 +173,41 @@ class Enumerator:
         """
         Constructs an enumerator of lists of values from another enumeration.
 
-        >>> print(Enumerator.lists(Enumerator[int]))
+        >>> print(Enumerator.lists(Enumerator(int)))
         [[], [0], [0, 0], [1], [0, 0, 0], [0, 1], ...]
 
-        >>> print(Enumerator[int].lists())
+        >>> print(Enumerator(int).lists())
         [[], [0], [0, 0], [1], [0, 0, 0], [0, 1], ...]
 
         You are perhaps better off using:
 
-        >>> print(Enumerator[list[int]])
+        >>> print(Enumerator(list[int]))
         [[], [0], [0, 0], [1], [0, 0, 0], [0, 1], ...]
         """
+        # TODO: allow multiple argument for sum?
         return Enumerator(lambda: ii.listss(self.tiers))
 
     def sets(self):
         """
         Constructs an enumerator of sets of values from another enumeration.
 
-        >>> print(Enumerator[int].sets())
+        >>> print(Enumerator(int).sets())
         [set(), {0}, {1}, {0, 1}, {-1}, {0, -1}, ...]
 
-        >>> Enumerator[bool].sets()
+        >>> Enumerator(bool).sets()
         Enumerator(lambda: (xs for xs in [[set()], [{False}, {True}], [{False, True}], [], [], [], ...]))
 
         You are perhaps better off using:
 
-        >>> print(Enumerator[set[int]])
+        >>> print(Enumerator(set[int]))
         [set(), {0}, {1}, {0, 1}, {-1}, {0, -1}, ...]
 
-        >>> Enumerator[set[bool]]
+        >>> Enumerator(set[bool])
         Enumerator(lambda: (xs for xs in [[set()], [{False}, {True}], [{False, True}], [], [], [], ...]))
 
         Nested sets are allowed:
 
-        >>> print(Enumerator[set[frozenset[int]]])
+        >>> print(Enumerator(set[frozenset[int]]))
         [set(), {frozenset()}, {frozenset({0})}, {frozenset(), frozenset({0})}, {frozenset({1})}, {frozenset(), frozenset({1})}, ...]
         """
         # TODO: Fix the following innefficient enumerator for sets
@@ -216,21 +217,21 @@ class Enumerator:
         """
         Constructs an enumeration of dictionaries.
 
-        >>> print(Enumerator[int].dicts(Enumerator[int]))
+        >>> print(Enumerator(int).dicts(Enumerator(int)))
         [{}, {0: 0}, {0: 1}, {1: 0}, {0: -1}, {1: 1}, ...]
 
-        >>> print(Enumerator[bool].dicts(Enumerator[int]))
+        >>> print(Enumerator(bool).dicts(Enumerator(int)))
         [{}, {False: 0}, {True: 0}, {False: 1}, {True: 1}, {False: 0, True: 0}, ...]
 
         You are perhaps better of using:
 
-        >>> print(Enumerator[dict[int,int]])
+        >>> print(Enumerator(dict[int,int]))
         [{}, {0: 0}, {0: 1}, {1: 0}, {0: -1}, {1: 1}, ...]
 
-        >>> print(Enumerator[dict[bool,int]])
+        >>> print(Enumerator(dict[bool,int]))
         [{}, {False: 0}, {True: 0}, {False: 1}, {True: 1}, {False: 0, True: 0}, ...]
 
-        >>> print(Enumerator[dict[bool,bool]])
+        >>> print(Enumerator(dict[bool,bool]))
         [{}, {False: False}, {False: True}, {True: False}, {True: True}, {False: False, True: False}, ...]
         """
         return self.sets().concatmap(
@@ -241,10 +242,10 @@ class Enumerator:
         """
         Use `+` to compute the sum of two enumerations:
 
-        >>> print(Enumerator[int] + Enumerator[bool])
+        >>> print(Enumerator(int) + Enumerator(bool))
         [0, False, True, 1, -1, 2, ...]
 
-        >>> Enumerator[int] + Enumerator[bool]
+        >>> Enumerator(int) + Enumerator(bool)
         Enumerator(lambda: (xs for xs in [[0, False, True], [1], [-1], [2], [-2], [3], ...]))
         """
         return Enumerator(lambda: ii.zippend(self.tiers(), other.tiers()))
@@ -253,10 +254,10 @@ class Enumerator:
         """
         Use `*` to take the product of two enumerations:
 
-        >>> print(Enumerator[int] * Enumerator[bool])
+        >>> print(Enumerator(int) * Enumerator(bool))
         [(0, False), (0, True), (1, False), (1, True), (-1, False), (-1, True), ...]
 
-        >>> Enumerator[int] * Enumerator[bool]
+        >>> Enumerator(int) * Enumerator(bool)
         Enumerator(lambda: (xs for xs in [[(0, False), (0, True)], [(1, False), (1, True)], [(-1, False), (-1, True)], [(2, False), (2, True)], [(-2, False), (-2, True)], [(3, False), (3, True)], ...]))
         """
         return Enumerator(lambda: ii.pproduct(self.tiers(), other.tiers()))
@@ -285,13 +286,13 @@ class Enumerator:
         Configures the maximum length of the Enumerator's representation.
 
         >>> Enumerator.set_repr_length(3)
-        >>> Enumerator[int]
+        >>> Enumerator(int)
         Enumerator(lambda: (xs for xs in [[0], [1], [-1], ...]))
 
         When not set, LeanCheck defaults to 6 tiers.
 
         >>> Enumerator.set_repr_length(6)
-        >>> Enumerator[int]
+        >>> Enumerator(int)
         Enumerator(lambda: (xs for xs in [[0], [1], [-1], [2], [-2], [3], ...]))
         """
         # NOTE: In the doctests above,
@@ -305,13 +306,13 @@ class Enumerator:
         Configures the maximum length of the Enumerator's representation.
 
         >>> Enumerator.set_str_length(12)
-        >>> print(Enumerator[int])
+        >>> print(Enumerator(int))
         [0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, ...]
 
         When not set, LeanCheck defaults to 6 items.
 
         >>> Enumerator.set_str_length(6)
-        >>> print(Enumerator[int])
+        >>> print(Enumerator(int))
         [0, 1, -1, 2, -2, 3, ...]
         """
         # NOTE: In the doctests above,
@@ -323,7 +324,7 @@ class Enumerator:
         """
         Applies a function to all values in the enumeration.
 
-        >>> Enumerator[int].map(lambda x: x*2)
+        >>> Enumerator(int).map(lambda x: x*2)
         Enumerator(lambda: (xs for xs in [[0], [2], [-2], [4], [-4], [6], ...]))
         """
         return Enumerator(lambda: ii.mmap(f, self.tiers()))
@@ -332,10 +333,10 @@ class Enumerator:
         """
         Filters values in an enumeration that match a given predicate.
 
-        >>> Enumerator[int].that(lambda x: x % 2 == 0)
+        >>> Enumerator(int).that(lambda x: x % 2 == 0)
         Enumerator(lambda: (xs for xs in [[0], [], [], [2], [-2], [], ...]))
 
-        >>> Enumerator[int].that(lambda x: x > 0)
+        >>> Enumerator(int).that(lambda x: x > 0)
         Enumerator(lambda: (xs for xs in [[], [1], [], [2], [], [3], ...]))
 
         This may be innefficient due to empty tiers and unneeded computation,
@@ -352,14 +353,14 @@ class Enumerator:
         Computes the sum of several enumerators
         respecting size-order.
 
-        >>> print(Enumerator[int].sum(Enumerator[bool],Enumerator[str]))
+        >>> print(Enumerator(int).sum(Enumerator(bool),Enumerator(str)))
         [0, False, True, '', 1, 'a', ...]
 
-        >>> print(Enumerator[int].sum(Enumerator[int]))
+        >>> print(Enumerator(int).sum(Enumerator(int)))
         [0, 0, 1, 1, -1, -1, ...]
 
         If you have just two enumerations, you are better off using `+`:
-        >>> print(Enumerator[int] + Enumerator[bool])
+        >>> print(Enumerator(int) + Enumerator(bool))
         [0, False, True, 1, -1, 2, ...]
         """
         return sum(enumerators, start=Enumerator.empty())
@@ -369,15 +370,15 @@ class Enumerator:
         Computes the product of several enumerators
         returning an enumeration of tuples.
 
-        >>> print(Enumerator.product(Enumerator[int], Enumerator[bool], Enumerator[list[int]]))
+        >>> print(Enumerator.product(Enumerator(int), Enumerator(bool), Enumerator[list[int]]))
         [(0, False, []), (0, True, []), (0, False, [0]), (0, True, [0]), (1, False, []), (1, True, []), ...]
 
-        >>> print(Enumerator[bool].product(Enumerator[float], Enumerator[str]))
+        >>> print(Enumerator(bool).product(Enumerator(float), Enumerator(str)))
         [(False, 0.0, ''), (True, 0.0, ''), (False, 0.0, 'a'), (False, 1.0, ''), (True, 0.0, 'a'), (True, 1.0, ''), ...]
 
         If you have just two enumerations, you can simply use `*`:
 
-        >>> print(Enumerator[int] * Enumerator[bool])
+        >>> print(Enumerator(int) * Enumerator(bool))
         [(0, False), (0, True), (1, False), (1, True), (-1, False), (-1, True), ...]
         """
         if len(enumerators) == 0:
@@ -390,7 +391,7 @@ class Enumerator:
         """
         Map and concatenate enumerators.
 
-        >>> Enumerator[int].concatmap(lambda x: Enumerator(lambda: (xs for xs in [[x],[x]])))
+        >>> Enumerator(int).concatmap(lambda x: Enumerator(lambda: (xs for xs in [[x],[x]])))
         Enumerator(lambda: (xs for xs in [[0], [0, 1], [1, -1], [-1, 2], [2, -2], [-2, 3], ...]))
 
         This has its use in the implementation of some
@@ -483,9 +484,9 @@ class Enumerator:
         Forces enumerations to contain only positive numbers:
 
         >>> Enumerator.only_positives()
-        >>> print(Enumerator[int])
+        >>> print(Enumerator(int))
         [1, 2, 3, 4, 5, 6, ...]
-        >>> print(Enumerator[float])
+        >>> print(Enumerator(float))
         [1.0, 0.5, 2.0, 0.3333333333333333, 1.5, 0.6666666666666666, ...]
         >>> print(Enumerator[list[tuple[int,float]]])
         [[], [(1, 1.0)], [(1, 1.0), (1, 1.0)], [(1, 0.5)], [(2, 1.0)], [(1, 1.0), (1, 1.0), (1, 1.0)], ...]
@@ -504,9 +505,9 @@ class Enumerator:
         i.e. zero and positives:
 
         >>> Enumerator.only_non_negatives()
-        >>> print(Enumerator[int])
+        >>> print(Enumerator(int))
         [0, 1, 2, 3, 4, 5, ...]
-        >>> print(Enumerator[float])
+        >>> print(Enumerator(float))
         [0.0, 1.0, 0.5, 2.0, 0.3333333333333333, 1.5, ...]
         >>> print(Enumerator[list[tuple[int,float]]])
         [[], [(0, 0.0)], [(0, 0.0), (0, 0.0)], [(0, 1.0)], [(1, 0.0)], [(0, 0.0), (0, 0.0), (0, 0.0)], ...]
