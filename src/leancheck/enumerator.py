@@ -169,12 +169,9 @@ class Enumerator:
             *[Enumerator(et) if not isinstance(et, Enumerator) else et for et in etys]
         ).map(lambda vs: ty(*vs))
 
-    def lists(self):
+    def lists(*enumerators):
         """
         Constructs an enumerator of lists of values from another enumeration.
-
-        >>> print(Enumerator.lists(Enumerator(int)))
-        [[], [0], [0, 0], [1], [0, 0, 0], [0, 1], ...]
 
         >>> print(Enumerator(int).lists())
         [[], [0], [0, 0], [1], [0, 0, 0], [0, 1], ...]
@@ -183,9 +180,18 @@ class Enumerator:
 
         >>> print(Enumerator(list[int]))
         [[], [0], [0, 0], [1], [0, 0, 0], [0, 1], ...]
+
+        With multiple arguments, this computes the sum of elements first:
+
+        >>> print(Enumerator.lists(Enumerator(int), Enumerator(bool)))
+        [[], [0], [False], [True], [0, 0], [0, False], ...]
+
+        You are still perhaps better off using:
+
+        >>> print(Enumerator(list[int,bool]))
+        [[], [0], [False], [True], [0, 0], [0, False], ...]
         """
-        # TODO: allow multiple argument for sum?
-        return Enumerator(lambda: ii.listss(self.tiers))
+        return Enumerator(lambda: ii.listss(Enumerator.sum(*enumerators).tiers))
 
     def sets(self):
         """
