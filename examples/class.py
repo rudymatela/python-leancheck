@@ -23,6 +23,6 @@ class Person:
         return f"Person('{self.name}', {self.age})"
 
 
-Enumerator.register(Person, Enumerator.cons(Person, str, int))
+Enumerator.register_cons(Person, str, int)
 
 print(Enumerator(Person))

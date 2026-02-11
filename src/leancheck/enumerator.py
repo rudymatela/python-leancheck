@@ -433,6 +433,34 @@ class Enumerator:
         cls._enumerators[c] = enumerator
 
     @classmethod
+    def register_cons(cls, ty, *etys):
+        """
+        Registers an enumerator built from `Enumerator.cons()`.
+
+        Calling `Enumerator.register_cons(ty, ...)` is equivalent to
+        `Eumerator.register(ty, Enumerator.cons(ty, ...))`.
+
+        >>> Enumerator.register_cons(complex, float, float)
+        >>> print(Enumerator(complex))
+        [0j, 1j, (1+0j), -1j, (1+1j), (-1+0j), ...]
+        """
+        Enumerator.register(ty, Enumerator.cons(ty, *etys))
+
+    @classmethod
+    def register_choices(cls, ty, *iis):
+        """
+        Registers an enumerator built from `Enumerator.choices()`.
+
+        Calling `Enumerator.register_choices(ty, ...)` is equivalent to
+        `Eumerator.register(ty, Enumerator.choices(...))`.
+
+        >>> Enumerator.register_cons(complex, float, float)
+        >>> print(Enumerator(complex))
+        [0j, 1j, (1+0j), -1j, (1+1j), (-1+0j), ...]
+        """
+        Enumerator.register(ty, Enumerator.choices(*iis))
+
+    @classmethod
     def find(cls, c):
         """
         Finds an enumerator for the given type.
@@ -536,9 +564,9 @@ class Enumerator:
 
 
 # Registers default Enumerators
-Enumerator.register(int, Enumerator.choices(gen.ints))
-Enumerator.register(float, Enumerator.choices(gen.floats))
-Enumerator.register(bool, Enumerator.choices(False, True))
+Enumerator.register_choices(int, gen.ints)
+Enumerator.register_choices(float, gen.floats)
+Enumerator.register_choices(bool, False, True)
 Enumerator.register(list, Enumerator.lists)  # i.e.: lambda e: e.lists()
 Enumerator.register(tuple, Enumerator.product)  # i.e.: lambda *e: Enumerator.product(*e)
 Enumerator.register(str, Enumerator(gen.strss))
@@ -551,13 +579,13 @@ Enumerator.register(Ellipsis, Enumerator.choices(...))
 Enumerator.register(NotImplemented, Enumerator.choices(NotImplemented))
 # Enumerator.register(type, Enumerator.from_list([int, bool, float, list, tuple, str, set, dict, frozenset, complex, range]))
 
-Enumerator.register(complex, Enumerator.cons(complex, float, float))
+Enumerator.register_cons(complex, float, float)
 # TODO: try with different step values in the range enumeration
-Enumerator.register(range, Enumerator.cons(range, int, int))
+Enumerator.register_cons(range, int, int)
 
 Enumerator.register(bytes, Enumerator(str).map(lambda s: bytes(s, "ascii")))
 Enumerator.register(bytearray, Enumerator(str).map(lambda s: bytearray(s, "ascii")))
-Enumerator.register(memoryview, Enumerator.cons(memoryview, bytes))
+Enumerator.register_cons(memoryview, bytes)
 
 
 # Runs tests if this is not being imported as a module.

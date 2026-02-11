@@ -1,8 +1,6 @@
 TODO for leancheck.py
 =====================
 
-* add `register_cons` and `register_choices`
-
 * fix infinite loop in `print(Enumerator(set[bool]))`
 
 * simplify code
