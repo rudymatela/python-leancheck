@@ -31,7 +31,7 @@ class Point:
 
 
 # TODO: make so that the following is inferred from types?
-Enumerator.register(Point, (Enumerator[int] * Enumerator[int]).map(lambda pq: Point(*pq)))
+Enumerator.register(Point, Enumerator.cons(Point, int, int))
 
 
 def prop_distance_positive(p: Point, q: Point) -> bool:
