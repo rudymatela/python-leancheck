@@ -17,6 +17,7 @@ with `import leancheck`.
 
 import inspect
 
+
 def return_type(fun):
     """
     Returns the return type of the given function.
@@ -27,6 +28,7 @@ def return_type(fun):
     <class 'bool'>
     """
     return inspect.signature(fun).return_annotation
+
 
 def arg_types(fun):
     """
