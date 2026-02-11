@@ -25,6 +25,7 @@ import typing
 import leancheck.misc as misc
 import leancheck.iitertools as ii
 import leancheck.gen as gen
+import leancheck.ty as ty
 from leancheck.enumerator import Enumerator
 
 
@@ -84,12 +85,9 @@ def check(prop, max_tests=360, verbose=True, silent=False, types=[]):
     verbose = verbose and not silent
     clear, red, green, blue, yellow = misc.colour_escapes()
     if not types:
-        sig = inspect.signature(prop)
-        # print(f"Property's signature: {sig}")
-        ret = sig.return_annotation
-        if ret != bool and not silent:
+        if ty.return_type(prop) != bool and not silent:
             print(f"{yellow}Warning{clear}: property's return value is {ret} and not {bool}")
-        types = [par.annotation for par in sig.parameters.values()]
+        types = ty.arg_types(prop)
     es = [Enumerator(t) for t in types]
     u = 0  # number of precondition fails
     for i, args in enumerate(itertools.islice(Enumerator.product(*es), max_tests)):
