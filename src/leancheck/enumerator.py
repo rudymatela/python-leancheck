@@ -77,7 +77,7 @@ class Enumerator:
     [[False, True]]
     """
 
-    def __new__(cls, tiers):
+    def __new__(cls, *args):
         """
         Raw initialization of an enumerator
         with a (potentially infinite) generator of finite lists.
@@ -87,10 +87,24 @@ class Enumerator:
 
         >>> Enumerator(lambda: (ps for ps in [[False, True]]))
         Enumerator(lambda: (xs for xs in [[False, True]]))
+
+        No arguments yield an empty enumerator:
+        >>> Enumerator()
+        Enumerator(lambda: (xs for xs in []))
+
+        With a type, this queries `register()`ed enumerators:
+        >>> Enumerator(int)
+        Enumerator(lambda: (xs for xs in [[0], [1], [-1], [2], [-2], [3], ...]))
         """
-        e = super(Enumerator, cls).__new__(cls)
-        e.tiers = tiers
-        return e
+        match args:
+            case []:
+                return cls.empty()
+            case [ty] if type(ty) in [type, types.GenericAlias, typing.Union, types.UnionType]:
+                return cls.find(ty)
+            case [tiers]:
+                e = super(Enumerator, cls).__new__(cls)
+                e.tiers = tiers
+                return e
 
     def __iter__(self):
         return ii.flatten(self.tiers())
