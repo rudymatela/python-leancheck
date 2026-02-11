@@ -526,10 +526,9 @@ Enumerator.register(Ellipsis, Enumerator.choices(...))
 Enumerator.register(NotImplemented, Enumerator.choices(NotImplemented))
 # Enumerator.register(type, Enumerator.from_list([int, bool, float, list, tuple, str, set, dict, frozenset, complex, range]))
 
-# TODO: oof, simplify the following complex and range instances
-Enumerator.register(complex, Enumerator[tuple[float, float]].map(lambda ri: complex(*ri)))  # type: ignore
+Enumerator.register(complex, Enumerator.cons(complex, float, float))
 # TODO: try with different step values in the range enumeration
-Enumerator.register(range, Enumerator[tuple[int, int]].map(lambda ss: range(*ss)))  # type: ignore
+Enumerator.register(range, Enumerator.cons(range, int, int))
 
 Enumerator.register(bytes, Enumerator[str].map(lambda s: bytes(s, "ascii")))  # type: ignore
 Enumerator.register(bytearray, Enumerator[str].map(lambda s: bytearray(s, "ascii")))  # type: ignore
