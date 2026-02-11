@@ -105,6 +105,8 @@ class Enumerator:
                 e = super(Enumerator, cls).__new__(cls)
                 e.tiers = tiers
                 return e
+            case _:
+                raise ValueError("could not construct Enumerator")  # TODO: display args
 
     def __iter__(self):
         return ii.flatten(self.tiers())
