@@ -139,6 +139,7 @@ class Enumerator:
 
         TODO: improve these docs
         """
+
         def tierify(obj):
             try:
                 return ii.nest(obj())
@@ -164,7 +165,9 @@ class Enumerator:
         >>> print(Enumerator.cons(complex, Enumerator(float), Enumerator(float)))
         [0j, 1j, (1+0j), -1j, (1+1j), (-1+0j), ...]
         """
-        return Enumerator.product(*[Enumerator(et) if not isinstance(et, Enumerator) else et for et in etys]).map(lambda vs: ty(*vs))
+        return Enumerator.product(
+            *[Enumerator(et) if not isinstance(et, Enumerator) else et for et in etys]
+        ).map(lambda vs: ty(*vs))
 
     def lists(self):
         """
