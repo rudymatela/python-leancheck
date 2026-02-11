@@ -148,7 +148,7 @@ class Enumerator:
         >>> Enumerator.from_gen(itertools.count)
         Enumerator(lambda: (xs for xs in [[0], [1], [2], [3], [4], [5], ...]))
         """
-        return cls(lambda: ii.nest(gen()))
+        return cls.choices(gen)
 
     @classmethod
     def from_list(cls, lst):
@@ -159,7 +159,7 @@ class Enumerator:
         >>> Enumerator.from_list([0,2,4,6])
         Enumerator(lambda: (xs for xs in [[0], [2], [4], [6]]))
         """
-        return cls(lambda: ii.nest(x for x in lst))
+        return cls.choices(lst)
 
     @classmethod
     def from_choices(cls, choices):
