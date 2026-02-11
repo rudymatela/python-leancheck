@@ -7,8 +7,6 @@
 #
 # This illustrates how one can use LeanCheck
 # to define custom (global) enumerators.
-#
-# type: ignore  # TODO: XXX: FIXME: avoid this mypy hint
 
 from leancheck import *
 
@@ -25,6 +23,6 @@ class Person:
         return f"Person('{self.name}', {self.age})"
 
 
-Enumerator.register(Person, (Enumerator[str] * Enumerator[int]).map(lambda na: Person(*na)))
+Enumerator.register(Person, Enumerator.cons(Person, str, int))
 
-print(Enumerator[Person])
+print(Enumerator(Person))

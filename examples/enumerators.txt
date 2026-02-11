@@ -1,84 +1,84 @@
->>> print(Enumerator[int])
+>>> print(Enumerator(int))
 [0, 1, -1, 2, -2, 3, ...]
 
->>> Enumerator[int]
+>>> Enumerator(int)
 Enumerator(lambda: (xs for xs in [[0], [1], [-1], [2], [-2], [3], ...]))
 
->>> print(Enumerator[int])
+>>> print(Enumerator(int))
 [0, 1, -1, 2, -2, 3, -3, 4, -4, 5, -5, 6, ...]
 
->>> Enumerator[int]
+>>> Enumerator(int)
 Enumerator(lambda: (xs for xs in [[0], [1], [-1], [2], [-2], [3], ...]))
 
->>> print(Enumerator[bool])
+>>> print(Enumerator(bool))
 [False, True]
 
->>> Enumerator[bool]
+>>> Enumerator(bool)
 Enumerator(lambda: (xs for xs in [[False, True]]))
 
->>> print(Enumerator[list[int]])
+>>> print(Enumerator(list[int]))
 [[], [0], [0, 0], [1], [0, 0, 0], [0, 1], [1, 0], [-1], [0, 0, 0, 0], [0, 0, 1], [0, 1, 0], [0, -1], ...]
 
->>> Enumerator[list[int]]
+>>> Enumerator(list[int])
 Enumerator(lambda: (xs for xs in [[[]], [[0]], [[0, 0], [1]], [[0, 0, 0], [0, 1], [1, 0], [-1]], [[0, 0, 0, 0], [0, 0, 1], [0, 1, 0], [0, -1], [1, 0, 0], [1, 1], [-1, 0], [2]], [[0, 0, 0, 0, 0], [0, 0, 0, 1], [0, 0, 1, 0], [0, 0, -1], [0, 1, 0, 0], [0, 1, 1], [0, -1, 0], [0, 2], [1, 0, 0, 0], [1, 0, 1], [1, 1, 0], [1, -1], [-1, 0, 0], [-1, 1], [2, 0], [-2]], ...]))
 
->>> print(Enumerator[list[bool]])
+>>> print(Enumerator(list[bool]))
 [[], [False], [True], [False, False], [False, True], [True, False], [True, True], [False, False, False], [False, False, True], [False, True, False], [False, True, True], [True, False, False], ...]
 
->>> Enumerator[list[bool]]
+>>> Enumerator(list[bool])
 Enumerator(lambda: (xs for xs in [[[]], [[False], [True]], [[False, False], [False, True], [True, False], [True, True]], [[False, False, False], [False, False, True], [False, True, False], [False, True, True], [True, False, False], [True, False, True], [True, True, False], [True, True, True]], [[False, False, False, False], [False, False, False, True], [False, False, True, False], [False, False, True, True], [False, True, False, False], [False, True, False, True], [False, True, True, False], [False, True, True, True], [True, False, False, False], [True, False, False, True], [True, False, True, False], [True, False, True, True], [True, True, False, False], [True, True, False, True], [True, True, True, False], [True, True, True, True]], [[False, False, False, False, False], [False, False, False, False, True], [False, False, False, True, False], [False, False, False, True, True], [False, False, True, False, False], [False, False, True, False, True], [False, False, True, True, False], [False, False, True, True, True], [False, True, False, False, False], [False, True, False, False, True], [False, True, False, True, False], [False, True, False, True, True], [False, True, True, False, False], [False, True, True, False, True], [False, True, True, True, False], [False, True, True, True, True], [True, False, False, False, False], [True, False, False, False, True], [True, False, False, True, False], [True, False, False, True, True], [True, False, True, False, False], [True, False, True, False, True], [True, False, True, True, False], [True, False, True, True, True], [True, True, False, False, False], [True, True, False, False, True], [True, True, False, True, False], [True, True, False, True, True], [True, True, True, False, False], [True, True, True, False, True], [True, True, True, True, False], [True, True, True, True, True]], ...]))
 
->>> print(Enumerator[float])
+>>> print(Enumerator(float))
 [0.0, 1.0, -1.0, 0.5, -0.5, 2.0, -2.0, 0.3333333333333333, -0.3333333333333333, 1.5, -1.5, 0.6666666666666666, ...]
 
->>> Enumerator[float]
+>>> Enumerator(float)
 Enumerator(lambda: (xs for xs in [[0.0], [1.0], [-1.0], [0.5], [-0.5], [2.0], ...]))
 
->>> print(Enumerator[list[float]])
+>>> print(Enumerator(list[float]))
 [[], [0.0], [0.0, 0.0], [1.0], [0.0, 0.0, 0.0], [0.0, 1.0], [1.0, 0.0], [-1.0], [0.0, 0.0, 0.0, 0.0], [0.0, 0.0, 1.0], [0.0, 1.0, 0.0], [0.0, -1.0], ...]
 
->>> Enumerator[list[float]]
+>>> Enumerator(list[float])
 Enumerator(lambda: (xs for xs in [[[]], [[0.0]], [[0.0, 0.0], [1.0]], [[0.0, 0.0, 0.0], [0.0, 1.0], [1.0, 0.0], [-1.0]], [[0.0, 0.0, 0.0, 0.0], [0.0, 0.0, 1.0], [0.0, 1.0, 0.0], [0.0, -1.0], [1.0, 0.0, 0.0], [1.0, 1.0], [-1.0, 0.0], [0.5]], [[0.0, 0.0, 0.0, 0.0, 0.0], [0.0, 0.0, 0.0, 1.0], [0.0, 0.0, 1.0, 0.0], [0.0, 0.0, -1.0], [0.0, 1.0, 0.0, 0.0], [0.0, 1.0, 1.0], [0.0, -1.0, 0.0], [0.0, 0.5], [1.0, 0.0, 0.0, 0.0], [1.0, 0.0, 1.0], [1.0, 1.0, 0.0], [1.0, -1.0], [-1.0, 0.0, 0.0], [-1.0, 1.0], [0.5, 0.0], [-0.5]], ...]))
 
->>> print(Enumerator[tuple[int, int]])
+>>> print(Enumerator(tuple[int, int]))
 [(0, 0), (0, 1), (1, 0), (0, -1), (1, 1), (-1, 0), (0, 2), (1, -1), (-1, 1), (2, 0), (0, -2), (1, 2), ...]
 
->>> Enumerator[tuple[int, int]]
+>>> Enumerator(tuple[int, int])
 Enumerator(lambda: (xs for xs in [[(0, 0)], [(0, 1), (1, 0)], [(0, -1), (1, 1), (-1, 0)], [(0, 2), (1, -1), (-1, 1), (2, 0)], [(0, -2), (1, 2), (-1, -1), (2, 1), (-2, 0)], [(0, 3), (1, -2), (-1, 2), (2, -1), (-2, 1), (3, 0)], ...]))
 
->>> print(Enumerator[tuple[int, int, int]])
+>>> print(Enumerator(tuple[int, int, int]))
 [(0, 0, 0), (0, 0, 1), (0, 1, 0), (1, 0, 0), (0, 0, -1), (0, 1, 1), (0, -1, 0), (1, 0, 1), (1, 1, 0), (-1, 0, 0), (0, 0, 2), (0, 1, -1), ...]
 
->>> Enumerator[tuple[int, int, int]]
+>>> Enumerator(tuple[int, int, int])
 Enumerator(lambda: (xs for xs in [[(0, 0, 0)], [(0, 0, 1), (0, 1, 0), (1, 0, 0)], [(0, 0, -1), (0, 1, 1), (0, -1, 0), (1, 0, 1), (1, 1, 0), (-1, 0, 0)], [(0, 0, 2), (0, 1, -1), (0, -1, 1), (0, 2, 0), (1, 0, -1), (1, 1, 1), (1, -1, 0), (-1, 0, 1), (-1, 1, 0), (2, 0, 0)], [(0, 0, -2), (0, 1, 2), (0, -1, -1), (0, 2, 1), (0, -2, 0), (1, 0, 2), (1, 1, -1), (1, -1, 1), (1, 2, 0), (-1, 0, -1), (-1, 1, 1), (-1, -1, 0), (2, 0, 1), (2, 1, 0), (-2, 0, 0)], [(0, 0, 3), (0, 1, -2), (0, -1, 2), (0, 2, -1), (0, -2, 1), (0, 3, 0), (1, 0, -2), (1, 1, 2), (1, -1, -1), (1, 2, 1), (1, -2, 0), (-1, 0, 2), (-1, 1, -1), (-1, -1, 1), (-1, 2, 0), (2, 0, -1), (2, 1, 1), (2, -1, 0), (-2, 0, 1), (-2, 1, 0), (3, 0, 0)], ...]))
 
->>> print(Enumerator[tuple[bool, bool]])
+>>> print(Enumerator(tuple[bool, bool]))
 [(False, False), (False, True), (True, False), (True, True)]
 
->>> Enumerator[tuple[bool, bool]]
+>>> Enumerator(tuple[bool, bool])
 Enumerator(lambda: (xs for xs in [[(False, False), (False, True), (True, False), (True, True)]]))
 
->>> print(Enumerator[tuple[bool, bool, bool]])
+>>> print(Enumerator(tuple[bool, bool, bool]))
 [(False, False, False), (False, False, True), (False, True, False), (False, True, True), (True, False, False), (True, False, True), (True, True, False), (True, True, True)]
 
->>> Enumerator[tuple[bool, bool, bool]]
+>>> Enumerator(tuple[bool, bool, bool])
 Enumerator(lambda: (xs for xs in [[(False, False, False), (False, False, True), (False, True, False), (False, True, True), (True, False, False), (True, False, True), (True, True, False), (True, True, True)]]))
 
->>> print(Enumerator[tuple[bool, int]])
+>>> print(Enumerator(tuple[bool, int]))
 [(False, 0), (True, 0), (False, 1), (True, 1), (False, -1), (True, -1), (False, 2), (True, 2), (False, -2), (True, -2), (False, 3), (True, 3), ...]
 
->>> Enumerator[tuple[bool, int]]
+>>> Enumerator(tuple[bool, int])
 Enumerator(lambda: (xs for xs in [[(False, 0), (True, 0)], [(False, 1), (True, 1)], [(False, -1), (True, -1)], [(False, 2), (True, 2)], [(False, -2), (True, -2)], [(False, 3), (True, 3)], ...]))
 
->>> print(Enumerator[tuple[bool, int, float]])
+>>> print(Enumerator(tuple[bool, int, float]))
 [(False, 0, 0.0), (True, 0, 0.0), (False, 0, 1.0), (False, 1, 0.0), (True, 0, 1.0), (True, 1, 0.0), (False, 0, -1.0), (False, 1, 1.0), (False, -1, 0.0), (True, 0, -1.0), (True, 1, 1.0), (True, -1, 0.0), ...]
 
->>> Enumerator[tuple[bool, int, float]]
+>>> Enumerator(tuple[bool, int, float])
 Enumerator(lambda: (xs for xs in [[(False, 0, 0.0), (True, 0, 0.0)], [(False, 0, 1.0), (False, 1, 0.0), (True, 0, 1.0), (True, 1, 0.0)], [(False, 0, -1.0), (False, 1, 1.0), (False, -1, 0.0), (True, 0, -1.0), (True, 1, 1.0), (True, -1, 0.0)], [(False, 0, 0.5), (False, 1, -1.0), (False, -1, 1.0), (False, 2, 0.0), (True, 0, 0.5), (True, 1, -1.0), (True, -1, 1.0), (True, 2, 0.0)], [(False, 0, -0.5), (False, 1, 0.5), (False, -1, -1.0), (False, 2, 1.0), (False, -2, 0.0), (True, 0, -0.5), (True, 1, 0.5), (True, -1, -1.0), (True, 2, 1.0), (True, -2, 0.0)], [(False, 0, 2.0), (False, 1, -0.5), (False, -1, 0.5), (False, 2, -1.0), (False, -2, 1.0), (False, 3, 0.0), (True, 0, 2.0), (True, 1, -0.5), (True, -1, 0.5), (True, 2, -1.0), (True, -2, 1.0), (True, 3, 0.0)], ...]))
 
->>> print(Enumerator[str])
+>>> print(Enumerator(str))
 ['', 'a', 'aa', ' ', 'aaa', 'a ', ' a', 'b', 'aaaa', 'aa ', 'a a', 'ab', ...]
 
->>> Enumerator[str]
+>>> Enumerator(str)
 Enumerator(lambda: (xs for xs in [[''], ['a'], ['aa', ' '], ['aaa', 'a ', ' a', 'b'], ['aaaa', 'aa ', 'a a', 'ab', ' aa', '  ', 'ba', '0'], ['aaaaa', 'aaa ', 'aa a', 'aab', 'a aa', 'a  ', 'aba', 'a0', ' aaa', ' a ', '  a', ' b', 'baa', 'b ', '0a', 'c'], ...]))
 

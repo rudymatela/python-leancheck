@@ -27,10 +27,10 @@ def take(n, generator):
 class TestLeanCheck(unittest.TestCase):
 
     def assertEnum(self, typ, lst):
-        self.assertEqual(take(len(lst), Enumerator[typ]), lst)
+        self.assertEqual(take(len(lst), Enumerator(typ)), lst)
 
     def assertFiniteEnum(self, typ, lst):
-        self.assertEqual(list(Enumerator[typ]), lst)
+        self.assertEqual(list(Enumerator(typ)), lst)
 
     def test_constructor(self):
         e = Enumerator(lambda: ([x] for x in [3, 1, 3, 3, 7]))

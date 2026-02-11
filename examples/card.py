@@ -24,11 +24,10 @@ card_enumerator = (rank_enumerator * suits_enumerator).map(lambda rs: Card(*rs))
 Enumerator.register(Card, card_enumerator)
 
 # Access the Enumerator and pretty-prints it:
-print(Enumerator[Card])  # type: ignore # TODO:
+print(Enumerator(Card))
 
 # Print all possible cards:
-# type: ignore
-for card in Enumerator[Card]:  # type: ignore # TODO:
+for card in Enumerator(Card):
     print(card)
 
 

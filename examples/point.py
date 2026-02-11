@@ -7,8 +7,6 @@
 #
 # This illustrates how one can use LeanCheck
 # to define custom (global) enumerators.
-#
-# type: ignore  # TODO: XXX: FIXME: avoid this mypy hint
 
 import leancheck
 from leancheck import Enumerator

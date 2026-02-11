@@ -10,11 +10,11 @@ from leancheck import *
 
 def pe(typ):
     name = typ.__name__ if type(typ) == type else str(typ)
-    print(f">>> print(Enumerator[{name}])")
-    print(Enumerator[typ])
+    print(f">>> print(Enumerator({name}))")
+    print(Enumerator(typ))
     print()
-    print(f">>> Enumerator[{name}]")
-    print(repr(Enumerator[typ]))
+    print(f">>> Enumerator({name})")
+    print(repr(Enumerator(typ)))
     print()
 
 

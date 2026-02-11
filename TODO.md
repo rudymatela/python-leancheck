@@ -3,7 +3,7 @@ TODO for leancheck.py
 
 * avoid `__class_getitem__` abuse (see below)
 
-* fix infinite loop in `print(Enumerator[set[bool]])`
+* fix infinite loop in `print(Enumerator(set[bool]))`
 
 * simplify code
 
