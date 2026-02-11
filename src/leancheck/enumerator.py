@@ -468,8 +468,8 @@ class Enumerator:
 
         >>> Enumerator.default()
         """
-        cls.register(int, cls.from_gen(gen.ints))
-        cls.register(float, cls.from_gen(gen.floats))
+        cls.register(int, cls.build(gen.ints))
+        cls.register(float, cls.build(gen.floats))
 
     @classmethod
     def only_positives(cls):
@@ -488,8 +488,8 @@ class Enumerator:
 
         >>> Enumerator.default()
         """
-        cls.register(int, cls.from_gen(gen.positive_ints))
-        cls.register(float, cls.from_gen(gen.positive_floats))
+        cls.register(int, cls.build(gen.positive_ints))
+        cls.register(float, cls.build(gen.positive_floats))
 
     @classmethod
     def only_non_negatives(cls):
@@ -514,9 +514,9 @@ class Enumerator:
 
 
 # Registers default Enumerators
-Enumerator.register(int, Enumerator.from_gen(gen.ints))
-Enumerator.register(float, Enumerator.from_gen(gen.floats))
-Enumerator.register(bool, Enumerator.from_choices([False, True]))
+Enumerator.register(int, Enumerator.build(gen.ints))
+Enumerator.register(float, Enumerator.build(gen.floats))
+Enumerator.register(bool, Enumerator.build(False, True))
 Enumerator.register(list, Enumerator.lists)  # i.e.: lambda e: e.lists()
 Enumerator.register(tuple, Enumerator.product)  # i.e.: lambda *e: Enumerator.product(*e)
 Enumerator.register(str, Enumerator(gen.strss))
@@ -524,9 +524,9 @@ Enumerator.register(set, Enumerator.sets)
 Enumerator.register(dict, Enumerator.dicts)
 Enumerator.register(frozenset, lambda e: e.sets().map(frozenset))
 
-Enumerator.register(types.NoneType, Enumerator.from_choices([None]))
-Enumerator.register(Ellipsis, Enumerator.from_choices([...]))
-Enumerator.register(NotImplemented, Enumerator.from_choices([NotImplemented]))
+Enumerator.register(types.NoneType, Enumerator.build(None))
+Enumerator.register(Ellipsis, Enumerator.build(...))
+Enumerator.register(NotImplemented, Enumerator.build(NotImplemented))
 # Enumerator.register(type, Enumerator.from_list([int, bool, float, list, tuple, str, set, dict, frozenset, complex, range]))
 
 # TODO: oof, simplify the following complex and range instances
