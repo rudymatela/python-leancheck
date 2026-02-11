@@ -32,6 +32,10 @@ def flatten(xss):
         yield from xs
 
 
+def unit(x):
+    yield [x]
+
+
 def intercalate(generator1, generator2):
     """
     This function intercalates the two given iterables.

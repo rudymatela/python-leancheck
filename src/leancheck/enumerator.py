@@ -110,6 +110,37 @@ class Enumerator:
         return ii.flatten(self.tiers())
 
     @classmethod
+    def build(cls, *iis):
+        """
+        Builds an enumerator from a list of plain iterables or items.
+
+        >>> Enumerator.build(itertools.count)
+        Enumerator(lambda: (xs for xs in [[0], [1], [2], [3], [4], [5], ...]))
+
+        >>> Enumerator.build([1,2,3], False, True)
+        Enumerator(lambda: (xs for xs in [[1, False, True], [2], [3]]))
+
+        Note strings are iterables, you need to nest if you plan to include
+        them:
+
+        >>> Enumerator.build([1,2,3], ["abc"])
+        Enumerator(lambda: (xs for xs in [[1, 'abc'], [2], [3]]))
+
+        >>> Enumerator.build([1,2,3], "abc")
+        Enumerator(lambda: (xs for xs in [[1, 'a'], [2, 'b'], [3, 'c']]))
+        """
+        def tierify(obj):
+            try:
+                return ii.nest(obj())
+            except TypeError:  # not callable
+                try:
+                    return ii.nest(iter(obj))
+                except TypeError:
+                    return ii.unit(obj)
+
+        return cls(lambda: ii.zippend(*[tierify(i) for i in iis]))
+
+    @classmethod
     def from_gen(cls, gen):
         """
         Initializes an enumerator directly from a plain generator.
