@@ -411,16 +411,48 @@ class Enumerator:
 
     @classmethod
     def find(cls, c):
+        """
+        Finds an enumerator for the given type.
+
+        >>> Enumerator.find(int)
+        Enumerator(lambda: (xs for xs in [[0], [1], [-1], [2], [-2], [3], ...]))
+
+        You are perhaps better off using the Enumerator constructor directly,
+        as it is an alias to this when its argument is a type.
+
+        >>> Enumerator(int)
+        Enumerator(lambda: (xs for xs in [[0], [1], [-1], [2], [-2], [3], ...]))
+
+        >>> Enumerator(bool)
+        Enumerator(lambda: (xs for xs in [[False, True]]))
+
+        >>> Enumerator(int | bool)
+        Enumerator(lambda: (xs for xs in [[0, False, True], [1], [-1], [2], [-2], [3], ...]))
+
+        >>> print(Enumerator(list[int]))
+        [[], [0], [0, 0], [1], [0, 0, 0], [0, 1], ...]
+
+        >>> print(Enumerator(tuple[bool, int]))
+        [(False, 0), (True, 0), (False, 1), (True, 1), (False, -1), (True, -1), ...]
+
+        >>> print(Enumerator(tuple[int,int,int]))
+        [(0, 0, 0), (0, 0, 1), (0, 1, 0), (1, 0, 0), (0, 0, -1), (0, 1, 1), ...]
+
+        >>> print(Enumerator(type))
+        Traceback (most recent call last):
+        ...
+        TypeError: could not find Enumerator for <class 'type'>
+        """
         try:
             if type(c) is types.GenericAlias:
                 origin = typing.get_origin(c)
                 args = typing.get_args(c)
-                enums = [Enumerator[a] for a in args]
+                enums = [Enumerator(a) for a in args]
                 return cls._enumerators[origin](*enums)
             if type(c) in [typing.Union, types.UnionType]:
                 # ^ oof.., cf. stackoverflow.com/q/45957615
                 args = typing.get_args(c)
-                enums = [Enumerator[a] for a in args]
+                enums = [Enumerator(a) for a in args]
                 return cls.sum(*enums)
             else:
                 return cls._enumerators[c]
@@ -430,30 +462,7 @@ class Enumerator:
     # @classmethod # automatic
     def __class_getitem__(cls, c):
         """
-        Finds an enumerator for the given type.
-
-        >>> Enumerator[int]
-        Enumerator(lambda: (xs for xs in [[0], [1], [-1], [2], [-2], [3], ...]))
-
-        >>> Enumerator[bool]
-        Enumerator(lambda: (xs for xs in [[False, True]]))
-
-        >>> Enumerator[int | bool]
-        Enumerator(lambda: (xs for xs in [[0, False, True], [1], [-1], [2], [-2], [3], ...]))
-
-        >>> print(Enumerator[list[int]])
-        [[], [0], [0, 0], [1], [0, 0, 0], [0, 1], ...]
-
-        >>> print(Enumerator[tuple[bool, int]])
-        [(False, 0), (True, 0), (False, 1), (True, 1), (False, -1), (True, -1), ...]
-
-        >>> print(Enumerator[tuple[int,int,int]])
-        [(0, 0, 0), (0, 0, 1), (0, 1, 0), (1, 0, 0), (0, 0, -1), (0, 1, 1), ...]
-
-        >>> print(Enumerator[type])
-        Traceback (most recent call last):
-        ...
-        TypeError: could not find Enumerator for <class 'type'>
+        Deprecated!
         """
         return cls.find(c)
 
