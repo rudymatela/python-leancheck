@@ -21,6 +21,7 @@ import types
 import typing
 import leancheck.iitertools as ii
 import leancheck.gen as gen
+from leancheck.ty import arg_types
 
 
 class Enumerator:
@@ -102,7 +103,15 @@ class Enumerator:
         match args:
             case []:
                 return cls.empty()
-            case [ty] if type(ty) in [type, types.GenericAlias, typing.Union, types.UnionType]:
+            case [ty] if type(ty) is type:
+                try:
+                    return cls._enumerators[ty]
+                except KeyError:
+                    try:  # tries to infer enumerator from argument types
+                        return cls.cons(ty, *arg_types(ty))
+                    except ValueError:  # no signature
+                        raise TypeError(f"could not infer Enumerator for {ty}")
+            case [ty] if type(ty) in [types.GenericAlias, typing.Union, types.UnionType]:
                 return cls.find(ty)
             case [tiers]:
                 e = super(Enumerator, cls).__new__(cls)
@@ -492,7 +501,7 @@ class Enumerator:
         >>> print(Enumerator(type))
         Traceback (most recent call last):
         ...
-        TypeError: could not find Enumerator for <class 'type'>
+        TypeError: could not infer Enumerator for <class 'type'>
         """
         try:
             if type(c) is types.GenericAlias:

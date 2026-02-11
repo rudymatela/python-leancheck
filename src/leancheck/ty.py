@@ -36,12 +36,35 @@ def arg_types(fun):
     ...     return x + y
     >>> arg_types(add)
     [<class 'int'>, <class 'int'>]
+
+    This works for lambdas with no arguments returning an empty list:
+
+    >>> arg_types(lambda: 42)
+    []
+
+    This raises an exception for functions without type annotations:
+
+    >>> def foo(x):
+    ...     return x + y
+    >>> arg_types(foo)
+    Traceback (most recent call last):
+    ...
+    ValueError: missing type annotation
+
+    Exception is raised for lambdas with one or more arguments as well:
+    >>> arg_types(lambda x, y: x + y)
+    Traceback (most recent call last):
+    ...
+    ValueError: missing type annotation
     """
     # TODO: This currently returns kwargs' types as well
     #       causing problems in some contexts.
     #       Make so that this only returns args.
     #       Have a separate function kwarg_types for these cases.
-    return [par.annotation for par in inspect.signature(fun).parameters.values()]
+    types = [par.annotation for par in inspect.signature(fun).parameters.values()]
+    if any(t is inspect.Signature.empty for t in types):
+        raise ValueError("missing type annotation")
+    return types
 
 
 # Runs tests if this is not being imported as a module.

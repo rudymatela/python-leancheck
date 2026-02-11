@@ -163,14 +163,15 @@ import leancheck
 from leancheck import Enumerator
 
 class Point:
-    def __init__(self, x, y):
+    def __init__(self, x: float, y: float):
         self.x = x
         self.y = y
 
+    def __repr__(self):
+        return f"Point({self.x}, {self.y})"
+
     def distance(self, other):
         return (self.x - other.x)**2 + (self.y - other.y)**2
-
-Enumerator.register_cons(Point, int, int)
 
 def prop_distance_positive(p: Point, q: Point) -> bool:
     return Point.distance(p,q) >= 0
@@ -180,6 +181,25 @@ def prop_self_distance(p: Point) -> bool:
 
 leancheck.main(verbose=True)
 ```
+
+The enumeration for `Point`s is inferred
+from the type annotations in the constructor.
+A point is a cross-product of two floats:
+
+```py
+>>> print(Enumerator(Point))
+[Point(0.0, 0.0), Point(0.0, 1.0), Point(1.0, 0.0), Point(0.0, -1.0), Point(1.0, 1.0), Point(-1.0, 0.0), ...]
+```
+
+If the type-annotation was not present,
+an enumerator could be registered for use with:
+
+```py
+Enumerator.register_cons(Point, float, float)
+```
+
+... anywhere between the `Point` class declaration
+and the `leancheck.main` call.
 
 
 Further reading

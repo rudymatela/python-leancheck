@@ -20,6 +20,9 @@ class Point:
         self.x = x
         self.y = y
 
+    def __repr__(self):
+        return f"Point({self.x}, {self.y})"
+
     def distance(self, other):
         return (self.x - other.x) ** 2 + (self.y - other.y) ** 2
 
@@ -28,8 +31,8 @@ class Point:
 # Point = collections.namedtuple('Point', ['x', 'y'])
 
 
-# TODO: make so that the following is inferred from types?
-Enumerator.register_cons(Point, int, int)
+# # The following is automatically inferred:
+# Enumerator.register_cons(Point, float, float)
 
 
 def prop_distance_positive(p: Point, q: Point) -> bool:
