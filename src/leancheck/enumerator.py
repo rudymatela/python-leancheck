@@ -140,38 +140,6 @@ class Enumerator:
 
         return cls(lambda: ii.zippend(*[tierify(i) for i in iis]))
 
-    @classmethod
-    def from_gen(cls, gen):
-        """
-        Initializes an enumerator directly from a plain generator.
-
-        >>> Enumerator.from_gen(itertools.count)
-        Enumerator(lambda: (xs for xs in [[0], [1], [2], [3], [4], [5], ...]))
-        """
-        return cls.choices(gen)
-
-    @classmethod
-    def from_list(cls, lst):
-        """
-        Initializes an enumerator from a list of options.
-        Earlier values are considered of smaller size than later values.
-
-        >>> Enumerator.from_list([0,2,4,6])
-        Enumerator(lambda: (xs for xs in [[0], [2], [4], [6]]))
-        """
-        return cls.choices(lst)
-
-    @classmethod
-    def from_choices(cls, choices):
-        """
-        Initializes an enumerator from a list of choices.
-        All given values are considered to be of the same size.
-
-        >>> Enumerator.from_choices([0,2,4,6])
-        Enumerator(lambda: (xs for xs in [[0, 2, 4, 6]]))
-        """
-        return cls.choices(*choices)
-
     def lists(self):
         """
         Constructs an enumerator of lists of values from another enumeration.
