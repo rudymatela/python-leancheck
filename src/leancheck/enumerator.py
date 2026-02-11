@@ -72,7 +72,7 @@ class Enumerator:
     There are other operations.  See below.
     """
 
-    tiers: typing.Callable[[], typing.Generator[list]]
+    tiers: typing.Callable[[], typing.Generator[list,None,None]]
     """
     Generate tiers of values.
 
