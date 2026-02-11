@@ -32,8 +32,8 @@ class Enumerator:
     tiers of values of increasing size.
     This is needed in order for the enumeration to be fair.
 
-    As a user, you can query available enumerations with
-    enumerations using the class constructor:
+    As a user, you can query available enumerations
+    by passing a type as the class constructor argument.
 
     >>> Enumerator(int)
     Enumerator(lambda: (xs for xs in [[0], [1], [-1], [2], [-2], [3], ...]))
@@ -67,6 +67,8 @@ class Enumerator:
 
     >>> print(Enumerator(int) * Enumerator(bool))
     [(0, False), (0, True), (1, False), (1, True), (-1, False), (-1, True), ...]
+
+    There are other operations.  See below.
     """
 
     tiers: typing.Callable[[], typing.Generator[list]]
@@ -79,7 +81,7 @@ class Enumerator:
 
     def __new__(cls, *args):
         """
-        Raw initialization of an enumerator
+        One can initialize a raw enumerator
         with a (potentially infinite) generator of finite lists.
 
         >>> Enumerator(lambda: ([x] for x in itertools.count()))
@@ -92,7 +94,8 @@ class Enumerator:
         >>> Enumerator()
         Enumerator(lambda: (xs for xs in []))
 
-        With a type, this queries `register()`ed enumerators:
+        With a type as the sole argument,
+        this queries `register()`ed enumerators:
         >>> Enumerator(int)
         Enumerator(lambda: (xs for xs in [[0], [1], [-1], [2], [-2], [3], ...]))
         """
@@ -116,28 +119,39 @@ class Enumerator:
         """
         Builds an enumerator from choices of iterables or items.
 
+        With a selection of atomic items, this returns an enumerator
+        where these values are of the same size:
+
+        >>> Enumerator.choices(False, True)
+        Enumerator(lambda: (xs for xs in [[False, True]]))
+
+        >>> Enumerator.choices(1, 2, 3)
+        Enumerator(lambda: (xs for xs in [[1, 2, 3]]))
+
+        If the single argument is a list,
+        earlier values are considered of smaller size than later values.
+
+        >>> Enumerator.choices([0,2,4,6])
+        Enumerator(lambda: (xs for xs in [[0], [2], [4], [6]]))
+
+        The same happens if a generator is passed as an argument:
+
         >>> Enumerator.choices(itertools.count)
         Enumerator(lambda: (xs for xs in [[0], [1], [2], [3], [4], [5], ...]))
+
+        Generators, list and atomic items can be combined:
 
         >>> Enumerator.choices([1,2,3], False, True)
         Enumerator(lambda: (xs for xs in [[1, False, True], [2], [3]]))
 
-        Note strings are iterables, you need to nest if you plan to include
-        them:
+        Note strings are iterables,
+        nest on lists accordingly:
 
         >>> Enumerator.choices([1,2,3], ["abc"])
         Enumerator(lambda: (xs for xs in [[1, 'abc'], [2], [3]]))
 
         >>> Enumerator.choices([1,2,3], "abc")
         Enumerator(lambda: (xs for xs in [[1, 'a'], [2, 'b'], [3, 'c']]))
-
-        Initializes an enumerator from a list of options.
-        Earlier values are considered of smaller size than later values.
-
-        >>> Enumerator.choices([0,2,4,6])
-        Enumerator(lambda: (xs for xs in [[0], [2], [4], [6]]))
-
-        TODO: improve these docs
         """
 
         def tierify(obj):
@@ -154,8 +168,10 @@ class Enumerator:
     @classmethod
     def cons(cls, ty, *etys):
         """
-        For types that can be constructed from other types,
-        one can just list the class and type arguments:
+        This constructs an enumerator
+        for classes that can be directly constructed
+        from the simple cross-product between other types.
+        Just list the class and type arguments:
 
         >>> print(Enumerator.cons(complex, float, float))
         [0j, 1j, (1+0j), -1j, (1+1j), (-1+0j), ...]
