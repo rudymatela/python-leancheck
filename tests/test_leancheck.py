@@ -37,8 +37,8 @@ class TestLeanCheck(unittest.TestCase):
         self.assertEqual(list(e), [3, 1, 3, 3, 7])
         self.assertEqual(list(e.tiers()), [[3], [1], [3], [3], [7]])
 
-    def test_from_list(self):
-        e = Enumerator.from_list([3, 1, 3, 3, 7])
+    def test_choices(self):
+        e = Enumerator.choices([3, 1, 3, 3, 7])
         self.assertEqual(list(e), [3, 1, 3, 3, 7])
 
     def test_int(self):
