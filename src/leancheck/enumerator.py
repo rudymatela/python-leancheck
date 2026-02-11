@@ -370,7 +370,7 @@ class Enumerator:
         Computes the product of several enumerators
         returning an enumeration of tuples.
 
-        >>> print(Enumerator.product(Enumerator(int), Enumerator(bool), Enumerator[list[int]]))
+        >>> print(Enumerator.product(Enumerator(int), Enumerator(bool), Enumerator(list[int])))
         [(0, False, []), (0, True, []), (0, False, [0]), (0, True, [0]), (1, False, []), (1, True, []), ...]
 
         >>> print(Enumerator(bool).product(Enumerator(float), Enumerator(str)))
@@ -488,7 +488,7 @@ class Enumerator:
         [1, 2, 3, 4, 5, 6, ...]
         >>> print(Enumerator(float))
         [1.0, 0.5, 2.0, 0.3333333333333333, 1.5, 0.6666666666666666, ...]
-        >>> print(Enumerator[list[tuple[int,float]]])
+        >>> print(Enumerator(list[tuple[int,float]]))
         [[], [(1, 1.0)], [(1, 1.0), (1, 1.0)], [(1, 0.5)], [(2, 1.0)], [(1, 1.0), (1, 1.0), (1, 1.0)], ...]
 
         Reset with
@@ -509,7 +509,7 @@ class Enumerator:
         [0, 1, 2, 3, 4, 5, ...]
         >>> print(Enumerator(float))
         [0.0, 1.0, 0.5, 2.0, 0.3333333333333333, 1.5, ...]
-        >>> print(Enumerator[list[tuple[int,float]]])
+        >>> print(Enumerator(list[tuple[int,float]]))
         [[], [(0, 0.0)], [(0, 0.0), (0, 0.0)], [(0, 1.0)], [(1, 0.0)], [(0, 0.0), (0, 0.0), (0, 0.0)], ...]
 
         Reset with
