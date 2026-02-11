@@ -460,13 +460,6 @@ class Enumerator:
         except KeyError as err:
             raise TypeError(f"could not find Enumerator for {c}") from err
 
-    # @classmethod # automatic
-    def __class_getitem__(cls, c):
-        """
-        Deprecated!
-        """
-        return cls.find(c)
-
     @classmethod
     def default(cls):
         """
