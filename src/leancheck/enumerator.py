@@ -150,6 +150,22 @@ class Enumerator:
 
         return cls(lambda: ii.zippend(*[tierify(i) for i in iis]))
 
+    @classmethod
+    def cons(cls, ty, *etys):
+        """
+        For types that can be constructed from other types,
+        one can just list the class and type arguments:
+
+        >>> print(Enumerator.cons(complex, float, float))
+        [0j, 1j, (1+0j), -1j, (1+1j), (-1+0j), ...]
+
+        ... or enumerations:
+
+        >>> print(Enumerator.cons(complex, Enumerator(float), Enumerator(float)))
+        [0j, 1j, (1+0j), -1j, (1+1j), (-1+0j), ...]
+        """
+        return Enumerator.product(*[Enumerator(et) if not isinstance(et, Enumerator) else et for et in etys]).map(lambda vs: ty(*vs))
+
     def lists(self):
         """
         Constructs an enumerator of lists of values from another enumeration.
