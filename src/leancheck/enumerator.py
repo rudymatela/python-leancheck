@@ -530,8 +530,8 @@ Enumerator.register(complex, Enumerator.cons(complex, float, float))
 # TODO: try with different step values in the range enumeration
 Enumerator.register(range, Enumerator.cons(range, int, int))
 
-Enumerator.register(bytes, Enumerator[str].map(lambda s: bytes(s, "ascii")))  # type: ignore
-Enumerator.register(bytearray, Enumerator[str].map(lambda s: bytearray(s, "ascii")))  # type: ignore
+Enumerator.register(bytes, Enumerator(str).map(lambda s: bytes(s, "ascii")))
+Enumerator.register(bytearray, Enumerator(str).map(lambda s: bytearray(s, "ascii")))
 Enumerator.register(memoryview, Enumerator.cons(memoryview, bytes))
 
 
