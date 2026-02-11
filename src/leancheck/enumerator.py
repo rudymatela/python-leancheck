@@ -532,7 +532,7 @@ Enumerator.register(range, Enumerator.cons(range, int, int))
 
 Enumerator.register(bytes, Enumerator[str].map(lambda s: bytes(s, "ascii")))  # type: ignore
 Enumerator.register(bytearray, Enumerator[str].map(lambda s: bytearray(s, "ascii")))  # type: ignore
-Enumerator.register(memoryview, Enumerator[bytes].map(lambda bs: memoryview(bs)))  # type: ignore
+Enumerator.register(memoryview, Enumerator.cons(memoryview, bytes))
 
 
 # Runs tests if this is not being imported as a module.
