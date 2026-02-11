@@ -112,7 +112,7 @@ class Enumerator:
     @classmethod
     def choices(cls, *iis):
         """
-        Builds an enumerator from a list of plain iterables or items.
+        Builds an enumerator from choices of iterables or items.
 
         >>> Enumerator.choices(itertools.count)
         Enumerator(lambda: (xs for xs in [[0], [1], [2], [3], [4], [5], ...]))
@@ -128,6 +128,14 @@ class Enumerator:
 
         >>> Enumerator.choices([1,2,3], "abc")
         Enumerator(lambda: (xs for xs in [[1, 'a'], [2, 'b'], [3, 'c']]))
+
+        Initializes an enumerator from a list of options.
+        Earlier values are considered of smaller size than later values.
+
+        >>> Enumerator.choices([0,2,4,6])
+        Enumerator(lambda: (xs for xs in [[0], [2], [4], [6]]))
+
+        TODO: improve these docs
         """
         def tierify(obj):
             try:
