@@ -16,8 +16,8 @@ from leancheck import *
 Card = collections.namedtuple("Card", ["rank", "suit"])
 
 # Define enumerators for rank and suits
-rank_enumerator = Enumerator.from_list([c for c in "A23456789JQK"])
-suits_enumerator = Enumerator.from_choices("spades diamonds clubs hearts".split())
+rank_enumerator = Enumerator.choices([c for c in "A23456789JQK"])
+suits_enumerator = Enumerator.choices(["spades"], ["diamonds"], ["clubs"], ["hearts"])
 card_enumerator = (rank_enumerator * suits_enumerator).map(lambda rs: Card(*rs))
 
 # Registers a global Card enumerator

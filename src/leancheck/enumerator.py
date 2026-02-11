@@ -170,7 +170,7 @@ class Enumerator:
         >>> Enumerator.from_choices([0,2,4,6])
         Enumerator(lambda: (xs for xs in [[0, 2, 4, 6]]))
         """
-        return cls(lambda: (cs for cs in [choices]))
+        return cls.choices(*choices)
 
     def lists(self):
         """
