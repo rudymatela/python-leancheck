@@ -106,7 +106,7 @@ class Enumerator:
                 e.tiers = tiers
                 return e
             case _:
-                raise ValueError("could not construct Enumerator")  # TODO: display args
+                raise ValueError(f"too many arguments in Enumerator construction")
 
     def __iter__(self):
         return ii.flatten(self.tiers())
