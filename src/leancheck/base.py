@@ -29,7 +29,7 @@ import leancheck.ty as ty
 from leancheck.enumerator import Enumerator
 
 
-def check(prop, max_tests=360, verbose=True, silent=False, types=[]):
+def check(prop, *types, max_tests=360, verbose=True, silent=False):
     """
     Checks a property for several enumerated argument values.
     Properties must have type hints
@@ -75,10 +75,9 @@ def check(prop, max_tests=360, verbose=True, silent=False, types=[]):
     True
 
     Lambdas do not allow type annotations,
-    for them one can use the `types=` option
-    to list argument types.
+    for them just pass types as further arguments.
 
-    >>> check(lambda xs: sorted(sorted(xs)) == sorted(xs), types=[list[int]])
+    >>> check(lambda xs: sorted(sorted(xs)) == sorted(xs), list[int])
     +++ OK, passed 360 tests: <lambda>
     True
     """
@@ -117,7 +116,7 @@ def check(prop, max_tests=360, verbose=True, silent=False, types=[]):
     return True
 
 
-def holds(prop, max_tests=360, types=[]):
+def holds(prop, *types, max_tests=360):
     """
     Alias to `check(prop, silent=True)`.
     Returns a boolean indicating whether the given argument property holds
@@ -133,7 +132,7 @@ def holds(prop, max_tests=360, types=[]):
     >>> holds(prop_increase)
     False
     """
-    return check(prop, max_tests=max_tests, silent=True, types=types)
+    return check(prop, *types, max_tests=max_tests, silent=True)
 
 
 def main(max_tests=360, silent=False, verbose=False, exit_on_failure=True):
