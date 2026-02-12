@@ -34,18 +34,18 @@ python-leancheck release instructions
 
 		$ make upload-for-real-this-time
 
-9. Bump version in `pyproject.toml` to odd "dev" patch (13579)
-
-10. Commit "dev version bump"
-
-11. Test real install with `pip install leancheck`
-
-12. Publish updated docs:
+9. Publish updated docs:
 
 		$ make clone-docs # or pull
 		$ make docs
 		$ cd docs
 		$ git diff
 		$ git commit
+
+10. Bump version in `pyproject.toml` to odd "dev" patch (13579)
+
+11. Commit "dev version bump"
+
+12. Test real install with `pip install leancheck`
 
 13. Rinse & repeat.

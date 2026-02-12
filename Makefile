@@ -29,7 +29,7 @@ validate-pyproject:
 	validate-pyproject pyproject.toml
 
 doc:
-	PYTHONPATH=src pdoc leancheck -o docs
+	PYTHONPATH=src pdoc --footer="`poetry version`" leancheck -o docs
 
 opendoc: doc
 	wbi docs/index.html
