@@ -3,7 +3,7 @@
 # Example: using LeanCheck to test Luciano Ramalho's Card class
 # (cf. "Fluent Python")
 #
-# (C) 2025  Rudy Matela
+# (C) 2026  Rudy Matela
 # Distributed under the LGPL v2.1 or later (see the file LICENSE)
 #
 # This illustrates how one can use LeanCheck

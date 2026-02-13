@@ -2,7 +2,7 @@
 #
 # Using LeanCheck to test a distance function over a point class
 #
-# (C) 2025  Rudy Matela
+# (C) 2026  Rudy Matela
 # Distributed under the LGPL v2.1 or later (see the file LICENSE)
 #
 # This illustrates how one can use LeanCheck
@@ -13,9 +13,6 @@ from leancheck import Enumerator
 
 
 class Point:
-    x: float  # float | int ?, cf. [1]
-    y: float  # float | int ?
-
     def __init__(self, x: float, y: float):
         self.x = x
         self.y = y
@@ -31,7 +28,7 @@ class Point:
 # Point = collections.namedtuple('Point', ['x', 'y'])
 
 
-# # The following is automatically inferred:
+# # The following is automatically inferred from type annotations:
 # Enumerator.register_cons(Point, float, float)
 
 
@@ -44,6 +41,3 @@ def prop_self_distance(p: Point) -> bool:
 
 
 leancheck.main(verbose=True)
-
-# Interesting discussion:
-# [1]: https://stackoverflow.com/questions/50928592/mypy-type-hint-unionfloat-int-is-there-a-number-type
