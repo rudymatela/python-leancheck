@@ -1,6 +1,8 @@
 TODO for leancheck.py
 =====================
 
+* in the `person.py` example, avoid calling Enumerator.choices
+
 * fix infinite loop in `print(Enumerator(set[bool]))`
 
 * simplify code
