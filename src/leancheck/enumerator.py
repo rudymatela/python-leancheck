@@ -183,7 +183,14 @@ class Enumerator:
                     except TypeError:
                         return ii.unit(obj)
 
-        return cls(lambda: ii.zippend(*[tierify(i) for i in iis]))
+        def enumerify(obj):
+            if isinstance(obj, Enumerator):
+                return obj
+            else:
+                return Enumerator(lambda: tierify(obj))
+
+        # return cls(lambda: ii.zippend(*[tierify(i) for i in iis]))
+        return Enumerator.sum(*[enumerify(i) for i in iis])
 
     @classmethod
     def cons(cls, ty, *etys):
