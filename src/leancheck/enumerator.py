@@ -161,16 +161,27 @@ class Enumerator:
 
         >>> Enumerator.choices([1,2,3], "abc")
         Enumerator(lambda: (xs for xs in [[1, 'a'], [2, 'b'], [3, 'c']]))
+
+        Enumerators and types are allowed to:
+
+        >>> Enumerator.choices(None, Enumerator(int), bool)
+        Enumerator(lambda: (xs for xs in [[None, 0, False, True], [1], [-1], [2], [-2], [3], ...]))
         """
 
         def tierify(obj):
+            if isinstance(obj, Enumerator):
+                return obj.tiers()
             try:
-                return ii.nest(obj())
-            except TypeError:  # not callable
+                # iter() raises TypeError on non-iterable results
+                return ii.nest(iter(obj()))
+            except TypeError:  # not callable or with non-iterable result
                 try:
                     return ii.nest(iter(obj))
                 except TypeError:
-                    return ii.unit(obj)
+                    try:
+                        return Enumerator(obj).tiers()
+                    except TypeError:
+                        return ii.unit(obj)
 
         return cls(lambda: ii.zippend(*[tierify(i) for i in iis]))
 
