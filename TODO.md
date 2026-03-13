@@ -1,7 +1,11 @@
 TODO for leancheck.py
 =====================
 
-* in the `person.py` example, avoid calling Enumerator.choices
+* make the intro inline documentation match the README.md
+
+* package _all_ files like in Haskell's leancheck
+
+* in the `person.py` example, avoid calling Enumerator.choices?
 
 * fix infinite loop in `print(Enumerator(set[bool]))`
 
@@ -11,5 +15,3 @@ TODO for leancheck.py
   Performance is not so good currently.
 
 * add carry-on flag
-
-* package _all_ files like in Haskell's leancheck
