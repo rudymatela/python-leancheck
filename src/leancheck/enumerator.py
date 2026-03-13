@@ -162,7 +162,7 @@ class Enumerator:
         >>> Enumerator.choices([1,2,3], "abc")
         Enumerator(lambda: (xs for xs in [[1, 'a'], [2, 'b'], [3, 'c']]))
 
-        Enumerators and types are allowed to:
+        Enumerators and types are allowed too:
 
         >>> Enumerator.choices(None, Enumerator(int), bool)
         Enumerator(lambda: (xs for xs in [[None, 0, False, True], [1], [-1], [2], [-2], [3], ...]))
