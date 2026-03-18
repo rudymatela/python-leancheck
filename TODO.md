@@ -1,6 +1,8 @@
 TODO for leancheck.py
 =====================
 
+* add regression tests for warning messages
+
 * make the intro inline documentation match the README.md
 
 * package _all_ files like in Haskell's leancheck

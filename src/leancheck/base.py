@@ -98,7 +98,7 @@ def check(prop, *types, max_tests=360, verbose=True, silent=False):
     clear, red, green, blue, yellow = misc.colour_escapes()
     if not types:
         if return_type(prop) != bool and not silent:
-            print(f"{yellow}Warning{clear}: property's return value is {ret} and not {bool}")
+            print(f"{yellow}Warning{clear}: property's return value is {return_type(prop)} and not {bool}")
         types = arg_types(prop)
     es = [Enumerator(t) for t in types]
     u = 0  # number of precondition fails
