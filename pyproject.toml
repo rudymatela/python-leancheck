@@ -14,7 +14,7 @@ readme = "README.md"
 license = "LGPL-2.1-or-later"
 dependencies = [] # none: standard/built-in Python libraries
 classifiers = [
-	"Development Status :: 3 - Alpha",
+	"Development Status :: 4 - Beta",
 	"Topic :: Software Development :: Testing",
 	"Intended Audience :: Developers",
 	"Operating System :: OS Independent",

@@ -9,9 +9,6 @@ This is a port of [Haskell's LeanCheck] to [Python].
 LeanCheck is an enumerative property-based testing library.
 It can be used to complement your unit tests.
 
-This is a work in progress:
-__this library is currently experimental.__.
-
 The usual drill in unit testing involves making assertions
 about specific input-output cases of functions, such as:
 
@@ -221,7 +218,7 @@ between LeanCheck and Hypothesis:
 | generator selection            | type annotation  | strategy decorators   |
 | testing individual properties  | check() function | properties themselves |
 | testing all properties in file | leancheck.main() | not supported?        |
-| development status             | experimental     | production/stable     |
+| development status             | beta             | production/stable     |
 
 LeanCheck is enumerative.  The test generators are selected based on type
 annotations in the properties.  One can test an individual property with the

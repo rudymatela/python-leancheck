@@ -8,10 +8,6 @@
 LeanCheck is an enumerative property-based testing library.
 It can be used to complement your unit tests.
 
-**WIP: This library is currently experimental.**
-It works for simple properties,
-but the selection of supported types is still limited.
-
 The usual drill in unit testing involves making assertions
 about specific input-output cases of functions, such as:
 
