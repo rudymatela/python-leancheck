@@ -93,6 +93,23 @@ def check(prop, *types, max_tests=360, verbose=True, silent=False):
     >>> check(lambda xs, ps: sorted(xs + ps) == sorted(ps + xs), list[int], list[bool])
     +++ OK, passed 360 tests: <lambda>
     True
+
+    This raises an error when no type annotations are provided:
+
+    >>> check(lambda x: x + 1 > x)
+    Traceback (most recent call last):
+    ...
+    ValueError: missing type annotation
+
+    Given properties must have type bindings for the return value,
+    otherwise a warning is issued:
+
+    >>> def prop_pow(x: int):
+    ...     return x * x >= 0
+    >>> check(prop_pow)
+    Warning: property's return value is <class 'inspect._empty'> and not <class 'bool'>
+    +++ OK, passed 360 tests: prop_pow
+    True
     """
     verbose = verbose and not silent
     clear, red, green, blue, yellow = misc.colour_escapes()
