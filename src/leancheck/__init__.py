@@ -94,3 +94,13 @@ __all__ = [
     "precondition",
     "Enumerator",
 ]
+
+
+# Runs tests if this is not being imported as a module.
+if __name__ == "__main__":
+    import doctest
+    import sys
+
+    (failures, _) = doctest.testmod(optionflags=doctest.REPORT_ONLY_FIRST_FAILURE)
+    if failures:
+        sys.exit(1)
