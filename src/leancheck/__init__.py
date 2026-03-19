@@ -26,16 +26,16 @@ For example:
 given *any* list, sorting it twice is the same as sorting it once.
 We can encode this as a function returning a boolean value:
 
-    >>> def prop_sorted_twice(xs: list[int]) -> bool:
-    ...     return sorted(sorted(xs)) == sorted(xs)
+>>> def prop_sorted_twice(xs: list[int]) -> bool:
+...     return sorted(sorted(xs)) == sorted(xs)
 
 For whatever list we provide this function,
 it should return `True`.
 Now one can use LeanCheck to verify this automatically:
 
-    >>> check(prop_sorted_twice)
-    +++ OK, passed 360 tests: prop_sorted_twice
-    True
+>>> check(prop_sorted_twice)
++++ OK, passed 360 tests: prop_sorted_twice
+True
 
 LeanCheck automatically came up with 360 unique lists
 to exercise the property.
@@ -43,14 +43,14 @@ to exercise the property.
 When the property or function-under-test is incorrect
 LeanCheck may find and report a counterexample:
 
-    >>> def prop_sorted_wrong(xs: list[int]) -> bool:
-    ...     return sorted(xs) == xs
-    ...
+>>> def prop_sorted_wrong(xs: list[int]) -> bool:
+...     return sorted(xs) == xs
+...
 
-    >>> check(prop_sorted_wrong)
-    *** Failed! Falsifiable after 7 tests:
-        prop_sorted_wrong([1, 0])
-    False
+>>> check(prop_sorted_wrong)
+*** Failed! Falsifiable after 7 tests:
+    prop_sorted_wrong([1, 0])
+False
 
 We now know that an ill input is the list `[1, 0]`.
 In this arbitrary example, the property is incorrect.
