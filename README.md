@@ -165,7 +165,8 @@ under the `examples/` folder in the source repository.
 Example: custom class
 ---------------------
 
-LeanCheck also works for tesing properties over instances of custom classes.
+LeanCheck also works for tesing properties
+over instances of custom or user-defined classes.
 The following short example illustrates how to do this:
 
 ```py
