@@ -115,7 +115,7 @@ def check(prop, *types, max_tests=360, verbose=True, silent=False, dump=0):
     with the dump argument:
 
     >>> check(lambda x: x * x >= x, int, dump=6)
-    ### Testing <lambda>
+    --- Testing <lambda>
         <lambda>(0)
         <lambda>(1)
         <lambda>(-1)
@@ -135,7 +135,7 @@ def check(prop, *types, max_tests=360, verbose=True, silent=False, dump=0):
         types = arg_types(prop)
     es = [Enumerator(t) for t in types]
     if dump:
-        print(f"### Testing {yellow}{prop.__name__}{clear}")
+        print(f"--- Testing {yellow}{prop.__name__}{clear}")
     u = 0  # number of precondition fails
     for i, args in enumerate(itertools.islice(Enumerator.product(*es), max_tests)):
         # TODO: remove slight code duplication below...

@@ -21,9 +21,12 @@ There are no arguments to the unit test.
 In property-based testing (with LeanCheck)
 one writes more general properties that should be true
 for any assignment of arguments.
+Properties in this sense are
+parameterized unit tests or
+parameterized assertions.
 
 For example:
-given __any__ list, sorting it twice is the same as sorting it once.
+given **any** list, sorting it twice is the same as sorting it once.
 We can encode this as a function returning a boolean value:
 
 ```py
@@ -37,27 +40,37 @@ Now one can use LeanCheck to verify this automatically:
 
 ```py
 >>> from leancheck import *
-
 >>> check(prop_sorted_twice)
 +++ OK, passed 360 tests: prop_sorted_twice
 ```
 
+LeanCheck automatically came up with 360 unique lists
+to exercise the property.
+
 When the property or function-under-test is incorrect
-LeanCheck may find and report a counterexample like so:
+LeanCheck may find and report a counterexample:
 
 ```py
-*** Failed! Falsifiable after 6 tests:
+*** Failed! Falsifiable after 7 tests:
     prop_sorted_wrong([1, 0])
 ```
 
 This would indicate that the list `[1, 0]` is an ill input.
 
-Besides using `check()` to test individual properties,
-one can use `leancheck.main()` to test all properties
-defined in the current file.
+If you have a collection of properties (`prop_*`) in a Python file,
+just call `leancheck.main()` and all of them will be automatically tested.
+In the case of a library, you can put everything under
+an if-expression as you would do with `unittest.main()` or `doctest.testmod()`.
+
+    if __name__ == '__main__':
+        leancheck.main()
+
+[LeanCheck is available on PyPI][python-leancheck] and installable via:
+
+    $ pip install leancheck
 
 
-Example, testing a sorting function
+Example: testing a sorting function
 -----------------------------------
 
 Consider the following (not-quite) `qsort` function:
@@ -101,7 +114,7 @@ def prop_sort_len(xs: list[int]) -> bool:
     return len(qsort(xs)) == len(xs)
 
 if __name__ == '__main__':
-    leancheck.main()
+    leancheck.main(verbose=True)
 ```
 
 We import LeanCheck, define the properties and call `leancheck.main()`
@@ -149,7 +162,7 @@ An extended version of this example can be found
 under the `examples/` folder in the source repository.
 
 
-Example, custom class
+Example: custom class
 ---------------------
 
 LeanCheck also works for tesing properties over instances of custom classes.
@@ -176,7 +189,8 @@ def prop_distance_positive(p: Point, q: Point) -> bool:
 def prop_self_distance(p: Point) -> bool:
     return Point.distance(p,p) == 0
 
-leancheck.main(verbose=True)
+if __name__ == '__main__':
+    leancheck.main(verbose=True)
 ```
 
 The enumeration for `Point`s is inferred
