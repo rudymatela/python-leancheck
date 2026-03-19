@@ -29,7 +29,7 @@ from leancheck.funtype import return_type, arg_types
 from leancheck.enumerator import Enumerator
 
 
-def check(prop, *types, max_tests=360, verbose=True, silent=False):
+def check(prop, *types, max_tests=360, verbose=True, silent=False, dump=0):
     """
     Checks a property for several enumerated argument values.
     Properties must have type hints
@@ -110,6 +110,22 @@ def check(prop, *types, max_tests=360, verbose=True, silent=False):
     Warning: property's return value is <class 'inspect._empty'> and not <class 'bool'>
     +++ OK, passed 360 tests: prop_pow
     True
+
+    You can ask `check()` to dump a number of test values
+    with the dump argument:
+
+    >>> check(lambda x: x * x >= x, int, dump=6)
+    ### Testing <lambda>
+        <lambda>(0)
+        <lambda>(1)
+        <lambda>(-1)
+        <lambda>(2)
+        <lambda>(-2)
+        <lambda>(3)
+        ...
+    +++ OK, passed 360 tests: <lambda>
+    <BLANKLINE>
+    True
     """
     verbose = verbose and not silent
     clear, red, green, blue, yellow = misc.colour_escapes()
@@ -118,6 +134,8 @@ def check(prop, *types, max_tests=360, verbose=True, silent=False):
             print(f"{yellow}Warning{clear}: property's return value is {return_type(prop)} and not {bool}")
         types = arg_types(prop)
     es = [Enumerator(t) for t in types]
+    if dump:
+        print(f"### Testing {yellow}{prop.__name__}{clear}")
     u = 0  # number of precondition fails
     for i, args in enumerate(itertools.islice(Enumerator.product(*es), max_tests)):
         # TODO: remove slight code duplication below...
@@ -139,10 +157,18 @@ def check(prop, *types, max_tests=360, verbose=True, silent=False):
                 print(f"    {red}{prop.__name__}{clear}({repr_args})")
                 print(f"    raised '{e}'")
             return False
+        if dump:
+            if i-u < dump:
+                repr_args = ", ".join(map(repr, args))
+                print(f"    {prop.__name__}{clear}({repr_args})")
+            elif i-u == dump:
+                print("    ...")
     if verbose:
         i = i + 1
         exhausted = " (exhausted)" if i < max_tests else ""
         print(f"+++ OK, passed {i-u} tests{exhausted}: {green}{prop.__name__}{clear}")
+        if dump:
+            print("")
     return True
 
 
@@ -165,7 +191,7 @@ def holds(prop, *types, max_tests=360):
     return check(prop, *types, max_tests=max_tests, silent=True)
 
 
-def main(max_tests=360, silent=False, verbose=False, exit_on_failure=True):
+def main(max_tests=360, silent=False, verbose=False, dump=0, exit_on_failure=True):
     """
     Tests all properties present in the current file,
     report results and
@@ -177,7 +203,7 @@ def main(max_tests=360, silent=False, verbose=False, exit_on_failure=True):
         if __name__ == '__main__':
             leancheck.main()
     """
-    n_failures, n_properties = testmod(max_tests=max_tests, silent=silent, verbose=verbose)
+    n_failures, n_properties = testmod(max_tests=max_tests, silent=silent, verbose=verbose, dump=dump)
     clear, red, green, blue, yellow = misc.colour_escapes()
     if not silent:
         if not n_properties:
@@ -190,7 +216,7 @@ def main(max_tests=360, silent=False, verbose=False, exit_on_failure=True):
         sys.exit(1)
 
 
-def testmod(max_tests=360, silent=False, verbose=False):
+def testmod(max_tests=360, silent=False, verbose=False, dump=0):
     """
     Tests all properties present in the current file
     and report the results.
@@ -218,7 +244,7 @@ def testmod(max_tests=360, silent=False, verbose=False):
     for name, member in sorted(inspect.getmembers(sys.modules["__main__"]), key=lineno):
         if name.startswith("prop_") and callable(member):
             n_properties += 1
-            passed = check(member, max_tests=max_tests, silent=silent, verbose=verbose)
+            passed = check(member, max_tests=max_tests, silent=silent, verbose=verbose, dump=dump)
             if not passed:
                 n_failures += 1
     return (n_failures, n_properties)  # just like doctest.testmod()
