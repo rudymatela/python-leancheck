@@ -34,6 +34,11 @@ doc:
 opendoc: doc
 	wbi docs/index.html
 
+# shows a diff between the README.md and __init__.py
+# we should try to keep the intro section mostly the same
+diffme:
+	diff -rud README.md src/leancheck/__init__.py
+
 run:       $(patsubst %.py,%.run, $(wildcard src/leancheck/*.py))
 
 .PHONY: examples
