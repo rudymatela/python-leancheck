@@ -101,6 +101,6 @@ if __name__ == "__main__":
     import doctest
     import sys
 
-    (failures, _) = doctest.testmod(optionflags=doctest.REPORT_ONLY_FIRST_FAILURE)
+    (failures, _) = doctest.testmod(optionflags=doctest.FAIL_FAST)
     if failures:
         sys.exit(1)
