@@ -1,10 +1,6 @@
 TODO for leancheck.py
 =====================
 
-* add regression tests for warning messages
-
-* make the intro inline documentation match the README.md
-
 * package _all_ files like in Haskell's leancheck
 
 * in the `person.py` example, avoid calling Enumerator.choices?
