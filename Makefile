@@ -81,7 +81,8 @@ test-install:
 
 
 upload-for-real-this-time: dist
-	echo 'Uploading for real in PyPI in 6 seconds (Ctrl-C to abort)'
+	ls -1 dist/
+	echo 'Uploading the above files for real to PyPI in 6 seconds (Ctrl-C to abort)'
 	sleep 6
 	twine upload --skip-existing dist/*
 
