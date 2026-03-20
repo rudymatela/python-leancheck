@@ -1,6 +1,8 @@
 python-leancheck release instructions
 =====================================
 
+Releasing `python-leancheck` in 16 easy steps.
+
 0. Make sure to pull from all remotes first
 
 		git pull --all
@@ -44,14 +46,16 @@ python-leancheck release instructions
 
 10. Bump version in `pyproject.toml` to odd "dev" patch (13579)
 
-11. Commit "dev version bump"
+11. List latest version in `changelog.md`
 
-12. Push then push tags
+12. Commit "dev version bump"
+
+13. Push then push tags
 
 		$ git push && git push --tags
 
-13. Test real install with `pip install leancheck`
+14. Test real install with `pip install leancheck`
 
-14. check documentation at `https://leancheck.github.io`
+15. check documentation at `https://leancheck.github.io`
 
-15. Rinse & repeat.
+16. Rinse & repeat.
