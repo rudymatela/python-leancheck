@@ -69,6 +69,9 @@ an if-expression as you would do with `unittest.main()` or `doctest.testmod()`.
 
     $ pip install leancheck
 
+[LeanCheck's API documentation][leancheck-docs] contains this tutorial
+as well as description and examples of use of most functions and methods.
+
 
 Example: testing a sorting function
 -----------------------------------
@@ -253,3 +256,4 @@ is considered a property by convention.  LeanCheck is simpler to use IMHO.
 [build-status]: https://github.com/rudymatela/python-leancheck/actions/workflows/test.yml/badge.svg
 [pypi-version]: https://img.shields.io/pypi/v/leancheck.svg
 [leancheck-on-pypi]: https://pypi.org/project/leancheck
+[leancheck-docs]: https://leancheck.github.io
