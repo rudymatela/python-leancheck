@@ -26,6 +26,7 @@ classifiers = [
 "Bug Tracker"   = "https://github.com/rudymatela/python-leancheck/issues"
 "Repository"    = "https://github.com/rudymatela/python-leancheck.git"
 "Documentation" = "https://leancheck.github.io/"
+"Changelog"     = "https://github.com/rudymatela/python-leancheck/blob/main/changelog.md"
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]
