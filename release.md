@@ -42,12 +42,16 @@ python-leancheck release instructions
 		$ git diff
 		$ git commit
 
-10. check documentation at `https://leancheck.github.io`
+10. Bump version in `pyproject.toml` to odd "dev" patch (13579)
 
-11. Bump version in `pyproject.toml` to odd "dev" patch (13579)
+11. Commit "dev version bump"
 
-12. Commit "dev version bump"
+12. Push then push tags
+
+		$ git push && git push --tags
 
 13. Test real install with `pip install leancheck`
 
-14. Rinse & repeat.
+14. check documentation at `https://leancheck.github.io`
+
+15. Rinse & repeat.
