@@ -23,30 +23,30 @@ Releasing `python-leancheck` in 16 easy steps.
 
 5. Bump version in `pyproject.toml` to even patch (02468)
 
-6. Commit and tag
+6. List latest version in `changelog.md`
+
+7. Commit and tag
 
 		$ git commit
 		$ git tag -a vX.Y.Z
 
-7. Cleanup dist
+8. Cleanup dist
 
 		$ rm -r dist/
 
-8. Upload for real on PyPI:
+9. Upload for real on PyPI:
 
 		$ make upload-for-real-this-time
 
-9. Publish updated docs:
+10. Publish updated docs:
 
 		$ make pull-docs || make clone-docs
 		$ make doc
 		$ cd docs
 		$ git diff
-		$ git commit
+		$ git commit && git push
 
-10. Bump version in `pyproject.toml` to odd "dev" patch (13579)
-
-11. List latest version in `changelog.md`
+11. Bump version in `pyproject.toml` to odd "dev" patch (13579)
 
 12. Commit "dev version bump"
 
