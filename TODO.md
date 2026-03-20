@@ -1,8 +1,6 @@
 TODO for leancheck.py
 =====================
 
-* fix `<BLANKLINE>` shenanigan
-
 * package _all_ files like in Haskell's leancheck
 
 * in the `person.py` example, avoid calling Enumerator.choices?

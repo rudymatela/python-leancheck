@@ -124,7 +124,6 @@ def check(prop, *types, max_tests=360, verbose=True, silent=False, dump=0):
         <lambda>(3)
         ...
     +++ OK, passed 360 tests: <lambda>
-    <BLANKLINE>
     True
     """
     verbose = verbose and not silent
@@ -167,8 +166,6 @@ def check(prop, *types, max_tests=360, verbose=True, silent=False, dump=0):
         i = i + 1
         exhausted = " (exhausted)" if i < max_tests else ""
         print(f"+++ OK, passed {i-u} tests{exhausted}: {green}{prop.__name__}{clear}")
-        if dump:
-            print("")
     return True
 
 
@@ -243,6 +240,8 @@ def testmod(max_tests=360, silent=False, verbose=False, dump=0):
 
     for name, member in sorted(inspect.getmembers(sys.modules["__main__"]), key=lineno):
         if name.startswith("prop_") and callable(member):
+            if dump and n_properties:
+                print("")  # blank line between each property output on dump mode
             n_properties += 1
             passed = check(member, max_tests=max_tests, silent=silent, verbose=verbose, dump=dump)
             if not passed:
