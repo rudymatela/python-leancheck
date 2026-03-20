@@ -13,7 +13,7 @@ python-leancheck release instructions
 
 		$ make upload-test
 
-3. Look at https://test.pypi.org/project/leancheck/
+3. Look at `https://test.pypi.org/project/leancheck/`
 
 4. Test install with:
 
@@ -36,16 +36,18 @@ python-leancheck release instructions
 
 9. Publish updated docs:
 
-		$ make clone-docs # or pull
-		$ make docs
+		$ make pull-docs || make clone-docs
+		$ make doc
 		$ cd docs
 		$ git diff
 		$ git commit
 
-10. Bump version in `pyproject.toml` to odd "dev" patch (13579)
+10. check documentation at `https://leancheck.github.io`
 
-11. Commit "dev version bump"
+11. Bump version in `pyproject.toml` to odd "dev" patch (13579)
 
-12. Test real install with `pip install leancheck`
+12. Commit "dev version bump"
 
-13. Rinse & repeat.
+13. Test real install with `pip install leancheck`
+
+14. Rinse & repeat.
