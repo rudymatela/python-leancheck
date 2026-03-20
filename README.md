@@ -199,6 +199,15 @@ if __name__ == '__main__':
     leancheck.main(verbose=True)
 ```
 
+Then just run:
+
+```sh
+$ python point.py
++++ OK, passed 360 tests: prop_distance_positive
++++ OK, passed 360 tests: prop_self_distance
++++ 2 properties passed
+```
+
 The enumeration for `Point`s is inferred
 from the type annotations in the constructor.
 A point is a cross-product of two floats:
