@@ -28,7 +28,7 @@ def prop_subadd_correct(x: float, y:float) -> bool:
 
 
 def prop_divmul(x: float, y:float) -> bool:
-    precondition(y)
+    precondition(y != 0.)
     return x / y * y == x
 
 
