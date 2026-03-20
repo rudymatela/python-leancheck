@@ -1,67 +1,9 @@
---- Testing prop_commute
-    prop_commute(0.0, 0.0)
-    prop_commute(0.0, 1.0)
-    prop_commute(1.0, 0.0)
-    prop_commute(0.0, -1.0)
-    prop_commute(1.0, 1.0)
-    prop_commute(-1.0, 0.0)
-    prop_commute(0.0, 0.5)
-    prop_commute(1.0, -1.0)
-    prop_commute(-1.0, 1.0)
-    prop_commute(0.5, 0.0)
-    prop_commute(0.0, -0.5)
-    prop_commute(1.0, 0.5)
-    ...
 +++ OK, passed 1080 tests: prop_commute
-
---- Testing prop_inc_monotonic
-    prop_inc_monotonic(0.0)
-    prop_inc_monotonic(1.0)
-    prop_inc_monotonic(-1.0)
-    prop_inc_monotonic(0.5)
-    prop_inc_monotonic(-0.5)
-    prop_inc_monotonic(2.0)
-    prop_inc_monotonic(-2.0)
-    prop_inc_monotonic(0.3333333333333333)
-    prop_inc_monotonic(-0.3333333333333333)
-    prop_inc_monotonic(1.5)
-    prop_inc_monotonic(-1.5)
-    prop_inc_monotonic(0.6666666666666666)
-    ...
 +++ OK, passed 1080 tests: prop_inc_monotonic
-
---- Testing prop_subadd
-    prop_subadd(0.0, 0.0)
-    prop_subadd(0.0, 1.0)
-    prop_subadd(1.0, 0.0)
-    prop_subadd(0.0, -1.0)
-    prop_subadd(1.0, 1.0)
-    prop_subadd(-1.0, 0.0)
-    prop_subadd(0.0, 0.5)
-    prop_subadd(1.0, -1.0)
-    prop_subadd(-1.0, 1.0)
-    prop_subadd(0.5, 0.0)
-    prop_subadd(0.0, -0.5)
-    prop_subadd(1.0, 0.5)
-    ...
 *** Failed! Falsifiable after 44 tests:
     prop_subadd(0.3333333333333333, 1.0)
-
---- Testing prop_divmul
-    prop_divmul(0.0, 1.0)
-    prop_divmul(0.0, -1.0)
-    prop_divmul(1.0, 1.0)
-    prop_divmul(0.0, 0.5)
-    prop_divmul(1.0, -1.0)
-    prop_divmul(-1.0, 1.0)
-    prop_divmul(0.0, -0.5)
-    prop_divmul(1.0, 0.5)
-    prop_divmul(-1.0, -1.0)
-    prop_divmul(0.5, 1.0)
-    prop_divmul(0.0, 2.0)
-    prop_divmul(1.0, -0.5)
-    ...
++++ OK, passed 1080 tests: prop_subadd_correct
 *** Failed! Falsifiable after 554 tests:
     prop_divmul(1.6666666666666667, 0.3333333333333333)
 
-*** 2 of 4 properties failed
+*** 2 of 5 properties failed

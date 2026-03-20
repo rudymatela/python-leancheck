@@ -7,6 +7,7 @@
 
 from leancheck import *
 import leancheck
+import math
 
 
 def prop_commute(x: float, y: float) -> bool:
@@ -22,9 +23,13 @@ def prop_subadd(x: float, y:float) -> bool:
     return x - y + y == x
 
 
+def prop_subadd_correct(x: float, y:float) -> bool:
+    return math.isclose(x - y + y, x)
+
+
 def prop_divmul(x: float, y:float) -> bool:
     precondition(y)
     return x / y * y == x
 
 
-leancheck.main(verbose=True, exit_on_failure=False, dump=12, max_tests=1080)
+leancheck.main(verbose=True, exit_on_failure=False, max_tests=1080)
