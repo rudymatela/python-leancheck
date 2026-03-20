@@ -3,6 +3,8 @@ LeanCheck for Python
 
 [![LeanCheck's Build Status][build-status]][build-log]
 [![LeanCheck on PyPI][pypi-version]][leancheck-on-pypi]
+[![LeanCheck on GitHub][github-badge]][leancheck-on-github]
+[![LeanCheck's API documentation][docs-badge]][leancheck-docs]
 
 This is a port of [Haskell's LeanCheck] to [Python].
 
@@ -255,5 +257,8 @@ is considered a property by convention.  LeanCheck is simpler to use IMHO.
 [build-log]:    https://github.com/rudymatela/python-leancheck/actions/workflows/test.yml
 [build-status]: https://github.com/rudymatela/python-leancheck/actions/workflows/test.yml/badge.svg
 [pypi-version]: https://img.shields.io/pypi/v/leancheck.svg
+[github-badge]: https://img.shields.io/badge/repo-GitHub-blue
+[docs-badge]:   https://img.shields.io/badge/docs-api-blue
 [leancheck-on-pypi]: https://pypi.org/project/leancheck
+[leancheck-on-github]: https://github.com/rudymatela/leancheck
 [leancheck-docs]: https://leancheck.github.io
