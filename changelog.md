@@ -9,6 +9,7 @@ upcoming
 * fix syntax highlighting in online docs
 * more consistent inline/README documentation
 * more README badges
+* add `examples/float.py`
 * add this changelog
 
 
