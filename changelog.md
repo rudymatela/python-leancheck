@@ -2,8 +2,8 @@ Changelog for Python's LeanCheck
 ================================
 
 
-upcoming
---------
+v0.1.6 (March 2026)
+-------------------
 
 * add option to dump test values
 * fix syntax highlighting in online docs
