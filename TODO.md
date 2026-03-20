@@ -1,6 +1,8 @@
 TODO for leancheck.py
 =====================
 
+* fix `<BLANKLINE>` shenanigan
+
 * add changelog, refer to it in pyproject.toml
 
 * package _all_ files like in Haskell's leancheck
