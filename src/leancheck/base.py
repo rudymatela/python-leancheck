@@ -126,7 +126,9 @@ def check(prop, *types, max_tests=360, verbose=True, silent=False, dump=0):
     +++ OK, passed 360 tests: <lambda>
     True
     """
-    verbose = verbose and not silent
+    silent = False if dump else silent  # dump overrides silent
+    verbose = True if dump else verbose  # dump overrides verbose
+    verbose = verbose and not silent  # silent overrides verbose
     clear, red, green, blue, yellow = misc.colour_escapes()
     if not types:
         if return_type(prop) != bool and not silent:

@@ -1,0 +1,45 @@
+--- Testing prop_plus_commutes
+    prop_plus_commutes(0, 0)
+    prop_plus_commutes(0, 1)
+    prop_plus_commutes(1, 0)
+    prop_plus_commutes(0, -1)
+    prop_plus_commutes(1, 1)
+    prop_plus_commutes(-1, 0)
+    prop_plus_commutes(0, 2)
+    prop_plus_commutes(1, -1)
+    prop_plus_commutes(-1, 1)
+    prop_plus_commutes(2, 0)
+    prop_plus_commutes(0, -2)
+    prop_plus_commutes(1, 2)
+    ...
++++ OK, passed 360 tests: prop_plus_commutes
+
+--- Testing prop_idempotence
+    prop_idempotence([])
+    prop_idempotence([0])
+    prop_idempotence([0, 0])
+    prop_idempotence([1])
+    prop_idempotence([0, 0, 0])
+    prop_idempotence([0, 1])
+    prop_idempotence([1, 0])
+    prop_idempotence([-1])
+    prop_idempotence([0, 0, 0, 0])
+    prop_idempotence([0, 0, 1])
+    prop_idempotence([0, 1, 0])
+    prop_idempotence([0, -1])
+    ...
++++ OK, passed 360 tests: prop_idempotence
+
+--- Testing prop_and_commutes
+    prop_and_commutes(False, False)
+    prop_and_commutes(False, True)
+    prop_and_commutes(True, False)
+    prop_and_commutes(True, True)
++++ OK, passed 4 tests (exhausted): prop_and_commutes
+
+--- Testing prop_and_or_interchangeable
+    prop_and_or_interchangeable(False, False)
+*** Failed! Falsifiable after 2 tests:
+    prop_and_or_interchangeable(False, True)
+
+*** 1 of 4 properties failed
