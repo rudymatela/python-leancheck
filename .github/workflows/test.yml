@@ -22,9 +22,9 @@ jobs:
       - run: python --version
       - run: pip --version
 
-      - name: Install dependencies
+      - name: Install build dependencies
         run:
-          pip install pytest mypy validate-pyproject pdoc
+          pip install pytest mypy validate-pyproject pdoc build poetry
 
       - run: make test
 
