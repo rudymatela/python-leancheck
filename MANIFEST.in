@@ -1,0 +1,9 @@
+include changelog.md
+include release.md
+include TODO.md
+include Makefile
+include examples/*.py
+include examples/*.txt
+include tests/distfiles.sh
+include .gitignore
+include .github/workflows/test.yml

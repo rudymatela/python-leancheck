@@ -11,7 +11,7 @@ all: run
 repl:
 	PYTHONPATH=src python -ic 'import leancheck; from leancheck import *; from leancheck.iitertools import *'
 
-test: run pytest mypy diff-test
+test: run pytest mypy diff-test test-dist
 
 pytest:
 	pytest
@@ -67,6 +67,9 @@ release:
 .PHONY: dist
 dist:
 	python -m build
+
+test-dist:
+	./tests/distfiles.sh
 
 upload-test: dist
 	twine upload --skip-existing --repository testpypi dist/*
