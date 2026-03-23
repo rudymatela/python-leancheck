@@ -28,6 +28,19 @@ black:
 validate-pyproject:
 	validate-pyproject pyproject.toml
 
+install:
+	@echo Please install using pip:
+	@echo
+	@echo "   " $$ pip install leancheck
+	@echo
+	@echo ... or use your operating system\'s package manager.
+
+# installs build dependencies
+install-build-deps:
+	pip install pytest mypy validate-pyproject pdoc build poetry
+# when the environment is externally manager, you should use your OS's
+# package manager instead, e.g.: $ pacman -S python-poetry ...
+
 doc:
 	PYTHONPATH=src pdoc --footer="`poetry version`" leancheck -o docs
 
