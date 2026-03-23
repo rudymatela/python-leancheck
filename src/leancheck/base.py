@@ -251,7 +251,7 @@ def testmod(max_tests=360, silent=False, verbose=False, dump=0):
     return (n_failures, n_properties)  # just like doctest.testmod()
 
 
-def precondition(condition: bool):
+def precondition(condition: bool, *other: list[bool]):
     """
     Allows one to define a precondition for a property.
 
@@ -276,8 +276,31 @@ def precondition(condition: bool):
 
     Above, `precondition(xs)` would be equivalent.
     We use the verbose option for clarity.
+
+    Multiple arguments to `precondition` are `and`'ed:
+
+    >>> def prop_sum(x: int, y: int) -> bool:
+    ...     precondition(0 < x, 0 < y)
+    ...     return 0 < x + y
+    >>> check(prop_sum)
+    +++ OK, passed 82 tests: prop_sum
+    True
+
+    In simple cases you are better off using the 'and' operator directly,
+    but this can be useful in some contexts, see:
+
+    >>> def prop_sum(xs: list[int]) -> bool:
+    ...     precondition(xs, *(0 < x for x in xs))
+    ...     precondition(xs and all(0 < x for x in xs))
+    ...     return 0 < sum(xs)
+    >>> check(prop_sum)
+    +++ OK, passed 15 tests: prop_sum
+    True
+
+    The above is a little bit shorter than
+    `precondition(xs and all(*(0 < x for x in xs)))`.
     """
-    if not condition:
+    if not condition or not all(other):
         raise PreconditionUnmatched
 
 
