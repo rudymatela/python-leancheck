@@ -1,8 +1,6 @@
 TODO for leancheck.py
 =====================
 
-* allow multiple arguments in `precondition()`
-
 * package _all_ files like in Haskell's leancheck
 
 * in the `person.py` example, avoid calling Enumerator.choices?
