@@ -64,8 +64,10 @@ just call `leancheck.main()` and all of them will be automatically tested.
 In the case of a library, you can put everything under
 an if-expression as you would do with `unittest.main()` or `doctest.testmod()`.
 
-    if __name__ == '__main__':
-        leancheck.main()
+```py
+if __name__ == '__main__':
+	leancheck.main()
+```
 
 [LeanCheck is available on PyPI][python-leancheck] and installable via:
 
