@@ -68,13 +68,13 @@ an if-expression as you would do with `unittest.main()` or `doctest.testmod()`.
     if __name__ == '__main__':
         leancheck.main()
 
-[LeanCheck is available on PyPI][python-leancheck] and installable via:
+[LeanCheck is available on PyPI][leancheck-on-pypi] and installable via:
 
     $ pip install leancheck
 
 This is a port of [Haskell's LeanCheck][] to [Python][].
 
-[python-leancheck]: https://pypi.org/project/leancheck/
+[leancheck-on-pypi]: https://pypi.org/project/leancheck/
 [Haskell's LeanCheck]: https://hackage.haskell.org/package/leancheck
 [Python]: https://python.org
 

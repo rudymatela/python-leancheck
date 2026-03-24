@@ -69,7 +69,7 @@ if __name__ == '__main__':
 	leancheck.main()
 ```
 
-[LeanCheck is available on PyPI][python-leancheck] and installable via:
+[LeanCheck is available on PyPI][leancheck-on-pypi] and installable via:
 
     $ pip install leancheck
 
