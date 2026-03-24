@@ -2,6 +2,12 @@ Changelog for Python's LeanCheck
 ================================
 
 
+upcoming
+--------
+
+* include all tracked files in source distribution
+
+
 v0.1.6 (March 2026)
 -------------------
 
