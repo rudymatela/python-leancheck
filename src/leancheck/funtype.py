@@ -30,7 +30,7 @@ def return_type(fun):
     return inspect.signature(fun).return_annotation
 
 
-def arg_types(fun):
+def arg_types(fun, defaults=True):
     """
     Returns the argument types of the given function.
 
@@ -58,12 +58,21 @@ def arg_types(fun):
     Traceback (most recent call last):
     ...
     ValueError: missing type annotation
+
+    By default, this includes types of arguments with default values:
+    >>> def foo(x: int, verbose: bool = False):
+    ...     pass
+    >>> arg_types(foo)
+    [<class 'int'>, <class 'bool'>]
+
+    Types of default arguments can be omitted like so:
+    >>> arg_types(foo, defaults=False)
+    [<class 'int'>]
     """
-    # TODO: This currently returns kwargs' types as well
-    #       causing problems in automatic Enumerator generation.
-    #       Add an option to be able to only returns args.
-    #       Have a separate function kwarg_types for these cases.
-    types = [par.annotation for par in inspect.signature(fun).parameters.values()]
+    types = [par.annotation
+             for par
+             in inspect.signature(fun).parameters.values()
+             if defaults or par.default is par.empty]
     if any(t is inspect.Signature.empty for t in types):
         raise ValueError("missing type annotation")
     return types
