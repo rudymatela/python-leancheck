@@ -60,8 +60,8 @@ def arg_types(fun):
     ValueError: missing type annotation
     """
     # TODO: This currently returns kwargs' types as well
-    #       causing problems in some contexts.
-    #       Make so that this only returns args.
+    #       causing problems in automatic Enumerator generation.
+    #       Add an option to be able to only returns args.
     #       Have a separate function kwarg_types for these cases.
     types = [par.annotation for par in inspect.signature(fun).parameters.values()]
     if any(t is inspect.Signature.empty for t in types):
